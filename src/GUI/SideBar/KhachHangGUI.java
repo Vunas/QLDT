@@ -29,7 +29,7 @@ public class KhachHangGUI extends JPanel {
         initComponent();
         chucNang();
         addSearchFunctionality();
-        loadData();
+        loadData(khachHangBLL.getAllKhachHang());
 
     }
 
@@ -86,7 +86,7 @@ public class KhachHangGUI extends JPanel {
                         KhachHangDTO newKhachHang = dialog.getKhachHangData(maKH);
                         if (khachHangBLL.addKhachHang(newKhachHang)) {
                             JOptionPane.showMessageDialog(null, "Thêm khách hàng thành công!");
-                            loadData();
+                            loadData(khachHangBLL.getAllKhachHang());
                         } else {
                             JOptionPane.showMessageDialog(null, "Thêm khách hàng thất bại!");
                         }
@@ -124,7 +124,7 @@ public class KhachHangGUI extends JPanel {
                 if (khachHangBLL.updateKhachHang(kh)) {
                     if (dialog.isSaved()) {
                         JOptionPane.showMessageDialog(null, "Cập nhật thông tin khách hàng thành công!");
-                        loadData(); // Tải lại bảng
+                        loadData(khachHangBLL.getAllKhachHang()); // Tải lại bảng
                     }
                 } else {
                     JOptionPane.showMessageDialog(null, "Cập nhật thông tin thất bại!");
@@ -148,7 +148,7 @@ public class KhachHangGUI extends JPanel {
                 if (confirm == JOptionPane.YES_OPTION) {
                     if (khachHangBLL.deleteKhachHang(maKH)) {
                         JOptionPane.showMessageDialog(null, "Xóa khách hàng thành công!");
-                        loadData();
+                        loadData(khachHangBLL.getAllKhachHang());
                     } else {
                         JOptionPane.showMessageDialog(null, "Xóa khách hàng thất bại!");
                     }
@@ -202,7 +202,7 @@ public class KhachHangGUI extends JPanel {
                 String keyword = textSearch.getText().trim();
 
                 // Gọi phương thức tìm kiếm với từ khóa
-                performSearch(keyword, type);
+                loadData(khachHangBLL.getKhachHangByNameSearch(keyword, type));
             }
         });
 
@@ -211,30 +211,13 @@ public class KhachHangGUI extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 topNav.getFindFor().setSelectedIndex(0);
                 textSearch.setText(""); // Xóa từ khóa tìm kiếm
-                loadData(); // Tải lại toàn bộ dữ liệu
+                loadData(khachHangBLL.getAllKhachHang()); // Tải lại toàn bộ dữ liệu
             }
         });
     }
 
-    private void performSearch(String keyword, String type) {
-        // Lấy danh sách khách hàng từ BLL
-        List<KhachHangDTO> filteredList = khachHangBLL.getKhachHangByNameSearch(keyword, type);
-        String[] columnNames = { "Mã KH", "Tên", "Địa Chỉ", "SĐT" };
-        DefaultTableModel model = new DefaultTableModel(columnNames, 0);
-        // Tìm kiếm và thêm dữ liệu khớp vào model
-        for (KhachHangDTO kh : filteredList) {
-
-            Object[] rowData = { kh.getMaKH(), kh.getHoTen(), kh.getDiaChi(), kh.getSdt() };
-            model.addRow(rowData);
-        }
-
-        // Cập nhật model cho JTable
-        tbl.setModel(model);
-    }
-
-    private void loadData() {
+    private void loadData(List<KhachHangDTO> khachHangList) {
         // Lấy dữ liệu từ BLL
-        List<KhachHangDTO> khachHangList = khachHangBLL.getAllKhachHang();
         String[] columnNames = { "Mã KH", "Tên", "Địa Chỉ", "SĐT" };
         DefaultTableModel model = new DefaultTableModel(columnNames, 0);
 

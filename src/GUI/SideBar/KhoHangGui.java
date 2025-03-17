@@ -27,12 +27,12 @@ public class KhoHangGui extends JPanel {
         khoHangBLL = new KhoHangBLL();
         initComponent();
         addSearchFunctionality();
-        loadData();
+        loadData(khoHangBLL.getAllKhoHang());
         chucNang(); // Add functionality to the buttons
     }
 
     private void initComponent() {
-        String[] itemFindFor = { "Tất Cả", "Theo Tên", "Theo Địa Chỉ" };
+        String[] itemFindFor = { "Tất Cả"};
 
         topNav = new TopNav("Kho Hàng", "warehouse", itemFindFor);
 
@@ -74,10 +74,9 @@ public class KhoHangGui extends JPanel {
         textSearch.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
-                String type = topNav.getFindFor().getSelectedItem().toString().toLowerCase();
                 String keyword = textSearch.getText().trim();
 
-                performSearch(keyword, type);
+                loadData(khoHangBLL.getKhoHangByNameSearch(keyword));
             }
         });
 
@@ -86,34 +85,13 @@ public class KhoHangGui extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 topNav.getFindFor().setSelectedIndex(0);
                 textSearch.setText(""); // Clear the search keyword
-                loadData(); // Reload all data
+                loadData(khoHangBLL.getAllKhoHang()); // Reload all data
             }
         });
     }
 
-    private void performSearch(String keyword, String type) {
-        // Fetch filtered warehouse list based on search criteria
-        List<KhoHangDTO> filteredList = khoHangBLL.getKhoHangByNameSearch(keyword);
-        String[] columnNames = { "Mã Kho", "Tên Kho", "Địa Chỉ" };
-        DefaultTableModel model = new DefaultTableModel(columnNames, 0);
-
-        // Add data to the table model
-        for (KhoHangDTO kho : filteredList) {
-            Object[] rowData = {
-                kho.getMaKho(),
-                kho.getTenKho(),
-                kho.getDiaChi()
-            };
-            model.addRow(rowData);
-        }
-
-        // Set the new model to the table
-        tbl.setModel(model);
-    }
-
-    private void loadData() {
+    private void loadData(List<KhoHangDTO> khoHangList) {
         // Fetch all warehouse data from BLL
-        List<KhoHangDTO> khoHangList = khoHangBLL.getAllKhoHang();
         String[] columnNames = { "Mã Kho", "Tên Kho", "Địa Chỉ" };
         DefaultTableModel model = new DefaultTableModel(columnNames, 0);
 
@@ -148,7 +126,7 @@ public class KhoHangGui extends JPanel {
                         KhoHangDTO newKhoHang = dialog.getKhoHangData(maKho);
                         if (khoHangBLL.addKhoHang(newKhoHang)) {
                             JOptionPane.showMessageDialog(null, "Thêm kho thành công!");
-                            loadData();
+                            loadData(khoHangBLL.getAllKhoHang());
                         } else {
                             JOptionPane.showMessageDialog(null, "Thêm kho thất bại!");
                         }
@@ -181,7 +159,7 @@ public class KhoHangGui extends JPanel {
                     KhoHangDTO updatedKhoHang = dialog.getKhoHangData(maKho);
                     if (khoHangBLL.updateKhoHang(updatedKhoHang)) {
                         JOptionPane.showMessageDialog(null, "Cập nhật kho thành công!");
-                        loadData();
+                        loadData(khoHangBLL.getAllKhoHang());
                     } else {
                         JOptionPane.showMessageDialog(null, "Cập nhật thất bại!");
                     }
@@ -205,7 +183,7 @@ public class KhoHangGui extends JPanel {
                 if (confirm == JOptionPane.YES_OPTION) {
                     if (khoHangBLL.deleteKhoHang(maKho)) {
                         JOptionPane.showMessageDialog(null, "Xóa kho thành công!");
-                        loadData();
+                        loadData(khoHangBLL.getAllKhoHang());
                     } else {
                         JOptionPane.showMessageDialog(null, "Xóa kho thất bại!");
                     }

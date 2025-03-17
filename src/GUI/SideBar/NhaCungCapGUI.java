@@ -29,7 +29,7 @@ public class NhaCungCapGUI extends JPanel {
         initComponent();
         chucNang();
         addSearchFunctionality();
-        loadData();
+        loadData(nhaCungCapBLL.getAllNhaCungCap());
     }
 
     private void initComponent() {
@@ -87,7 +87,7 @@ public class NhaCungCapGUI extends JPanel {
                         NhaCungCapDTO newNhaCungCap = dialog.getNhaCungCapData(maNCC);
                         if (nhaCungCapBLL.addNhaCungCap(newNhaCungCap)) {
                             JOptionPane.showMessageDialog(null, "Thêm nhà cung cấp thành công!");
-                            loadData();
+                            loadData(nhaCungCapBLL.getAllNhaCungCap());
                         } else {
                             JOptionPane.showMessageDialog(null, "Thêm nhà cung cấp thất bại!");
                         }
@@ -125,7 +125,7 @@ public class NhaCungCapGUI extends JPanel {
                     NhaCungCapDTO updatedNhaCungCap = dialog.getNhaCungCapData(maNCC);
                     if (nhaCungCapBLL.updateNhaCungCap(updatedNhaCungCap)) {
                         JOptionPane.showMessageDialog(null, "Cập nhật thông tin nhà cung cấp thành công!");
-                        loadData();
+                        loadData(nhaCungCapBLL.getAllNhaCungCap());
                     } else {
                         JOptionPane.showMessageDialog(null, "Cập nhật thông tin thất bại!");
                     }
@@ -150,7 +150,7 @@ public class NhaCungCapGUI extends JPanel {
                 if (confirm == JOptionPane.YES_OPTION) {
                     if (nhaCungCapBLL.deleteNhaCungCap(maNCC)) {
                         JOptionPane.showMessageDialog(null, "Xóa nhà cung cấp thành công!");
-                        loadData();
+                        loadData(nhaCungCapBLL.getAllNhaCungCap());
                     } else {
                         JOptionPane.showMessageDialog(null, "Xóa nhà cung cấp thất bại!");
                     }
@@ -199,7 +199,7 @@ public class NhaCungCapGUI extends JPanel {
                 String type = topNav.getFindFor().getSelectedItem().toString().toLowerCase();
                 String keyword = textSearch.getText().trim();
 
-                performSearch(keyword, type);
+                loadData(nhaCungCapBLL.getNhaCungCapByNameSearch(keyword, type));
             }
         });
 
@@ -208,35 +208,13 @@ public class NhaCungCapGUI extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 topNav.getFindFor().setSelectedIndex(0);
                 textSearch.setText(""); // Xóa từ khóa tìm kiếm
-                loadData(); // Tải lại toàn bộ dữ liệu
+                loadData(nhaCungCapBLL.getAllNhaCungCap()); // Tải lại toàn bộ dữ liệu
             }
         });
     }
 
-    private void performSearch(String keyword, String type) {
-        // Lấy danh sách nhà cung cấp được lọc dựa trên từ khóa và loại tìm kiếm
-        List<NhaCungCapDTO> filteredList = nhaCungCapBLL.getNhaCungCapByNameSearch(keyword, type);
-        String[] columnNames = { "Mã NCC", "Tên", "Địa Chỉ", "SĐT" };
-        DefaultTableModel model = new DefaultTableModel(columnNames, 0);
-
-        // Thêm dữ liệu từ danh sách nhà cung cấp vào bảng
-        for (NhaCungCapDTO ncc : filteredList) {
-            Object[] rowData = {
-                    ncc.getMaNhaCungCap(),
-                    ncc.getTen(),
-                    ncc.getDiaChi(),
-                    ncc.getsDT()
-            };
-            model.addRow(rowData);
-        }
-
-        // Gán model mới vào bảng
-        tbl.setModel(model);
-    }
-
-    private void loadData() {
+    private void loadData(List<NhaCungCapDTO> nhaCungCapList) {
         // Lấy danh sách tất cả nhà cung cấp từ BLL
-        List<NhaCungCapDTO> nhaCungCapList = nhaCungCapBLL.getAllNhaCungCap();
         String[] columnNames = { "Mã NCC", "Tên", "Địa Chỉ", "SĐT" };
         DefaultTableModel model = new DefaultTableModel(columnNames, 0);
 

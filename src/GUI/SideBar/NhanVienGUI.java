@@ -30,7 +30,7 @@ public class NhanVienGUI extends JPanel {
         initComponent();
         chucNang();
         addSearchFunctionality();
-        loadData();
+        loadData(nhanVienBLL.getAllNhanVien());
     }
 
     private void initComponent() {
@@ -86,7 +86,7 @@ public class NhanVienGUI extends JPanel {
                         NhanVienDTO newNhanVien = dialog.getDataNhanVienDTO(maNV);
                         if (nhanVienBLL.addNhanVien(newNhanVien)) {
                             JOptionPane.showMessageDialog(null, "Thêm nhân viên thành công!");
-                            loadData();
+                            loadData(nhanVienBLL.getAllNhanVien());
                         } else {
                             JOptionPane.showMessageDialog(null, "Thêm nhân viên thất bại!");
                         }
@@ -125,7 +125,7 @@ public class NhanVienGUI extends JPanel {
                     NhanVienDTO updatedNhanVien = dialog.getDataNhanVienDTO(maNV);
                     if (nhanVienBLL.updateNhanVien(updatedNhanVien)) {
                         JOptionPane.showMessageDialog(null, "Cập nhật thông tin nhân viên thành công!");
-                        loadData(); // Tải lại bảng
+                        loadData(nhanVienBLL.getAllNhanVien()); // Tải lại bảng
                     } else {
                         JOptionPane.showMessageDialog(null, "Cập nhật thông tin thất bại!");
                     }
@@ -149,7 +149,7 @@ public class NhanVienGUI extends JPanel {
                 if (confirm == JOptionPane.YES_OPTION) {
                     if (nhanVienBLL.deleteNhanVien(maNV)) {
                         JOptionPane.showMessageDialog(null, "Xóa nhân viên thành công!");
-                        loadData();
+                        loadData(nhanVienBLL.getAllNhanVien());
                     } else {
                         JOptionPane.showMessageDialog(null, "Xóa nhân viên thất bại!");
                     }
@@ -197,7 +197,7 @@ public class NhanVienGUI extends JPanel {
                 String type = topNav.getFindFor().getSelectedItem().toString().toLowerCase();
                 String keyword = textSearch.getText().trim();
 
-                performSearch(keyword, type);
+                loadData(nhanVienBLL.getnhanVienByNameSearch(keyword, type));
             }
         });
 
@@ -206,36 +206,13 @@ public class NhanVienGUI extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 topNav.getFindFor().setSelectedIndex(0);
                 textSearch.setText(""); // Xóa từ khóa tìm kiếm
-                loadData(); // Tải lại toàn bộ dữ liệu
+                loadData(nhanVienBLL.getAllNhanVien()); // Tải lại toàn bộ dữ liệu
             }
         });
     }
-
-    private void performSearch(String keyword, String type) {
-        // Lấy danh sách nhân viên được lọc dựa trên từ khóa và loại tìm kiếm
-        List<NhanVienDTO> filteredList = nhanVienBLL.getnhanVienByNameSearch(keyword, type);
-        String[] columnNames = { "Mã NV", "Họ Tên", "Ngày Sinh", "Giới Tính", "SĐT" };
-        DefaultTableModel model = new DefaultTableModel(columnNames, 0);
-
-        // Thêm dữ liệu từ danh sách nhân viên vào bảng
-        for (NhanVienDTO nv : filteredList) {
-            Object[] rowData = {
-                    nv.getMaNV(),
-                    nv.getHoTen(),
-                    nv.getNgaySinh().toString(),
-                    nv.getGioiTinh() == 0 ? "Nam" : "Nữ",
-                    nv.getSDT()
-            };
-            model.addRow(rowData);
-        }
-
-        // Gán model mới vào bảng
-        tbl.setModel(model);
-    }
-
-    private void loadData() {
+    
+    private void loadData(List<NhanVienDTO> nhanVienList) {
         // Lấy danh sách tất cả nhân viên từ BLL
-        List<NhanVienDTO> nhanVienList = nhanVienBLL.getAllNhanVien();
         String[] columnNames = { "Mã NV", "Họ Tên", "Ngày Sinh", "Giới Tính", "SĐT" };
         DefaultTableModel model = new DefaultTableModel(columnNames, 0);
 
