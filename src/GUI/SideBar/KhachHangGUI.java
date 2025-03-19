@@ -47,6 +47,7 @@ public class KhachHangGUI extends JPanel {
         tbl.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
         tbl.setRowHeight(35);
         tbl.setFocusable(false);
+        tbl.setAutoCreateRowSorter(true);
 
         // Tô màu header bảng
         JTableHeader header = tbl.getTableHeader();
@@ -181,7 +182,7 @@ public class KhachHangGUI extends JPanel {
             }
         });
 
-        btn[4].addActionListener(new ActionListener() {
+        btn[5].addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
                 ExportExcelUtility.saveTableToExcel(tbl, "Khách Hàng");

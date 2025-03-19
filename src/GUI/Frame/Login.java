@@ -38,7 +38,12 @@ public class Login extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         JLabel imglbl = new JLabel();
-        imglbl.setIcon(new ImageIcon("src/resources/img/login.jpg"));
+
+        ImageIcon originalIcon = new ImageIcon("src/resources/img/login.jpg");
+        Image originalImage = originalIcon.getImage();
+        Image resizedImage = originalImage.getScaledInstance(600, 430, Image.SCALE_SMOOTH); // Set kích thước mong muốn
+        ImageIcon resizedIcon = new ImageIcon(resizedImage);
+        imglbl.setIcon(resizedIcon);
         pnlImg = new JPanel();
         pnlImg.setBackground(Color.white);
         pnlImg.setBorder(new EmptyBorder(20, 0, 0, 0));

@@ -78,16 +78,16 @@ public class TopNav extends JPanel {
         pnlSearch.add(btnRefresh);
 
         // Functional buttons panel (Bottom section)
-        pnlChucNang = new JPanel(new FlowLayout(1, 10, 0)); // Grid layout with spacing
+        pnlChucNang = new JPanel(new FlowLayout(1, 5, 0)); // Grid layout with spacing
         // pnlChucNang.setPreferredSize(new Dimension(300, 30));
         pnlChucNang.setBackground(new Color(240, 240, 240)); // Match parent background
 
-        btn = new JButton[5];
+        btn = new JButton[6];
 
         // Configure buttons
-        String[] buttonTexts = { "Thêm", "Sửa", "Xóa", "Chi tiết", "Xuất Excel" };
-        String[] icons = {"add","fix","del","detail","excel"};
-        float[] iconSizes = { 0.4f, 0.4f, 0.4f, 0.6f, 0.45f };
+        String[] buttonTexts = { "Thêm", "Sửa", "Xóa", "Chi tiết","Nhập Excel", "Xuất Excel" };
+        String[] icons = {"add","fix","del","detail","import_excel","excel"};
+        float[] iconSizes = { 0.4f, 0.4f, 0.4f, 0.6f,0.4f, 0.45f };
 
         for (int i = 0; i < btn.length; i++) {
             btn[i] = new JButton(buttonTexts[i], new FlatSVGIcon("./resources/icon/"+icons[i]+".svg", iconSizes[i]));
