@@ -16,6 +16,7 @@ import GUI.SideBar.KhachHangGUI;
 import GUI.SideBar.KhoHangGui;
 import GUI.SideBar.NhaCungCapGUI;
 import GUI.SideBar.NhanVienGUI;
+import GUI.SideBar.QuyenGUI;
 import GUI.SideBar.TaiKhoan;
 import GUI.SideBar.TrangChuGUI;
 
@@ -23,7 +24,7 @@ public class SideBar extends JPanel {
     Main main;
     JPanel pnlTop, pnlMid, pnlBot;
     ItemBar[] itemBars;
-    String[] menu = {"Trang chủ", "Sản phẩm", "Thuộc tính", "Khu vực kho", 
+    String[] menuBars = {"Trang chủ", "Sản phẩm", "Thuộc tính", "Khu vực kho", 
                      "Phiếu nhập", "Phiếu xuất", "Khách hàng", "Nhà cung cấp", 
                      "Nhân viên", "Tài khoản", "Thống kê", "Phân quyền"};
 
@@ -65,9 +66,9 @@ public class SideBar extends JPanel {
         pnlMid.setLayout(new FlowLayout(0, 0, 5));
         pnlMid.setBorder(BorderFactory.createEmptyBorder(5 , 5, 5, 5));
 
-        itemBars= new ItemBar[menu.length];
-        for (int i=0; i< menu.length; i++) {
-            itemBars[i] = new ItemBar(menu[i],icons[i]);
+        itemBars= new ItemBar[menuBars.length];
+        for (int i=0; i< menuBars.length; i++) {
+            itemBars[i] = new ItemBar(menuBars[i],icons[i]);
             pnlMid.add(itemBars[i]);
         }
         itemBars[0].setBackground(mainColor);
@@ -180,7 +181,7 @@ public class SideBar extends JPanel {
         itemBars[11].addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent evt) {
-                main.setPanel(new KhachHangGUI());
+                main.setPanel(new QuyenGUI());
                 changePage(11);
             }
         });
@@ -195,20 +196,4 @@ public class SideBar extends JPanel {
         itemBars[i].iselected= true;
     }
     
-    // private void eventChangePage(ItemBar itemBar, int i){
-    //     switch (i) {
-    //         case 1:
-    //             // listitem[0].addMouseListener(new MouseAdapter() {
-    //             // @Override
-    //             //     public void mousePressed(MouseEvent evt) {
-    //             //         trangChu = new TrangChu();
-    //             //         main.setPanel(trangChu);
-    //             //     }
-    //             // });
-    //             break;
-        
-    //         default:
-    //             break;
-    //     }
-    // }
 }
