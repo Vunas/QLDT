@@ -2,6 +2,8 @@ package BLL.BUS;
 
 import DAO.TaiKhoanDao;
 import DTO.TaiKhoanDTO;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class TaiKhoanBLL {
@@ -50,4 +52,28 @@ public class TaiKhoanBLL {
         }
         return taiKhoan;
     }
+
+    public TaiKhoanDTO getTaiKhoanByTenDangNhap(String tenDangNhap){
+        return taiKhoanDao.getTaiKhoanByTenDangNhap(tenDangNhap);
+    }
+
+    // Lấy danh sách tài khoản theo tên đăng nhập tìm kiếm
+    public List<TaiKhoanDTO> getTaiKhoanByNameSearch(String keyword) {
+        // Lấy danh sách tất cả tài khoản từ DAO
+        List<TaiKhoanDTO> taiKhoanList = taiKhoanDao.getAllTaiKhoan();
+
+        // Tạo danh sách kết quả để lưu tài khoản phù hợp
+        List<TaiKhoanDTO> filteredList = new ArrayList<>();
+
+        // Tìm kiếm theo tên đăng nhập
+        for (TaiKhoanDTO taiKhoan : taiKhoanList) {
+            if (taiKhoan.getTenDangNhap().toLowerCase().contains(keyword.toLowerCase())) {
+                filteredList.add(taiKhoan);
+            }
+        }
+
+        // Trả về danh sách tài khoản khớp với tiêu chí tìm kiếm
+        return filteredList;
+    }
+
 }

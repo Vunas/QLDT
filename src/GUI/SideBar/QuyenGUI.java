@@ -15,6 +15,7 @@ import BLL.BUS.QuyenBLL;
 import DTO.QuyenDTO;
 import GUI.DiaLog.QuyenDiaLog;
 import GUI.Panel.TopNav;
+import util.ExportExcelUtility;
 
 public class QuyenGUI extends JPanel {
     TopNav topNav;
@@ -213,5 +214,11 @@ public class QuyenGUI extends JPanel {
             }
         });
 
+        btn[5].addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ExportExcelUtility.saveTableToExcel(tbl, "Quyền");
+            }
+        });
     }
 }

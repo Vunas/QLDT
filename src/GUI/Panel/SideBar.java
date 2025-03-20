@@ -17,7 +17,7 @@ import GUI.SideBar.KhoHangGui;
 import GUI.SideBar.NhaCungCapGUI;
 import GUI.SideBar.NhanVienGUI;
 import GUI.SideBar.QuyenGUI;
-import GUI.SideBar.TaiKhoan;
+import GUI.SideBar.TaiKhoanGUI;
 import GUI.SideBar.TrangChuGUI;
 
 public class SideBar extends JPanel {
@@ -165,7 +165,7 @@ public class SideBar extends JPanel {
         itemBars[9].addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent evt) {
-                main.setPanel(new TaiKhoan());
+                main.setPanel(new TaiKhoanGUI());
                 changePage(9);
             }
         });

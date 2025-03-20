@@ -4,38 +4,35 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.util.List;
 
-import BLL.BUS.KhoHangBLL;
-import DTO.KhoHangDTO;
-import GUI.DiaLog.KhoHangDialog;
+import BLL.BUS.TaiKhoanBLL;
+import DTO.TaiKhoanDTO;
+import GUI.DiaLog.TaiKhoanDialog;
 import GUI.Panel.TopNav;
 import util.ExportExcelUtility;
 
-import java.awt.*;
-
-public class KhoHangGui extends JPanel {
+public class TaiKhoanGUI extends JPanel {
     TopNav topNav;
     JPanel pnlBot;
     JTable tbl;
-    KhoHangBLL khoHangBLL;
+    TaiKhoanBLL taiKhoanBLL;
 
-    public KhoHangGui() {
-        khoHangBLL = new KhoHangBLL();
+    public TaiKhoanGUI() {
+        taiKhoanBLL = new TaiKhoanBLL();
         initComponent();
         addSearchFunctionality();
-        loadData(khoHangBLL.getAllKhoHang());
+        loadData(taiKhoanBLL.getAllTaiKhoan());
         chucNang(); // Add functionality to the buttons
     }
 
     private void initComponent() {
-        String[] itemFindFor = { "Tất Cả"};
+        String[] itemFindFor = { "Tất Cả" };
 
-        topNav = new TopNav("Kho Hàng", "warehouse", itemFindFor);
+        topNav = new TopNav("Tài Khoản", "account_circle", itemFindFor);
 
         // Bottom Panel
         pnlBot = new JPanel(new BorderLayout());
@@ -62,7 +59,7 @@ public class KhoHangGui extends JPanel {
         pnlBot.setBorder(new EmptyBorder(10, 15, 10, 15));
         pnlBot.add(scrollPane, BorderLayout.CENTER);
 
-        // Set layout for KhoHangGUI
+        // Set layout for TaiKhoanGUI
         this.setLayout(new BorderLayout());
         this.add(topNav, BorderLayout.NORTH);
         this.add(pnlBot, BorderLayout.CENTER);
@@ -72,13 +69,9 @@ public class KhoHangGui extends JPanel {
         JTextField textSearch = topNav.getTextSearch();
         JButton btnRefresh = topNav.getBtnRefresh();
 
-        textSearch.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyReleased(KeyEvent e) {
-                String keyword = textSearch.getText().trim();
-
-                loadData(khoHangBLL.getKhoHangByNameSearch(keyword));
-            }
+        textSearch.addActionListener(e -> {
+            String keyword = textSearch.getText().trim();
+            loadData(taiKhoanBLL.getTaiKhoanByNameSearch(keyword));
         });
 
         btnRefresh.addActionListener(new ActionListener() {
@@ -86,22 +79,23 @@ public class KhoHangGui extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 topNav.getFindFor().setSelectedIndex(0);
                 textSearch.setText(""); // Clear the search keyword
-                loadData(khoHangBLL.getAllKhoHang()); // Reload all data
+                loadData(taiKhoanBLL.getAllTaiKhoan()); // Reload all data
             }
         });
     }
 
-    private void loadData(List<KhoHangDTO> khoHangList) {
-        // Fetch all warehouse data from BLL
-        String[] columnNames = { "Mã Kho", "Tên Kho", "Địa Chỉ" };
+    private void loadData(List<TaiKhoanDTO> taiKhoanList) {
+        // Fetch all account data from BLL
+        String[] columnNames = { "Mã Nhân Viên", "Tên Đăng Nhập", "Mật Khẩu", "Mã Quyền" };
         DefaultTableModel model = new DefaultTableModel(columnNames, 0);
 
         // Add data to the table model
-        for (KhoHangDTO kho : khoHangList) {
+        for (TaiKhoanDTO tk : taiKhoanList) {
             Object[] rowData = {
-                kho.getMaKho(),
-                kho.getTenKho(),
-                kho.getDiaChi()
+                tk.getMaNV(),
+                tk.getTenDangNhap(),
+                tk.getMatKhau(),
+                tk.getMaQuyen()
             };
             model.addRow(rowData);
         }
@@ -109,58 +103,60 @@ public class KhoHangGui extends JPanel {
         // Set the new model to the table
         tbl.setModel(model);
     }
+    
 
     private void chucNang() {
         JButton[] btn = topNav.getBtn();
 
-        // Add warehouse
+        // Add account
         btn[0].addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(KhoHangGui.this);
-                KhoHangDialog dialog = new KhoHangDialog(parentFrame, null, "Thêm Kho");
+                JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(TaiKhoanGUI.this);
+                TaiKhoanDialog dialog = new TaiKhoanDialog(parentFrame, null, "Thêm Tài Khoản");
                 dialog.setVisible(true);
 
                 if (dialog.isSaved()) {
                     try {
-                        int maKho = khoHangBLL.generateNewId();
-                        KhoHangDTO newKhoHang = dialog.getKhoHangData(maKho);
-                        if (khoHangBLL.addKhoHang(newKhoHang)) {
-                            JOptionPane.showMessageDialog(null, "Thêm kho thành công!");
-                            loadData(khoHangBLL.getAllKhoHang());
+                        TaiKhoanDTO newTaiKhoan = dialog.getTaiKhoanData();
+                        if (taiKhoanBLL.addTaiKhoan(newTaiKhoan)) {
+                            JOptionPane.showMessageDialog(null, "Thêm tài khoản thành công!");
+                            loadData(taiKhoanBLL.getAllTaiKhoan());
                         } else {
-                            JOptionPane.showMessageDialog(null, "Thêm kho thất bại!");
+                            JOptionPane.showMessageDialog(null, "Thêm tài khoản thất bại!");
                         }
                     } catch (Exception ex) {
-                        JOptionPane.showMessageDialog(null, "Lỗi khi thêm kho: " + ex.getMessage());
+                        JOptionPane.showMessageDialog(null, "Lỗi khi thêm tài khoản: " + ex.getMessage());
                     }
                 }
             }
         });
 
-        // Edit warehouse
+        // Edit account
         btn[1].addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int selectedRow = tbl.getSelectedRow();
                 if (selectedRow == -1) {
-                    JOptionPane.showMessageDialog(null, "Hãy chọn một kho để sửa!");
+                    JOptionPane.showMessageDialog(null, "Hãy chọn một tài khoản để sửa!");
                     return;
                 }
 
-                int maKho = (int) tbl.getValueAt(selectedRow, 0);
-                String tenKho = (String) tbl.getValueAt(selectedRow, 1);
-                String diaChi = (String) tbl.getValueAt(selectedRow, 2);
+                int maNV = (int) tbl.getValueAt(selectedRow, 0);
+                String tenDangNhap = (String) tbl.getValueAt(selectedRow, 1);
+                String matKhau = (String) tbl.getValueAt(selectedRow, 2);
+                int maQuyen = (int) tbl.getValueAt(selectedRow, 3);
 
-                JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(KhoHangGui.this);
-                KhoHangDialog dialog = new KhoHangDialog(parentFrame, new KhoHangDTO(maKho, tenKho, diaChi), "Chỉnh Sửa Kho");
+                JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(TaiKhoanGUI.this);
+                TaiKhoanDialog dialog = new TaiKhoanDialog(parentFrame,
+                        new TaiKhoanDTO(maNV, tenDangNhap, matKhau, maQuyen), "Chỉnh Sửa Tài Khoản");
                 dialog.setVisible(true);
 
                 if (dialog.isSaved()) {
-                    KhoHangDTO updatedKhoHang = dialog.getKhoHangData(maKho);
-                    if (khoHangBLL.updateKhoHang(updatedKhoHang)) {
-                        JOptionPane.showMessageDialog(null, "Cập nhật kho thành công!");
-                        loadData(khoHangBLL.getAllKhoHang());
+                    TaiKhoanDTO updatedTaiKhoan = dialog.getTaiKhoanData();
+                    if (taiKhoanBLL.updateTaiKhoan(updatedTaiKhoan)) {
+                        JOptionPane.showMessageDialog(null, "Cập nhật tài khoản thành công!");
+                        loadData(taiKhoanBLL.getAllTaiKhoan());
                     } else {
                         JOptionPane.showMessageDialog(null, "Cập nhật thất bại!");
                     }
@@ -168,46 +164,48 @@ public class KhoHangGui extends JPanel {
             }
         });
 
-        // Delete warehouse
+        // Delete account
         btn[2].addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int selectedRow = tbl.getSelectedRow();
                 if (selectedRow == -1) {
-                    JOptionPane.showMessageDialog(null, "Hãy chọn một kho để xóa!");
+                    JOptionPane.showMessageDialog(null, "Hãy chọn một tài khoản để xóa!");
                     return;
                 }
 
-                int maKho = (int) tbl.getValueAt(selectedRow, 0);
-                int confirm = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn xóa kho này?",
-                        "Xóa Kho", JOptionPane.YES_NO_OPTION);
+                int maNV = (int) tbl.getValueAt(selectedRow, 0);
+                int confirm = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn xóa tài khoản này?",
+                        "Xóa Tài Khoản", JOptionPane.YES_NO_OPTION);
                 if (confirm == JOptionPane.YES_OPTION) {
-                    if (khoHangBLL.deleteKhoHang(maKho)) {
-                        JOptionPane.showMessageDialog(null, "Xóa kho thành công!");
-                        loadData(khoHangBLL.getAllKhoHang());
+                    if (taiKhoanBLL.deleteTaiKhoan(maNV)) {
+                        JOptionPane.showMessageDialog(null, "Xóa tài khoản thành công!");
+                        loadData(taiKhoanBLL.getAllTaiKhoan());
                     } else {
-                        JOptionPane.showMessageDialog(null, "Xóa kho thất bại!");
+                        JOptionPane.showMessageDialog(null, "Xóa tài khoản thất bại!");
                     }
                 }
             }
         });
 
-        // View details of warehouse
+        // View details of account
         btn[3].addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int selectedRow = tbl.getSelectedRow();
                 if (selectedRow == -1) {
-                    JOptionPane.showMessageDialog(null, "Hãy chọn một kho để xem chi tiết!");
+                    JOptionPane.showMessageDialog(null, "Hãy chọn một tài khoản để xem chi tiết!");
                     return;
                 }
 
-                int maKho = (int) tbl.getValueAt(selectedRow, 0);
-                String tenKho = (String) tbl.getValueAt(selectedRow, 1);
-                String diaChi = (String) tbl.getValueAt(selectedRow, 2);
+                int maNV = (int) tbl.getValueAt(selectedRow, 0);
+                String tenDangNhap = (String) tbl.getValueAt(selectedRow, 1);
+                String matKhau = (String) tbl.getValueAt(selectedRow, 2);
+                int maQuyen = (int) tbl.getValueAt(selectedRow, 3);
 
-                JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(KhoHangGui.this);
-                KhoHangDialog dialog = new KhoHangDialog(parentFrame, new KhoHangDTO(maKho, tenKho, diaChi), "Xem chi tiết");
+                JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(TaiKhoanGUI.this);
+                TaiKhoanDialog dialog = new TaiKhoanDialog(parentFrame,
+                        new TaiKhoanDTO(maNV, tenDangNhap, matKhau, maQuyen), "Xem chi tiết");
                 dialog.setVisible(true);
             }
         });
@@ -215,7 +213,7 @@ public class KhoHangGui extends JPanel {
         btn[5].addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ExportExcelUtility.saveTableToExcel(tbl, "Nhân viên");
+                ExportExcelUtility.saveTableToExcel(tbl, "Tài Khoản");
             }
         });
     }

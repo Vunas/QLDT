@@ -41,6 +41,10 @@ public class NhanVienBLL {
         return NhanVienDao.getAllNhanVien();
     }
 
+    public List<NhanVienDTO> getNhanVienChuaCoTaiKhoan() {
+        return NhanVienDao.getNhanVienChuaCoTaiKhoan();
+    }
+
     // Lấy danh sách nhân viên theo tên tìm kiếm
     public List<NhanVienDTO> getnhanVienByNameSearch(String keyword, String type) {
         // Lấy danh sách tất cả nhân viên từ DAO

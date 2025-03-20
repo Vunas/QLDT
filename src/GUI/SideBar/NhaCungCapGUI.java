@@ -181,7 +181,7 @@ public class NhaCungCapGUI extends JPanel {
         });
 
         // Export to Excel
-        btn[4].addActionListener(new ActionListener() {
+        btn[5].addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 ExportExcelUtility.saveTableToExcel(tbl, "Nhà cung cấp");

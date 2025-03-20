@@ -34,21 +34,6 @@ INSERT INTO NhanVien (MaNV, HoTen, NgaySinh, GioiTinh, SDT) VALUES
 (3, 'Le Van C', '1992-07-20', 1, '0938765432'),
 (4, 'Pham Minh D', '1988-09-15', 1, '0981234567');
 
--- Bảng Tài khoản
-CREATE TABLE TaiKhoan (
-    MaNV INT PRIMARY KEY,          -- Mã nhân viên (khoá chính)
-    TenDangNhap VARCHAR(50),       -- Tên đăng nhập
-    MatKhau VARCHAR(100),          -- Mật khẩu
-    MaQuyen INT,                   -- Mã quyền
-    FOREIGN KEY (MaNV) REFERENCES NhanVien(MaNV)
-);
-
-INSERT INTO TaiKhoan (MaNV, TenDangNhap, MatKhau, MaQuyen) VALUES 
-(1, 'nv001', '123456', 1),
-(2, 'nv002', 'qwerty', 2),
-(3, 'nv003', 'abcdef', 2),
-(4, 'nv004', '123abc', 3);
-
 -- Bảng Nhà cung cấp
 CREATE TABLE nha_cung_cap (
     maNCC INT PRIMARY KEY AUTO_INCREMENT,
@@ -80,4 +65,20 @@ CREATE TABLE quyen (
     tenQuyen VARCHAR(100) NOT NULL,        -- Tên quyền (Không được để trống)
     danhSachChucNang VARCHAR(100)                  -- Danh sách chức năng (Chuỗi dài, chứa các chức năng liên kết)
 );
+
+-- Bảng Tài khoản
+CREATE TABLE TaiKhoan (
+    MaNV INT PRIMARY KEY,          -- Mã nhân viên (khoá chính)
+    TenDangNhap VARCHAR(50),       -- Tên đăng nhập
+    MatKhau VARCHAR(100),          -- Mật khẩu
+    MaQuyen INT,                   -- Mã quyền
+    FOREIGN KEY (MaNV) REFERENCES NhanVien(MaNV)
+    FOREIGN Key (MaQuyen) REFERENCES quyen(MaQuyen)
+);
+
+INSERT INTO TaiKhoan (MaNV, TenDangNhap, MatKhau, MaQuyen) VALUES 
+(1, 'nv001', '123456', 1),
+(2, 'nv002', 'qwerty', 2),
+(3, 'nv003', 'abcdef', 2),
+(4, 'nv004', '123abc', 3);
 

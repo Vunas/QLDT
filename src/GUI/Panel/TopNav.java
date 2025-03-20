@@ -44,11 +44,6 @@ public class TopNav extends JPanel {
         pnlSearch.setLayout(new FlowLayout(1, 10, 0));
         pnlSearch.setBorder(new EmptyBorder(5, 10, 5, 10)); // Padding inside the panel
 
-        // ComboBox for search options
-        findFor = new JComboBox<>(itemFindFor);
-        findFor.setPreferredSize(new Dimension(100, 40)); // Adjust ComboBox size
-        pnlSearch.add(findFor);
-
         // Search icon
         JLabel iconSearch = new JLabel(new FlatSVGIcon("./resources/icon/search.svg", 0.3f));
         iconSearch.putClientProperty(FlatClientProperties.STYLE, "arc: 99"); // Add rounded style
@@ -68,6 +63,11 @@ public class TopNav extends JPanel {
 
         inputSearch.add(textSearch, BorderLayout.CENTER);
         pnlSearch.add(inputSearch);
+
+        // ComboBox for search options
+        findFor = new JComboBox<>(itemFindFor);
+        findFor.setPreferredSize(new Dimension(100, 40)); // Adjust ComboBox size
+        pnlSearch.add(findFor);
 
         // Refresh button
         btnRefresh = new JButton("Làm Mới",new FlatSVGIcon("./resources/icon/refresh.svg", 0.3f));

@@ -179,7 +179,7 @@ public class NhanVienGUI extends JPanel {
                 dialog.setVisible(true);
             }
         });
-        btn[4].addActionListener(new ActionListener() {
+        btn[5].addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 ExportExcelUtility.saveTableToExcel(tbl, "Nhân viên");
