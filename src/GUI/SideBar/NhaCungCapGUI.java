@@ -24,18 +24,18 @@ public class NhaCungCapGUI extends JPanel {
     JTable tbl;
     NhaCungCapBLL nhaCungCapBLL;
 
-    public NhaCungCapGUI() {
+    public NhaCungCapGUI(TopNav topNav) {
         nhaCungCapBLL = new NhaCungCapBLL();
-        initComponent();
+        initComponent(topNav);
         chucNang();
         addSearchFunctionality();
         loadData(nhaCungCapBLL.getAllNhaCungCap());
     }
 
-    private void initComponent() {
+    private void initComponent(TopNav topNav) {
+        this.topNav = topNav;
         String[] itemFindFor = { "Tất Cả", "Theo Tên", "Theo SDT" };
-
-        topNav = new TopNav("Nhà Cung Cấp", "supplier", itemFindFor);
+        topNav.setItemComboBox(itemFindFor);
 
         // Panel dưới
         pnlBot = new JPanel(new BorderLayout());

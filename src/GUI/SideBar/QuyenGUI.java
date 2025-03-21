@@ -23,18 +23,18 @@ public class QuyenGUI extends JPanel {
     JTable tbl;
     QuyenBLL quyenBLL;
 
-    public QuyenGUI() {
+    public QuyenGUI(TopNav topNav) {
         quyenBLL = new QuyenBLL();
-        initComponent();
+        initComponent(topNav);
         addSearchFunctionality();
         loadData(quyenBLL.getAllQuyen());
         chucNang();
     }
 
-    private void initComponent() {
+    private void initComponent(TopNav topNav) {
+        this.topNav= topNav;
         String[] itemFindFor = { "Tất Cả" };
-
-        topNav = new TopNav("Quyền", "permission", itemFindFor);
+        topNav.setItemComboBox(itemFindFor);
 
         // Bottom Panel
         pnlBot = new JPanel(new BorderLayout());

@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import javax.swing.border.MatteBorder;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -23,11 +24,11 @@ public class TopNav extends JPanel {
     JTextField textSearch;
     JButton btnRefresh;
 
-    public TopNav(String title, String link,String[] itemFindFor) {
-        initComponent(title, link,itemFindFor);
+    public TopNav() {
+        initComponent();
     }
 
-    private void initComponent(String title, String link,String[] itemFindFor) {
+    private void initComponent() {
         // Set up main panel with BorderLayout
         setLayout(new BorderLayout());
         setBorder(new EmptyBorder(10, 10, 10, 10)); // Padding
@@ -65,7 +66,7 @@ public class TopNav extends JPanel {
         pnlSearch.add(inputSearch);
 
         // ComboBox for search options
-        findFor = new JComboBox<>(itemFindFor);
+        findFor = new JComboBox<>();
         findFor.setPreferredSize(new Dimension(100, 40)); // Adjust ComboBox size
         pnlSearch.add(findFor);
 
@@ -119,4 +120,10 @@ public class TopNav extends JPanel {
     public JButton getBtnRefresh() {
         return btnRefresh;
     }
+
+    public void setItemComboBox(String[] items) {
+    findFor.setModel(new DefaultComboBoxModel<>(items));
+}
+
+    
 }

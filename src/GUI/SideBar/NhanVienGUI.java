@@ -25,18 +25,18 @@ public class NhanVienGUI extends JPanel {
     JTable tbl;
     NhanVienBLL nhanVienBLL;
 
-    public NhanVienGUI() {
+    public NhanVienGUI(TopNav topNav) {
         nhanVienBLL = new NhanVienBLL();
-        initComponent();
+        initComponent(topNav);
         chucNang();
         addSearchFunctionality();
         loadData(nhanVienBLL.getAllNhanVien());
     }
 
-    private void initComponent() {
+    private void initComponent(TopNav topNav) {
+        this.topNav = topNav;
         String[] itemFindFor = { "Tất Cả", "Theo tên", "Theo SDT" };
-
-        topNav = new TopNav("Nhân Viên", "user", itemFindFor);
+        topNav.setItemComboBox(itemFindFor);
 
         // Panel dưới
         pnlBot = new JPanel(new BorderLayout());

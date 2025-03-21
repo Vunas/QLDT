@@ -7,14 +7,20 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.FlatLightLaf;
 
+import BLL.BUS.TaiKhoanBLL;
+import DTO.TaiKhoanDTO;
 import GUI.Panel.InputType.InputPassword;
 import GUI.Panel.InputType.InputText;
+import util.HashUtil;
 
 import java.awt.*;
 
@@ -79,6 +85,9 @@ public class Login extends JFrame {
         lblForgot.setHorizontalAlignment(JLabel.RIGHT);
         pnlMain.add(lblForgot);
 
+        txt.setText("admin");
+        psw.setPassWord("admin");
+
         lblForgot.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
@@ -108,14 +117,43 @@ public class Login extends JFrame {
         btnLogin.setForeground(Color.WHITE); 
         btnLogin.setPreferredSize(new Dimension(380, 55));
         btnLogin.putClientProperty(FlatClientProperties.STYLE, "arc: 20");
+        btnLogin.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                Boolean flag = true;
+                if (txt.getText() == null || txt.getText().isEmpty()) {
+                    flag = false;
+                    txt.setLblError("*Tên đăng nhập không được để trống");
+                }else
+                    txt.setLblError("");
+                if (psw.getPassWord() == null || psw.getPassWord().isEmpty() || psw.getPassWord().equals(HashUtil.hashPassword(""))){
+                    flag = false;
+                    psw.setLblError("*Mật khẩu không được để trống");
+                }else   
+                    psw.setLblError("");
+                
+                if (!flag) {
+                    return;
+                }
+
+                TaiKhoanDTO taiKhoanDTO = new TaiKhoanBLL().login(txt.getText(), psw.getPassWord());
+
+                if (taiKhoanDTO == null){
+                    JOptionPane.showMessageDialog(null, "Đăng nhập thất bại.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                dispose();
+                new Main(taiKhoanDTO).setVisible(true);
+            }
+        });
         pnlMain.add(btnLogin, BorderLayout.LINE_END);
 
         this.add(pnlImg, BorderLayout.LINE_START);
         this.add(pnlMain, BorderLayout.CENTER);
     }
 
-    // public static void main(String[] args) {
-    //     FlatLightLaf.setup(); // Thiết lập FlatLaf
-    //     new Login().setVisible(true);
-    // }
+    public static void main(String[] args) {
+        FlatLightLaf.setup(); // Thiết lập FlatLaf
+        new Login().setVisible(true);
+    }
 }

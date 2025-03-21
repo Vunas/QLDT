@@ -9,14 +9,17 @@ import javax.swing.JPanel;
 import com.formdev.flatlaf.FlatIntelliJLaf;
 import com.formdev.flatlaf.FlatLightLaf;
 
+import DTO.TaiKhoanDTO;
 import GUI.Panel.SideBar;
 import GUI.SideBar.TrangChuGUI;
 
 public class Main extends JFrame {
     SideBar sideBar;
     TrangChuGUI main;
+    private TaiKhoanDTO taiKhoanDTO;
 
-    public Main(){
+    public Main(TaiKhoanDTO taiKhoanDTO){
+        this.taiKhoanDTO = taiKhoanDTO;
         initComponent();
     }
 
@@ -27,7 +30,7 @@ public class Main extends JFrame {
         this.setTitle("Hệ thống quản lý ");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        sideBar= new SideBar(this);
+        sideBar= new SideBar(this,taiKhoanDTO);
         this.add(sideBar,BorderLayout.WEST);
 
         main= new TrangChuGUI();
@@ -42,12 +45,12 @@ public class Main extends JFrame {
         getContentPane().validate();
     }
 
-    public static void main(String[] args) {
+    // public static void main(String[] args) {
         
-        FlatIntelliJLaf.registerCustomDefaultsSource("style");
-        FlatLightLaf.setup();
-        FlatIntelliJLaf.setup();
+    //     FlatIntelliJLaf.registerCustomDefaultsSource("style");
+    //     FlatLightLaf.setup();
+    //     FlatIntelliJLaf.setup();
         
-        new Main().setVisible(true);
-    }
+    //     new Main().setVisible(true);
+    // }
 }

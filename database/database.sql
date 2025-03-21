@@ -48,23 +48,28 @@ INSERT INTO nha_cung_cap (ten, diaChi, sdt) VALUES
 ('Nhà Cung Cấp GHI', '789 Đường C, Hà Nội', '0934567890'),
 ('Công Ty TNHH JKL', '321 Đường D, Đà Nẵng', '0945678901');
 
--- Bảng Kho Hàng
-CREATE TABLE kho_hang (
-    maKho INT PRIMARY KEY AUTO_INCREMENT,
-    tenKho VARCHAR(255) NOT NULL,
-    diaChi VARCHAR(255) NOT NULL
-);
+-- -- Bảng Kho Hàng
+-- CREATE TABLE kho_hang (
+--     maKho INT PRIMARY KEY AUTO_INCREMENT,
+--     tenKho VARCHAR(255) NOT NULL,
+--     diaChi VARCHAR(255) NOT NULL
+-- );
 
-INSERT INTO kho_hang (tenKho, diaChi) VALUES
-('Kho Chính', '123 Đường A, Quận 1, TP. HCM'),
-('Kho Hà Nội', '456 Đường B, Ba Đình, Hà Nội'),
-('Kho Đà Nẵng', '789 Đường C, Hải Châu, Đà Nẵng');
+-- INSERT INTO kho_hang (tenKho, diaChi) VALUES
+-- ('Kho Chính', '123 Đường A, Quận 1, TP. HCM'),
+-- ('Kho Hà Nội', '456 Đường B, Ba Đình, Hà Nội'),
+-- ('Kho Đà Nẵng', '789 Đường C, Hải Châu, Đà Nẵng');
 
 CREATE TABLE quyen (
     maQuyen INT AUTO_INCREMENT PRIMARY KEY, -- Mã quyền (Khóa chính, tự tăng)
     tenQuyen VARCHAR(100) NOT NULL,        -- Tên quyền (Không được để trống)
     danhSachChucNang VARCHAR(100)                  -- Danh sách chức năng (Chuỗi dài, chứa các chức năng liên kết)
 );
+
+INSERT INTO quyen (maQuyen, tenquyen, danhSachChucNang) VALUES
+('1', 'admin', 'rcfd /rcfd /rcfd /rcfd /rcfd /rcfd /rcfd /rcfd /rcfd /rcfd /'),
+('2', 'quản lý', 'rcfd / / /rcfd /rcfd /rcfd / / / / /'),
+('3', 'nhân viên','rcfd / / /rcfd / / / / / / /');
 
 -- Bảng Tài khoản
 CREATE TABLE TaiKhoan (
@@ -77,8 +82,7 @@ CREATE TABLE TaiKhoan (
 );
 
 INSERT INTO TaiKhoan (MaNV, TenDangNhap, MatKhau, MaQuyen) VALUES 
-(1, 'nv001', '123456', 1),
-(2, 'nv002', 'qwerty', 2),
-(3, 'nv003', 'abcdef', 2),
-(4, 'nv004', '123abc', 3);
+(1, 'admin', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', 1),
+(2, 'quanly', '34a378e876712e095ed1059a4ee44ea2ac7c93831dd4f58e5e980853a6b7999e', 2),
+(3, 'nhanvien', 'fa5a1d3e67d2193b86bc68c7db41bd84f242fe4e41146ef4a4a5441254d2a3f7', 3);
 

@@ -11,6 +11,10 @@ import java.awt.event.MouseEvent;
 import javax.swing.*;
 import javax.swing.border.MatteBorder;
 
+import BLL.BUS.QuyenBLL;
+import BLL.BUS.TaiKhoanBLL;
+import DTO.QuyenDTO;
+import DTO.TaiKhoanDTO;
 import GUI.Frame.Main;
 import GUI.SideBar.KhachHangGUI;
 import GUI.SideBar.KhoHangGui;
@@ -22,23 +26,30 @@ import GUI.SideBar.TrangChuGUI;
 
 public class SideBar extends JPanel {
     Main main;
+    TopNav topNav;
+    TaiKhoanDTO taiKhoanDTO;
+    QuyenDTO quyenDTO;
     JPanel pnlTop, pnlMid, pnlBot;
     ItemBar[] itemBars;
-    String[] menuBars = {"Trang chủ", "Sản phẩm", "Thuộc tính", "Khu vực kho", 
+    String[] menuBars = {"Trang chủ", "Sản phẩm", "Thuộc tính",  
                      "Phiếu nhập", "Phiếu xuất", "Khách hàng", "Nhà cung cấp", 
-                     "Nhân viên", "Tài khoản", "Thống kê", "Phân quyền"};
+                     "Nhân viên", "Tài khoản",  "Phân quyền","Thống kê"};
 
-    String[] icons ={"home","phone","del","place","home","user","home","user","home","account","home","protect"};
+    String[] icons ={"home","phone","del","home","user","home","user","home","account","protect","home"};
     int thisPage= 0;
 
     Color mainColor = Color.GRAY;
 
-    public SideBar(Main main) {
+    public SideBar(Main main,TaiKhoanDTO taiKhoanDTO) {
+        this.taiKhoanDTO = taiKhoanDTO;
+        this.quyenDTO = new QuyenBLL().getQuyenById(taiKhoanDTO.getMaQuyen());
         initComponent(main);
     }
 
     private void initComponent(Main main) {
         this.main= main;
+
+        topNav = new TopNav();
 
         setLayout(new BorderLayout());
         setPreferredSize(new Dimension(190, 200));
@@ -93,99 +104,105 @@ public class SideBar extends JPanel {
         itemBars[0].addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent evt) {
-                main.setPanel(new TrangChuGUI());
                 changePage(0);
+                main.setPanel(new TrangChuGUI());
             }
         });
 
         itemBars[1].addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent evt) {
-                main.setPanel(new KhachHangGUI());
                 changePage(1);
+                main.setPanel(new KhachHangGUI(topNav));
             }
         });
 
         itemBars[2].addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent evt) {
-                main.setPanel(new KhachHangGUI());
                 changePage(2);
+                main.setPanel(new KhachHangGUI(topNav));
             }
         });
         
+        // itemBars[3].addMouseListener(new MouseAdapter() {
+        //     @Override
+        //     public void mousePressed(MouseEvent evt) {
+            //         changePage(3);
+        //         main.setPanel(new KhoHangGui(topNav));
+        //     }
+        // });
+
         itemBars[3].addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent evt) {
-                main.setPanel(new KhoHangGui());
                 changePage(3);
+                main.setPanel(new KhachHangGUI(topNav));
             }
         });
 
         itemBars[4].addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent evt) {
-                main.setPanel(new KhachHangGUI());
                 changePage(4);
+                main.setPanel(new KhachHangGUI(topNav));
             }
         });
 
         itemBars[5].addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent evt) {
-                main.setPanel(new KhachHangGUI());
                 changePage(5);
+                main.setPanel(new KhachHangGUI(topNav));
             }
         });
 
         itemBars[6].addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent evt) {
-                main.setPanel(new KhachHangGUI());
                 changePage(6);
+                main.setPanel(new NhaCungCapGUI(topNav));
             }
         });
 
         itemBars[7].addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent evt) {
-                main.setPanel(new NhaCungCapGUI());
                 changePage(7);
+                main.setPanel(new NhanVienGUI(topNav));
             }
         });
 
         itemBars[8].addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent evt) {
-                main.setPanel(new NhanVienGUI());
                 changePage(8);
+                main.setPanel(new TaiKhoanGUI(topNav));
             }
         });
 
         itemBars[9].addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent evt) {
-                main.setPanel(new TaiKhoanGUI());
                 changePage(9);
+                main.setPanel(new QuyenGUI(topNav));
             }
         });
 
         itemBars[10].addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent evt) {
-                main.setPanel(new KhachHangGUI());
                 changePage(10);
+                main.setPanel(new KhachHangGUI(topNav));
             }
         });
 
-        itemBars[11].addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent evt) {
-                main.setPanel(new QuyenGUI());
-                changePage(11);
-            }
-        });
+        new TaiKhoanBLL().chinhSuaQuyen(this, quyenDTO);
     
+    }
+
+    public ItemBar[] getItemBars() {
+        return this.itemBars;
     }
 
     private void changePage(int i){
@@ -194,6 +211,8 @@ public class SideBar extends JPanel {
         thisPage= i;
         itemBars[i].setBackground(mainColor);
         itemBars[i].iselected= true;
+        topNav = new TopNav();
+        new TaiKhoanBLL().chinhSuaChucNang(topNav, quyenDTO, i);
     }
     
 }

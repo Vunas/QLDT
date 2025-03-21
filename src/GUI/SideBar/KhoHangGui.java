@@ -24,18 +24,18 @@ public class KhoHangGui extends JPanel {
     JTable tbl;
     KhoHangBLL khoHangBLL;
 
-    public KhoHangGui() {
+    public KhoHangGui(TopNav topNav) {
         khoHangBLL = new KhoHangBLL();
-        initComponent();
+        initComponent(topNav);
         addSearchFunctionality();
         loadData(khoHangBLL.getAllKhoHang());
         chucNang(); // Add functionality to the buttons
     }
 
-    private void initComponent() {
+    private void initComponent(TopNav topNav) {
+        this.topNav = topNav;
         String[] itemFindFor = { "Tất Cả"};
-
-        topNav = new TopNav("Kho Hàng", "warehouse", itemFindFor);
+        topNav.setItemComboBox(itemFindFor);
 
         // Bottom Panel
         pnlBot = new JPanel(new BorderLayout());

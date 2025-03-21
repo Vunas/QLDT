@@ -44,7 +44,7 @@ public class QuyenDiaLog extends JDialog {
         String[] chucNang = { "Tên Chức Năng", "Đọc", "Thêm", "Sửa", "Xóa" };
         Object[][] data = {
                 { "Sản Phẩm", false, false, false, false },
-                { "Kho Hàng", false, false, false, false },
+                // { "Kho Hàng", false, false, false, false },
                 { "Phiếu Nhập", false, false, false, false },
                 { "Phiếu Xuất", false, false, false, false },
                 { "Khách Hàng", false, false, false, false },
@@ -52,7 +52,8 @@ public class QuyenDiaLog extends JDialog {
                 { "Nhân Viên", false, false, false, false },
                 { "Tài Khoản", false, false, false, false },
                 { "Thống kê", false, false, false, false },
-                { "Phân Quyền", false, false, false, false }
+                { "Phân Quyền", false, false, false, false },
+                { "Thống kê", false,false, false, false}
         };
 
         tbl = new JTable(data, chucNang) {
@@ -131,7 +132,7 @@ public class QuyenDiaLog extends JDialog {
             if (Boolean.TRUE.equals(tbl.getValueAt(row, 4))) {
                 stringBuilder.append("d");
             }
-            stringBuilder.append("/");
+            stringBuilder.append(" ").append("/");
         }
         danhSachChucNang = stringBuilder.toString();
     }

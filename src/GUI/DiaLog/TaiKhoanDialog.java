@@ -16,14 +16,17 @@ import DTO.NhanVienDTO;
 import DTO.QuyenDTO;
 import DTO.TaiKhoanDTO;
 import GUI.Panel.InputType.InputChoose;
+import GUI.Panel.InputType.InputPassword;
 import GUI.Panel.InputType.InputText;
+import util.HashUtil;
 
 public class TaiKhoanDialog extends JDialog {
     private InputChoose tfMaNV;
     private InputText tfTenDangNhap;
-    private InputText tfMatKhau;
+    private InputPassword tfMatKhau;
     private InputChoose tfMaQuyen;
     private boolean isSaved = false;
+    private String matKhau;
 
     public TaiKhoanDialog(JFrame owner, TaiKhoanDTO taiKhoan, String titleString) {
         super(owner, titleString, true);
@@ -49,20 +52,21 @@ public class TaiKhoanDialog extends JDialog {
         tfMaNV = new InputChoose("Mã Nhân Viên",createTableNVChuaCoTK());
         tfMaNV.setGhiChuChoDiaLog("*Chỉ những nhân vien chưa có tài khoản mới xuất thiên trong bảng này!");
         tfTenDangNhap = new InputText("Tên Đăng Nhập");
-        tfMatKhau = new InputText("Mật Khẩu");
+        tfMatKhau = new InputPassword("Mật Khẩu");
         tfMaQuyen = new InputChoose("Mã Quyền",CreateTableQuyen());
 
         if (taiKhoan != null) {
             tfMaNV.setText(String.valueOf(taiKhoan.getMaNV()));
             tfTenDangNhap.setText(taiKhoan.getTenDangNhap());
-            tfMatKhau.setText(taiKhoan.getMatKhau());
+            tfMatKhau.setPassWord(taiKhoan.getMatKhau());
+            matKhau = new String(taiKhoan.getMatKhau());
+            tfMatKhau.setVisible(false);
             tfMaQuyen.setText(String.valueOf(taiKhoan.getMaQuyen()));
 
             // Set fields to read-only if "Xem chi tiết"
             if (titleString.equals("Xem chi tiết")) {
                 tfMaNV.getBtnChoose().setEnabled(false);
                 tfTenDangNhap.getTxtForm().setEditable(false);
-                tfMatKhau.getTxtForm().setEditable(false);
                 tfMaQuyen.getBtnChoose().setEnabled(false);
             }
         }
@@ -87,11 +91,6 @@ public class TaiKhoanDialog extends JDialog {
                     isSaved = true;
                     validateTaiKhoan();
                     if (isSaved) {
-                        if (taiKhoan != null) {
-                            taiKhoan.setTenDangNhap(tfTenDangNhap.getText());
-                            taiKhoan.setMatKhau(tfMatKhau.getText());
-                            taiKhoan.setMaQuyen(Integer.parseInt(tfMaQuyen.getText()));
-                        }
                         dispose();
                     }
                 }
@@ -125,7 +124,7 @@ public class TaiKhoanDialog extends JDialog {
                 tfTenDangNhap.setLblError("");
         }
 
-        if (tfMatKhau.getText() == null || tfMatKhau.getText().isEmpty()) {
+        if (tfMatKhau.getPassWord() == null || tfMatKhau.getPassWord().isEmpty() || tfMatKhau.getPassWord().equals(HashUtil.hashPassword(""))) {
             isSaved = false; // Check if the password is empty
             tfMatKhau.setLblError("Mật khẩu không được để trống.");
         } else {
@@ -144,12 +143,7 @@ public class TaiKhoanDialog extends JDialog {
     }
 
     public TaiKhoanDTO getTaiKhoanData() {
-        return new TaiKhoanDTO(
-            Integer.parseInt(tfMaNV != null ? tfMaNV.getText() : "0"), 
-            tfTenDangNhap.getText(), 
-            tfMatKhau.getText(), 
-            Integer.parseInt(tfMaQuyen.getText())
-        );
+        return new TaiKhoanDTO(Integer.parseInt(tfMaNV.getText()), tfTenDangNhap.getText(), matKhau == null? tfMatKhau.getPassWord() : matKhau, Integer.parseInt(tfMaQuyen.getText()));
     }
 
     private JTable createTableNVChuaCoTK() {
