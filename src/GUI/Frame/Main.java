@@ -6,9 +6,6 @@ import java.awt.Dimension;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import com.formdev.flatlaf.FlatIntelliJLaf;
-import com.formdev.flatlaf.FlatLightLaf;
-
 import DTO.TaiKhoanDTO;
 import GUI.Panel.SideBar;
 import GUI.SideBar.TrangChuGUI;

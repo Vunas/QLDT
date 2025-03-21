@@ -15,9 +15,9 @@ import BLL.BUS.QuyenBLL;
 import BLL.BUS.TaiKhoanBLL;
 import DTO.QuyenDTO;
 import DTO.TaiKhoanDTO;
+import GUI.Frame.Login;
 import GUI.Frame.Main;
 import GUI.SideBar.KhachHangGUI;
-import GUI.SideBar.KhoHangGui;
 import GUI.SideBar.NhaCungCapGUI;
 import GUI.SideBar.NhanVienGUI;
 import GUI.SideBar.QuyenGUI;
@@ -89,6 +89,13 @@ public class SideBar extends JPanel {
         pnlBot.setBackground(Color.WHITE);  
 
         ItemBar logoutItem= new ItemBar("Đăng xuất","logout");
+        logoutItem.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e){
+                main.dispose();
+                new Login().setVisible(true);
+            }
+        });
       
 
         pnlBot.add(logoutItem,Label.BOTTOM_ALIGNMENT);
