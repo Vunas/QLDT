@@ -25,18 +25,18 @@ public class NhanVienGUI extends JPanel {
     JTable tbl;
     NhanVienBLL nhanVienBLL;
 
-    public NhanVienGUI() {
+    public NhanVienGUI(TopNav topNav) {
         nhanVienBLL = new NhanVienBLL();
-        initComponent();
+        initComponent(topNav);
         chucNang();
         addSearchFunctionality();
         loadData(nhanVienBLL.getAllNhanVien());
     }
 
-    private void initComponent() {
+    private void initComponent(TopNav topNav) {
+        this.topNav = topNav;
         String[] itemFindFor = { "Tất Cả", "Theo tên", "Theo SDT" };
-
-        topNav = new TopNav("Nhân Viên", "user", itemFindFor);
+        topNav.setItemComboBox(itemFindFor);
 
         // Panel dưới
         pnlBot = new JPanel(new BorderLayout());
@@ -179,7 +179,7 @@ public class NhanVienGUI extends JPanel {
                 dialog.setVisible(true);
             }
         });
-        btn[4].addActionListener(new ActionListener() {
+        btn[5].addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 ExportExcelUtility.saveTableToExcel(tbl, "Nhân viên");

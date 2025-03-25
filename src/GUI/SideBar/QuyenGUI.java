@@ -4,37 +4,36 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.List;
 
-import BLL.BUS.KhoHangBLL;
-import DTO.KhoHangDTO;
-import GUI.DiaLog.KhoHangDialog;
+import BLL.BUS.QuyenBLL;
+import DTO.QuyenDTO;
+import GUI.DiaLog.QuyenDiaLog;
 import GUI.Panel.TopNav;
 import util.ExportExcelUtility;
 
-import java.awt.*;
-
-public class KhoHangGui extends JPanel {
+public class QuyenGUI extends JPanel {
     TopNav topNav;
     JPanel pnlBot;
     JTable tbl;
-    KhoHangBLL khoHangBLL;
+    QuyenBLL quyenBLL;
 
-    public KhoHangGui(TopNav topNav) {
-        khoHangBLL = new KhoHangBLL();
+    public QuyenGUI(TopNav topNav) {
+        quyenBLL = new QuyenBLL();
         initComponent(topNav);
         addSearchFunctionality();
-        loadData(khoHangBLL.getAllKhoHang());
-        chucNang(); // Add functionality to the buttons
+        loadData(quyenBLL.getAllQuyen());
+        chucNang();
     }
 
     private void initComponent(TopNav topNav) {
-        this.topNav = topNav;
-        String[] itemFindFor = { "Tất Cả"};
+        this.topNav= topNav;
+        String[] itemFindFor = { "Tất Cả" };
         topNav.setItemComboBox(itemFindFor);
 
         // Bottom Panel
@@ -62,7 +61,7 @@ public class KhoHangGui extends JPanel {
         pnlBot.setBorder(new EmptyBorder(10, 15, 10, 15));
         pnlBot.add(scrollPane, BorderLayout.CENTER);
 
-        // Set layout for KhoHangGUI
+        // Set layout for QuyenGUI
         this.setLayout(new BorderLayout());
         this.add(topNav, BorderLayout.NORTH);
         this.add(pnlBot, BorderLayout.CENTER);
@@ -76,8 +75,7 @@ public class KhoHangGui extends JPanel {
             @Override
             public void keyReleased(KeyEvent e) {
                 String keyword = textSearch.getText().trim();
-
-                loadData(khoHangBLL.getKhoHangByNameSearch(keyword));
+                loadData(quyenBLL.getQuyenByNameSearch(keyword));
             }
         });
 
@@ -86,22 +84,21 @@ public class KhoHangGui extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 topNav.getFindFor().setSelectedIndex(0);
                 textSearch.setText(""); // Clear the search keyword
-                loadData(khoHangBLL.getAllKhoHang()); // Reload all data
+                loadData(quyenBLL.getAllQuyen()); // Reload all data
             }
         });
     }
 
-    private void loadData(List<KhoHangDTO> khoHangList) {
-        // Fetch all warehouse data from BLL
-        String[] columnNames = { "Mã Kho", "Tên Kho", "Địa Chỉ" };
+    private void loadData(List<QuyenDTO> quyenList) {
+        // Fetch all permissions data from BLL
+        String[] columnNames = { "Mã Quyền", "Tên Quyền" };
         DefaultTableModel model = new DefaultTableModel(columnNames, 0);
 
         // Add data to the table model
-        for (KhoHangDTO kho : khoHangList) {
+        for (QuyenDTO quyen : quyenList) {
             Object[] rowData = {
-                kho.getMaKho(),
-                kho.getTenKho(),
-                kho.getDiaChi()
+                    quyen.getMaQuyen(),
+                    quyen.getTenQuyen()
             };
             model.addRow(rowData);
         }
@@ -113,101 +110,106 @@ public class KhoHangGui extends JPanel {
     private void chucNang() {
         JButton[] btn = topNav.getBtn();
 
-        // Add warehouse
+        // Add permission
         btn[0].addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(KhoHangGui.this);
-                KhoHangDialog dialog = new KhoHangDialog(parentFrame, null, "Thêm Kho");
+                JFrame pwner = (JFrame) SwingUtilities.getWindowAncestor(QuyenGUI.this);
+                QuyenDiaLog dialog = new QuyenDiaLog(pwner, null, "Thêm quyền");
                 dialog.setVisible(true);
-
                 if (dialog.isSaved()) {
                     try {
-                        int maKho = khoHangBLL.generateNewId();
-                        KhoHangDTO newKhoHang = dialog.getKhoHangData(maKho);
-                        if (khoHangBLL.addKhoHang(newKhoHang)) {
-                            JOptionPane.showMessageDialog(null, "Thêm kho thành công!");
-                            loadData(khoHangBLL.getAllKhoHang());
+                        // Assign a new unique ID
+                        QuyenDTO quyenDTO = dialog.getDataQuyenDTO();
+                        if (quyenBLL.addQuyen(quyenDTO)) {
+                            JOptionPane.showMessageDialog(null, "Thêm  thành công!");
+                            loadData(quyenBLL.getAllQuyen());
                         } else {
-                            JOptionPane.showMessageDialog(null, "Thêm kho thất bại!");
+                            JOptionPane.showMessageDialog(null, "Thêm  thất bại!");
                         }
                     } catch (Exception ex) {
-                        JOptionPane.showMessageDialog(null, "Lỗi khi thêm kho: " + ex.getMessage());
+                        JOptionPane.showMessageDialog(null, "Lỗi khi thêm : " + ex.getMessage());
                     }
                 }
             }
         });
 
-        // Edit warehouse
+        // Edit permission
+        // Edit permission
         btn[1].addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int selectedRow = tbl.getSelectedRow();
                 if (selectedRow == -1) {
-                    JOptionPane.showMessageDialog(null, "Hãy chọn một kho để sửa!");
+                    JOptionPane.showMessageDialog(null, "Hãy chọn một quyền để sửa!");
                     return;
                 }
 
-                int maKho = (int) tbl.getValueAt(selectedRow, 0);
-                String tenKho = (String) tbl.getValueAt(selectedRow, 1);
-                String diaChi = (String) tbl.getValueAt(selectedRow, 2);
+                int maQuyen = (int) tbl.getValueAt(selectedRow, 0);
+                QuyenDTO quyen = quyenBLL.getQuyenById(maQuyen); // Lấy dữ liệu quyền từ BLL
 
-                JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(KhoHangGui.this);
-                KhoHangDialog dialog = new KhoHangDialog(parentFrame, new KhoHangDTO(maKho, tenKho, diaChi), "Chỉnh Sửa Kho");
+                JFrame owner = (JFrame) SwingUtilities.getWindowAncestor(QuyenGUI.this);
+                QuyenDiaLog dialog = new QuyenDiaLog(owner, quyen, "Chỉnh sửa quyền");
                 dialog.setVisible(true);
 
                 if (dialog.isSaved()) {
-                    KhoHangDTO updatedKhoHang = dialog.getKhoHangData(maKho);
-                    if (khoHangBLL.updateKhoHang(updatedKhoHang)) {
-                        JOptionPane.showMessageDialog(null, "Cập nhật kho thành công!");
-                        loadData(khoHangBLL.getAllKhoHang());
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Cập nhật thất bại!");
+                    try {
+                        QuyenDTO updatedQuyen = dialog.getDataQuyenDTO();
+                        updatedQuyen.setMaQuyen(maQuyen); // Giữ nguyên mã quyền
+                        if (quyenBLL.updateQuyen(updatedQuyen)) {
+                            JOptionPane.showMessageDialog(null, "Chỉnh sửa thành công!");
+                            loadData(quyenBLL.getAllQuyen()); // Tải lại dữ liệu
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Chỉnh sửa thất bại!");
+                        }
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(null, "Lỗi khi sửa: " + ex.getMessage());
                     }
                 }
             }
         });
 
-        // Delete warehouse
+        // Delete permission
+        // Delete permission
         btn[2].addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int selectedRow = tbl.getSelectedRow();
                 if (selectedRow == -1) {
-                    JOptionPane.showMessageDialog(null, "Hãy chọn một kho để xóa!");
+                    JOptionPane.showMessageDialog(null, "Hãy chọn một quyền để xóa!");
                     return;
                 }
 
-                int maKho = (int) tbl.getValueAt(selectedRow, 0);
-                int confirm = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn xóa kho này?",
-                        "Xóa Kho", JOptionPane.YES_NO_OPTION);
+                int maQuyen = (int) tbl.getValueAt(selectedRow, 0);
+                int confirm = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn xóa quyền này?",
+                        "Xóa Quyền", JOptionPane.YES_NO_OPTION);
                 if (confirm == JOptionPane.YES_OPTION) {
-                    if (khoHangBLL.deleteKhoHang(maKho)) {
-                        JOptionPane.showMessageDialog(null, "Xóa kho thành công!");
-                        loadData(khoHangBLL.getAllKhoHang());
+                    if (quyenBLL.deleteQuyen(maQuyen)) {
+                        JOptionPane.showMessageDialog(null, "Xóa quyền thành công!");
+                        loadData(quyenBLL.getAllQuyen()); // Tải lại dữ liệu
                     } else {
-                        JOptionPane.showMessageDialog(null, "Xóa kho thất bại!");
+                        JOptionPane.showMessageDialog(null, "Xóa quyền thất bại!");
                     }
                 }
             }
         });
 
-        // View details of warehouse
+        // View details
+        // View details
         btn[3].addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int selectedRow = tbl.getSelectedRow();
                 if (selectedRow == -1) {
-                    JOptionPane.showMessageDialog(null, "Hãy chọn một kho để xem chi tiết!");
+                    JOptionPane.showMessageDialog(null, "Hãy chọn một quyền để xem chi tiết!");
                     return;
                 }
 
-                int maKho = (int) tbl.getValueAt(selectedRow, 0);
-                String tenKho = (String) tbl.getValueAt(selectedRow, 1);
-                String diaChi = (String) tbl.getValueAt(selectedRow, 2);
+                int maQuyen = (int) tbl.getValueAt(selectedRow, 0);
+                QuyenDTO quyen = quyenBLL.getQuyenById(maQuyen); // Lấy dữ liệu quyền từ BLL
 
-                JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(KhoHangGui.this);
-                KhoHangDialog dialog = new KhoHangDialog(parentFrame, new KhoHangDTO(maKho, tenKho, diaChi), "Xem chi tiết");
+                JFrame owner = (JFrame) SwingUtilities.getWindowAncestor(QuyenGUI.this);
+                QuyenDiaLog dialog = new QuyenDiaLog(owner, quyen, "Xem chi tiết quyền");
                 dialog.setVisible(true);
             }
         });
@@ -215,7 +217,7 @@ public class KhoHangGui extends JPanel {
         btn[5].addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ExportExcelUtility.saveTableToExcel(tbl, "Nhân viên");
+                ExportExcelUtility.saveTableToExcel(tbl, "Quyền");
             }
         });
     }

@@ -24,19 +24,19 @@ public class KhachHangGUI extends JPanel {
     JTable tbl;
     KhachHangBLL khachHangBLL;
 
-    public KhachHangGUI() {
+    public KhachHangGUI(TopNav topNav) {
         khachHangBLL = new KhachHangBLL();
-        initComponent();
+        initComponent(topNav);
         chucNang();
         addSearchFunctionality();
         loadData(khachHangBLL.getAllKhachHang());
 
     }
 
-    private void initComponent() {
+    private void initComponent(TopNav topNav) {
+        this.topNav = topNav;
         String[] itemFindFor = { "Tất Cả","Theo tên", "Theo SDT" };
-
-        topNav = new TopNav("Khách Hàng", "user", itemFindFor);
+        topNav.setItemComboBox(itemFindFor);
 
         // Panel dưới
         pnlBot = new JPanel(new BorderLayout());

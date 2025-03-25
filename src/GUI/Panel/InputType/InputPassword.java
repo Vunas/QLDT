@@ -11,6 +11,8 @@ import javax.swing.JPasswordField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import util.HashUtil;
+
 public class InputPassword extends JPanel {
     JPasswordField passwordField;
     JLabel lblTitle, lblError;
@@ -66,4 +68,17 @@ public class InputPassword extends JPanel {
     public void setLblError(String errorMessage) {
         this.lblError.setText(errorMessage); // Hiển thị thông báo lỗi
     }
+
+    public void setPassWord(String passWord) {
+        passwordField.setText(passWord);
+    }
+
+    public String getPassWord() {
+        char[] passwordArray = passwordField.getPassword();
+        String password = new String(passwordArray);
+        java.util.Arrays.fill(passwordArray, '\0'); // Xóa mảng để bảo mật
+        String hashedPassword = HashUtil.hashPassword(password);
+        return hashedPassword;
+    }
+
 }

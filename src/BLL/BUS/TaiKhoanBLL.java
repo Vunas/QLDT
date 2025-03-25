@@ -1,8 +1,16 @@
 package BLL.BUS;
 
 import DAO.TaiKhoanDao;
+import DTO.QuyenDTO;
 import DTO.TaiKhoanDTO;
+import GUI.Panel.ItemBar;
+import GUI.Panel.SideBar;
+import GUI.Panel.TopNav;
+
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.JButton;
 
 public class TaiKhoanBLL {
     private TaiKhoanDao taiKhoanDao;
@@ -20,10 +28,6 @@ public class TaiKhoanBLL {
 
     // 2. Thêm một tài khoản mới
     public boolean addTaiKhoan(TaiKhoanDTO taiKhoan) {
-        // Thực hiện các kiểm tra hoặc xử lý nghiệp vụ tại đây (nếu cần)
-        if (taiKhoan.getTenDangNhap() == null || taiKhoan.getTenDangNhap().isEmpty()) {
-            throw new IllegalArgumentException("Tên đăng nhập không được để trống");
-        }
         return taiKhoanDao.addTaiKhoan(taiKhoan);
     }
 
@@ -45,9 +49,58 @@ public class TaiKhoanBLL {
     // 5. Kiểm tra thông tin đăng nhập
     public TaiKhoanDTO login(String tenDangNhap, String matKhau) {
         TaiKhoanDTO taiKhoan = taiKhoanDao.login(tenDangNhap, matKhau);
-        if (taiKhoan == null) {
-            throw new IllegalArgumentException("Thông tin đăng nhập không hợp lệ");
-        }
         return taiKhoan;
+    }
+
+    public TaiKhoanDTO getTaiKhoanByTenDangNhap(String tenDangNhap){
+        return taiKhoanDao.getTaiKhoanByTenDangNhap(tenDangNhap);
+    }
+
+    // Lấy danh sách tài khoản theo tên đăng nhập tìm kiếm
+    public List<TaiKhoanDTO> getTaiKhoanByNameSearch(String keyword) {
+        // Lấy danh sách tất cả tài khoản từ DAO
+        List<TaiKhoanDTO> taiKhoanList = taiKhoanDao.getAllTaiKhoan();
+
+        // Tạo danh sách kết quả để lưu tài khoản phù hợp
+        List<TaiKhoanDTO> filteredList = new ArrayList<>();
+
+        // Tìm kiếm theo tên đăng nhập
+        for (TaiKhoanDTO taiKhoan : taiKhoanList) {
+            if (taiKhoan.getTenDangNhap().toLowerCase().contains(keyword.toLowerCase())) {
+                filteredList.add(taiKhoan);
+            }
+        }
+
+        // Trả về danh sách tài khoản khớp với tiêu chí tìm kiếm
+        return filteredList;
+    }
+
+    public void chinhSuaQuyen(SideBar sideBar, QuyenDTO quyenDTO){
+        String[] chucNangList = quyenDTO.getDanhSachChucNang().split("/"); // Tách chuỗi quyền theo dấu "/"
+        ItemBar[] itemBars = sideBar.getItemBars();
+        for (int i = 0; i < chucNangList.length; i++) {
+            if (!chucNangList[i].contains("r")){
+                itemBars[i+1].setVisible(false);
+            }
+        }   
+    }
+
+    public void chinhSuaChucNang(TopNav topNav, QuyenDTO quyenDTO, int index){
+        if(index == 0) return;
+        String[] chucNangList = quyenDTO.getDanhSachChucNang().split("/");
+        String chucNang = chucNangList[index - 1];
+        JButton[] btn= topNav.getBtn();
+        if (!chucNang.contains("c")){
+            btn[0].setVisible(false);
+        }
+        if (!chucNang.contains("f")){
+            btn[1].setVisible(false);
+        }
+        if (!chucNang.contains("d")){
+            btn[2].setVisible(false);
+        }
+        if (!chucNang.contains("cfd")){
+            btn[4].setVisible(false);
+        }
     }
 }

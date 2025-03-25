@@ -107,4 +107,24 @@ public class TaiKhoanDao {
         }
         return null; // Đăng nhập thất bại
     }
+    
+    public TaiKhoanDTO getTaiKhoanByTenDangNhap(String tenDangNhap) {
+        TaiKhoanDTO taiKhoan = null;
+        String query = "SELECT * FROM TaiKhoan WHERE TenDangNhap = ?";
+        try (Connection conn = JdbcUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, tenDangNhap);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    int maNV = rs.getInt("MaNV");
+                    String matKhau = rs.getString("MatKhau");
+                    int maQuyen = rs.getInt("MaQuyen");
+                    taiKhoan = new TaiKhoanDTO(maNV, tenDangNhap, matKhau, maQuyen);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return taiKhoan;
+    }
 }
