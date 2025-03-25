@@ -10,7 +10,7 @@ public class TaiKhoanDao {
 
     // 1. Thêm tài khoản mới
     public boolean addTaiKhoan(TaiKhoanDTO taiKhoan) {
-        String sql = "INSERT INTO TaiKhoan (maNV, tenDangNhap, matKhau, maQuyen) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO taikhoan (MaNV, TenDangNhap, MatKhau, MaQuyen) VALUES (?, ?, ?, ?)";
         try (Connection conn = JdbcUtil.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
@@ -29,17 +29,17 @@ public class TaiKhoanDao {
     // 2. Lấy danh sách tài khoản
     public List<TaiKhoanDTO> getAllTaiKhoan() {
         List<TaiKhoanDTO> list = new ArrayList<>();
-        String sql = "SELECT * FROM TaiKhoan";
+        String sql = "SELECT * FROM taikhoan";
         try (Connection conn = JdbcUtil.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
                 TaiKhoanDTO taiKhoan = new TaiKhoanDTO(
-                        rs.getInt("maNV"),
-                        rs.getString("tenDangNhap"),
-                        rs.getString("matKhau"),
-                        rs.getInt("maQuyen")
+                        rs.getInt("MaNV"),
+                        rs.getString("TenDangNhap"),
+                        rs.getString("MatKhau"),
+                        rs.getInt("MaQuyen")
                 );
                 list.add(taiKhoan);
             }
@@ -52,7 +52,7 @@ public class TaiKhoanDao {
 
     // 3. Cập nhật tài khoản
     public boolean updateTaiKhoan(TaiKhoanDTO taiKhoan) {
-        String sql = "UPDATE TaiKhoan SET tenDangNhap = ?, matKhau = ?, maQuyen = ? WHERE maNV = ?";
+        String sql = "UPDATE taikhoan SET TenDangNhap = ?, MatKhau = ?, MaQuyen = ? WHERE MaNV = ?";
         try (Connection conn = JdbcUtil.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
@@ -70,7 +70,7 @@ public class TaiKhoanDao {
 
     // 4. Xóa tài khoản
     public boolean deleteTaiKhoan(int maNV) {
-        String sql = "DELETE FROM TaiKhoan WHERE maNV = ?";
+        String sql = "DELETE FROM taikhoan WHERE MaNV = ?";
         try (Connection conn = JdbcUtil.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
@@ -85,7 +85,7 @@ public class TaiKhoanDao {
 
     // 5. Kiểm tra thông tin đăng nhập
     public TaiKhoanDTO login(String tenDangNhap, String matKhau) {
-        String sql = "SELECT * FROM TaiKhoan WHERE tenDangNhap = ? AND matKhau = ?";
+        String sql = "SELECT * FROM taikhoan WHERE TenDangNhap = ? AND MatKhau = ?";
         try (Connection conn = JdbcUtil.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
@@ -108,9 +108,11 @@ public class TaiKhoanDao {
         return null; // Đăng nhập thất bại
     }
     
+    
+    
     public TaiKhoanDTO getTaiKhoanByTenDangNhap(String tenDangNhap) {
         TaiKhoanDTO taiKhoan = null;
-        String query = "SELECT * FROM TaiKhoan WHERE TenDangNhap = ?";
+        String query = "SELECT * FROM taikhoan WHERE TenDangNhap = ?";
         try (Connection conn = JdbcUtil.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, tenDangNhap);

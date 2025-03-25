@@ -3,12 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/thaoh/OneDrive/Desktop/QLDT/src/BLL/BUS/SanPhamBLL.java</file>
-            <file>file:/C:/Users/thaoh/OneDrive/Desktop/QLDT/src/GUI/DiaLog/KhachHangDiaLog.java</file>
-            <file>file:/C:/Users/thaoh/OneDrive/Desktop/QLDT/src/DTO/SanPhamDTO.java</file>
-            <file>file:/C:/Users/thaoh/OneDrive/Desktop/QLDT/src/DTO/NhanVienDTO.java</file>
-            <file>file:/C:/Users/thaoh/OneDrive/Desktop/QLDT/src/GUI/DiaLog/KhoHangDialog.java</file>
             <file>file:/C:/Users/thaoh/OneDrive/Desktop/QLDT/src/GUI/Frame/Main.java</file>
+            <file>file:/C:/Users/thaoh/OneDrive/Desktop/QLDT/src/GUI/SideBar/SanPhamGUI.java</file>
+            <file>file:/C:/Users/thaoh/OneDrive/Desktop/QLDT/src/GUI/DiaLog/SanPhamDiaLog.java</file>
         </group>
     </open-files>
 </project-private>

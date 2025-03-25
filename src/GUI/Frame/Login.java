@@ -137,7 +137,7 @@ public class Login extends JFrame {
                 }
 
                 TaiKhoanDTO taiKhoanDTO = new TaiKhoanBLL().login(txt.getText(), psw.getPassWord());
-
+                System.out.println(taiKhoanDTO);
                 if (taiKhoanDTO == null){
                     JOptionPane.showMessageDialog(null, "Đăng nhập thất bại.", "Lỗi", JOptionPane.ERROR_MESSAGE);
                     return;
