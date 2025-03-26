@@ -20,6 +20,7 @@ import GUI.Frame.Main;
 import GUI.SideBar.KhachHangGUI;
 import GUI.SideBar.NhaCungCapGUI;
 import GUI.SideBar.NhanVienGUI;
+import GUI.SideBar.PhieuNhapGUI;
 import GUI.SideBar.QuyenGUI;
 import GUI.SideBar.TaiKhoanGUI;
 import GUI.SideBar.TrangChuGUI;
@@ -31,8 +32,8 @@ public class SideBar extends JPanel {
     QuyenDTO quyenDTO;
     JPanel pnlTop, pnlMid, pnlBot;
     ItemBar[] itemBars;
-    String[] menuBars = {"Trang chủ", "Sản phẩm", "Thuộc tính",  
-                     "Phiếu nhập", "Phiếu xuất", "Khách hàng", "Nhà cung cấp", 
+    String[] menuBars = {"Trang Chủ", "Sản phẩm", "Thuộc tính",  
+                     "Phiếu nhập", "Hóa đơn", "Khách hàng", "Nhà cung cấp", 
                      "Nhân viên", "Tài khoản",  "Phân quyền","Thống kê"};
 
     String[] icons ={"home","phone","del","home","user","home","user","home","account","protect","home"};
@@ -144,7 +145,7 @@ public class SideBar extends JPanel {
             @Override
             public void mousePressed(MouseEvent evt) {
                 changePage(3);
-                main.setPanel(new KhachHangGUI(topNav));
+                main.setPanel(new PhieuNhapGUI(main));
             }
         });
 

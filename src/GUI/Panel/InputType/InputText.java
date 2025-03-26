@@ -60,6 +60,10 @@ public class InputText extends JPanel {
     public JTextField getTxtForm() {
         return txtForm;
     }
+    
+      public void setEditable(boolean value) {
+        txtForm.setEditable(value);
+    }
 
     public void setTxtForm(JTextField txtForm) {
         this.txtForm = txtForm;

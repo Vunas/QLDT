@@ -88,6 +88,7 @@ public class TaiKhoanBLL {
     public void chinhSuaChucNang(TopNav topNav, QuyenDTO quyenDTO, int index){
         if(index == 0) return;
         String[] chucNangList = quyenDTO.getDanhSachChucNang().split("/");
+        if (index - 1 >= chucNangList.length) return;
         String chucNang = chucNangList[index - 1];
         JButton[] btn= topNav.getBtn();
         if (!chucNang.contains("c")){

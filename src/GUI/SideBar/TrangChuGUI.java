@@ -17,11 +17,11 @@ public class TrangChuGUI extends JPanel {
     private void initComponents(){
         pnlTop= new JPanel();
         pnlTop.setBackground(new Color(220, 56, 92));
-        pnlTop.add(new JLabel("Đây là tiêu Đề"));
+        pnlTop.add(new JLabel());
         pnlTop.setPreferredSize(new Dimension(Integer.MAX_VALUE, 200));
 
         pnlBot= new JPanel();
-        pnlBot.add(new JLabel("ĐÂy là ảnh"));
+        pnlBot.add(new JLabel());
 
 
         setLayout(new BorderLayout());
