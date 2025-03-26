@@ -11,7 +11,7 @@ import javax.swing.border.EmptyBorder;
 
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 
-import GUI.DiaLog.TableDialog;
+import GUI.DiaLog.TableDiaLog;
 
 public class InputChoose extends JPanel {
     JLabel lblTitle, lblError;
@@ -46,7 +46,7 @@ public class InputChoose extends JPanel {
             public void actionPerformed(ActionEvent e) {
 
                 // Tạo và hiển thị TableDialog
-                TableDialog dialog = new TableDialog(null, "Chọn dữ liệu", tbl);
+                TableDiaLog dialog = new TableDiaLog(null, "Chọn dữ liệu", tbl);
                 dialog.setGhiChu(ghiChuChoDiaLog);
                 dialog.setVisible(true);
                 String selectedValue = dialog.getSelectedValue();

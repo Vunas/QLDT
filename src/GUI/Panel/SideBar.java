@@ -13,10 +13,13 @@ import javax.swing.border.MatteBorder;
 
 import BLL.BUS.QuyenBLL;
 import BLL.BUS.TaiKhoanBLL;
+import BLL.BUS.SanPhamBLL;
 import DTO.QuyenDTO;
 import DTO.TaiKhoanDTO;
+import DTO.SanPhamDTO;
 import GUI.Frame.Login;
 import GUI.Frame.Main;
+import GUI.SideBar.SanPhamGUI;
 import GUI.SideBar.KhachHangGUI;
 import GUI.SideBar.NhaCungCapGUI;
 import GUI.SideBar.NhanVienGUI;
@@ -120,7 +123,7 @@ public class SideBar extends JPanel {
             @Override
             public void mousePressed(MouseEvent evt) {
                 changePage(1);
-                main.setPanel(new KhachHangGUI(topNav));
+                main.setPanel(new SanPhamGUI(topNav));
             }
         });
 

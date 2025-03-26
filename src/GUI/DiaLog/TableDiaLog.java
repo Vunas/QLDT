@@ -6,13 +6,13 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class TableDialog extends JDialog {
+public class TableDiaLog extends JDialog {
     private JTable table;
     private JLabel ghiChu;
     private JButton btnSelect;
     private String selectedValue; // Lưu giá trị được chọn
 
-    public TableDialog(Frame owner, String title, JTable tbl) {
+    public TableDiaLog(Frame owner, String title, JTable tbl) {
         super(owner, title, true); // Tạo JDialog với modal
         this.setLayout(new BorderLayout(10, 10)); // Sử dụng BorderLayout
         this.setSize(600, 500);
