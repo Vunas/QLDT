@@ -108,4 +108,18 @@ public class NhaCungCapDao {
         }
         return nhaCungCapList;
     }
+    public String[] getNameNhaCungCap(){
+        List<String> listNCC = new ArrayList<>();
+        String sql ="SELECT ten FROM nha_cung_cap";
+        try(Connection conn = JdbcUtil.getConnection()) {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()){
+                listNCC.add(rs.getString("ten"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listNCC.toArray(new String[0]);
+    }
 }

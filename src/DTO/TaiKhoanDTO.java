@@ -6,8 +6,11 @@ public class TaiKhoanDTO {
     private String matKhau;      // Mật khẩu
     private int maQuyen;         // Mã quyền (quản lý, nhân viên, v.v.)
 
+    private static TaiKhoanDTO taiKhoanHienTai;
+    
     // Constructor không tham số
     public TaiKhoanDTO() {}
+    
 
     // Constructor có tham số
     public TaiKhoanDTO(int maNV, String tenDangNhap, String matKhau, int maQuyen) {
@@ -17,6 +20,14 @@ public class TaiKhoanDTO {
         this.maQuyen = maQuyen;
     }
 
+     public static TaiKhoanDTO getTaiKhoanHienTai() {
+        return taiKhoanHienTai;
+    }
+
+    public static void setTaiKhoanHienTai(TaiKhoanDTO taiKhoan) {
+        taiKhoanHienTai = taiKhoan;
+    }
+        
     // Getter và Setter cho từng thuộc tính
     public int getMaNV() {
         return maNV;

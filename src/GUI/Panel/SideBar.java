@@ -23,6 +23,7 @@ import GUI.SideBar.SanPhamGUI;
 import GUI.SideBar.KhachHangGUI;
 import GUI.SideBar.NhaCungCapGUI;
 import GUI.SideBar.NhanVienGUI;
+import GUI.SideBar.PhieuNhapGUI;
 import GUI.SideBar.QuyenGUI;
 import GUI.SideBar.TaiKhoanGUI;
 import GUI.SideBar.TrangChuGUI;
@@ -147,7 +148,7 @@ public class SideBar extends JPanel {
             @Override
             public void mousePressed(MouseEvent evt) {
                 changePage(3);
-                main.setPanel(new KhachHangGUI(topNav));
+                main.setPanel(new PhieuNhapGUI(main));
             }
         });
 

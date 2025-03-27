@@ -1,17 +1,16 @@
 
 package BLL.BUS;
 
-import DAO.SanPhamDao;
 import DTO.SanPhamDTO;
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class SanPhamBLL {
-        private final SanPhamDao SanPhamDao;
+        private final DAO.SanPhamBLL SanPhamDao;
 
     public SanPhamBLL() {
-        SanPhamDao = new SanPhamDao();
+        SanPhamDao = new DAO.SanPhamBLL();
     }
 
     

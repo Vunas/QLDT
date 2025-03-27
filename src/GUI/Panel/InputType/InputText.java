@@ -54,13 +54,16 @@ public class InputText extends JPanel {
     }
 
     public void setLblError(String errorMessage) {
-        lblError.setText(errorMessage); // Hiển thị lỗi
+        lblError.setText(errorMessage);
     }
 
     public JTextField getTxtForm() {
         return txtForm;
     }
-
+    
+     public void setEditable(boolean value) {
+        txtForm.setEditable(value);
+    }
     public void setTxtForm(JTextField txtForm) {
         this.txtForm = txtForm;
     }
@@ -71,5 +74,9 @@ public class InputText extends JPanel {
 
     public void setText(String text) {
         this.txtForm.setText(text);
+    }
+
+    public void setText(int maphieunhap) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

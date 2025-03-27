@@ -80,4 +80,8 @@ public class NhaCungCapBLL {
         List<NhaCungCapDTO> allNhaCungCap = nhaCungCapDao.getAllNhaCungCap();
         return allNhaCungCap.get(allNhaCungCap.size() - 1).getMaNhaCungCap() + 1;
     }
+    
+    public String[] getNameNhaCungCap(){
+        return nhaCungCapDao.getNameNhaCungCap();
+    }
 }
