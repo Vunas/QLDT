@@ -2,6 +2,9 @@ package GUI.Panel.InputType;
 
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
@@ -35,9 +38,9 @@ public class InputText extends JPanel {
 
         // Thêm các thành phần với khoảng cách
         this.add(lblTitle);
-        this.add(Box.createRigidArea(new Dimension(0, 5))); // Khoảng cách giữa các thành phần
+        this.add(Box.createRigidArea(new Dimension(5, 5))); // Khoảng cách giữa các thành phần
         this.add(txtForm);
-        this.add(Box.createRigidArea(new Dimension(0, 5)));
+        this.add(Box.createRigidArea(new Dimension(5, 5)));
         this.add(lblError);
     }
 
@@ -75,8 +78,27 @@ public class InputText extends JPanel {
     public void setText(String text) {
         this.txtForm.setText(text);
     }
-
-    public void setText(int maphieunhap) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    
+    public void setInputType(String type){
+        
+        txtForm.addKeyListener(new KeyAdapter(){
+            public void keyTyped(KeyEvent e){
+               char c = e.getKeyChar();
+               if("number".equals(type)){
+                   if(!Character.isDigit(c))
+                   {
+                       e.consume();
+                    
+                   }
+               }
+               else if("text".equals(type)){
+                   if(!Character.isLetter(c)){
+                       e.consume();
+                   }
+               }
+            }
+        });
     }
+    
+    
 }

@@ -122,4 +122,27 @@ public class NhaCungCapDao {
         }
         return listNCC.toArray(new String[0]);
     }
+    
+    public NhaCungCapDTO getNhaCungCapByName(String ten) {
+        String sql = "SELECT * FROM nha_cung_cap WHERE ten = ?";
+        try (Connection connection = JdbcUtil.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, ten);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return new NhaCungCapDTO(
+                        resultSet.getInt("maNCC"),
+                        resultSet.getString("ten"),
+                        resultSet.getString("diaChi"),
+                        resultSet.getString("sdt")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

@@ -55,4 +55,19 @@ public class ChiTietPhieuNhapDao {
         }
         return list;
     }
+    
+    public boolean xoaCTPhieuNhap(int maPhieuNhap){
+      String sql = "DELETE FROM chitietphieunhap WHERE maPhieuNhap = ?";
+      try (Connection conn = JdbcUtil.getConnection()){
+          PreparedStatement stmt = conn.prepareStatement(sql);
+          stmt.setInt(1,maPhieuNhap);
+          
+          int check = stmt.executeUpdate();
+          return check>0;
+          
+      } catch (Exception e) {
+          e.printStackTrace();
+      }
+      return false;
+  }
 }

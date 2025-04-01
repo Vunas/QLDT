@@ -22,4 +22,8 @@ public class ChiTietPhieuNhapBLL {
     public boolean addChiTietPhieuNhap(ChiTietPhieuNhapDTO chiTietPhieuNhap) {
         return chiTietPhieuNhapDAO.addChiTietPhieuNhap(chiTietPhieuNhap);
     }
+    
+    public boolean deleteChiTietPhieuNhap(int maPhieuNhap) {
+        return chiTietPhieuNhapDAO.xoaCTPhieuNhap(maPhieuNhap);
+    }
 }

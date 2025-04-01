@@ -1,98 +1,148 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package GUI.SideBar;
 
+import BLL.BUS.ChiTietPhieuNhapBLL;
+import BLL.BUS.NhaCungCapBLL;
+import BLL.BUS.PhieuNhapBLL;
+import DTO.ChiTietPhieuNhapDTO;
+import DTO.NhaCungCapDTO;
+import DTO.PhieuNhapDTO;
+import DTO.TaiKhoanDTO;
 import GUI.DiaLog.PhieuNhapDiaLog;
 import GUI.Frame.Main;
 import GUI.Panel.TaoPhieuNhap;
 import GUI.Panel.TopNav;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
+
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.SwingUtilities;
-import javax.swing.border.EmptyBorder;
-import javax.swing.table.JTableHeader;
+import java.util.List;
 
-/**
- *
- * @author nguyen
- */
-public class PhieuNhapGUI extends JPanel{
-    TopNav topNav;
-    JPanel pnlBot;
-    JTable tbl;
-    TaoPhieuNhap pn;
-    Main main;
+public class PhieuNhapGUI extends JPanel {
+    private TopNav topNav;
+    private JPanel pnlBot;
+    private JTable tbl;
+    private DefaultTableModel tbmtb1;
+    private JScrollPane scrtb1;
+    private Main main;
 
     public PhieuNhapGUI(Main main) {
         initComponent(main);
+        loaddata();
         chucNang();
     }
-    
-    public void initComponent(Main main){
-        this.main =  main;
-        String[] itemFindFor ={"Tất Cả","Mã Phiếu Nhập","Nhà Cung Cấp","Nhân Viên Nhập"};
+
+    private void initComponent(Main main) {
+        this.main = main;
+        String[] itemFindFor = {"Tất Cả", "Mã Phiếu Nhập", "Nhà Cung Cấp", "Nhân Viên Nhập"};
         
         topNav = new TopNav();
         topNav.setItemComboBox(itemFindFor);
         
         pnlBot = new JPanel(new BorderLayout());
         pnlBot.setPreferredSize(new Dimension(0, 500));
+        pnlBot.setBorder(new EmptyBorder(10, 15, 10, 15));
         
         tbl = new JTable();
         tbl.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
         tbl.setRowHeight(35);
         tbl.setFocusable(false);
+
+        tbmtb1 = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         
+        String[] headtable = {"Mã Phiếu Nhập", "Nhà Cung Cấp", "Nhân Viên Nhập", "Thời Gian", "Tổng Tiền"};
+        tbmtb1.setColumnIdentifiers(headtable);
+        tbl.setModel(tbmtb1);
+
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+        for (int i = 0; i < tbl.getColumnCount(); i++) {
+            tbl.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        }
+
         JTableHeader header = tbl.getTableHeader();
         header.setPreferredSize(new Dimension(0, 40));
         header.setBackground(new Color(100, 149, 237));
         header.setForeground(Color.WHITE);
         header.setFont(new Font("Segoe UI", Font.BOLD, 14));
-        
-        JScrollPane scrollPane = new JScrollPane(tbl);
-        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        
-        pnlBot.setLayout(new BorderLayout());
-        pnlBot.setBorder(new EmptyBorder(10, 15, 10, 15));
-        pnlBot.add(scrollPane, BorderLayout.CENTER);
 
-        this.setLayout(new BorderLayout());
-        this.add(topNav, BorderLayout.NORTH);
-        this.add(pnlBot, BorderLayout.CENTER);
-        
+        scrtb1 = new JScrollPane(tbl);
+        scrtb1.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scrtb1.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        pnlBot.add(scrtb1, BorderLayout.CENTER);
+
+        setLayout(new BorderLayout());
+        add(topNav, BorderLayout.NORTH);
+        add(pnlBot, BorderLayout.CENTER);
     }
-    
+
    private void chucNang(){
     JButton[] btn = topNav.getBtn();
     btn[1].setVisible(false);
     btn[0].addActionListener(new ActionListener(){
         @Override
         public void actionPerformed(ActionEvent e) {
-            main.setPanel(new TaoPhieuNhap());
+            main.setPanel(new TaoPhieuNhap(main));
         }
     });
      btn[3].addActionListener(new ActionListener(){
         @Override
         public void actionPerformed(ActionEvent e) {
-            PhieuNhapDiaLog pndialog = new PhieuNhapDiaLog(main);
-
+            int selectedRow = tbl.getSelectedRow();
+            if(selectedRow==-1){
+                 JOptionPane.showMessageDialog(null, "Chọn 1 dòng để xem chi tiết");
+            }
+            else{
+                int maPN = Integer.parseInt(tbl.getValueAt(selectedRow, 0).toString());
+                PhieuNhapDiaLog pndialog = new PhieuNhapDiaLog(main,maPN);
+            }
+            
         }
     });
+     btn[2].addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            int selectedRow = tbl.getSelectedRow();
+            if(selectedRow != -1){
+                int confirm = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn muốn xóa chứ","Xác ", JOptionPane.YES_NO_OPTION);
+                if(confirm == JOptionPane.YES_OPTION){
+                    int maPN = Integer.parseInt(tbmtb1.getValueAt(selectedRow, 0).toString());
+                    new ChiTietPhieuNhapBLL().deleteChiTietPhieuNhap(maPN);
+                    new PhieuNhapBLL().deletePhieuNhap(maPN);
+                    JOptionPane.showMessageDialog(null, "Xóa thành công");
+                }
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Chọn 1 dòng để xóa");
+            }
+    }
+     });
 }
 
-    
+    private void loaddata() {
+        List<PhieuNhapDTO> list = new PhieuNhapBLL().getAllPhieuNhap();
+        for (PhieuNhapDTO pn : list) {
+            NhaCungCapDTO ncc = new NhaCungCapBLL().getNhaCungCapById(pn.getMaNhaCungCap());
+            TaiKhoanDTO taiKhoan = TaiKhoanDTO.getTaiKhoanHienTai();
+            
+            int tongtien = 0;
+            List<ChiTietPhieuNhapDTO> ctpn = new ChiTietPhieuNhapBLL().getChiTietPhieuNhapByPhieuNhap(pn.getMaPhieuNhap());
+            for (ChiTietPhieuNhapDTO ct : ctpn) {
+                tongtien += ct.getDonGia() * ct.getSoLuong();
+            }
+            
+            tbmtb1.addRow(new Object[]{pn.getMaPhieuNhap(), ncc.getTen(), taiKhoan.getTenDangNhap(), pn.getNgayNhap(), tongtien});
+        }
+    }
     
     
 }

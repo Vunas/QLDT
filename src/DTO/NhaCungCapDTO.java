@@ -6,6 +6,11 @@ public class NhaCungCapDTO {
     String diaChi;
     String sDT;
 
+    public NhaCungCapDTO() {
+    }
+    
+    
+    
     public NhaCungCapDTO(int maNhaCungCap, String ten, String diaChi, String sDT) {
         this.maNhaCungCap = maNhaCungCap;
         this.ten = ten;

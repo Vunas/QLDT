@@ -13,7 +13,7 @@ import javax.swing.border.MatteBorder;
 
 import BLL.BUS.QuyenBLL;
 import BLL.BUS.TaiKhoanBLL;
-import BLL.BUS.SanPhamBLL;
+import BLL.BUS.SanPhamDAO;
 import DTO.QuyenDTO;
 import DTO.TaiKhoanDTO;
 import DTO.SanPhamDTO;
