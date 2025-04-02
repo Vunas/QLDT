@@ -3,11 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/nguyen/OneDrive/Máy%20tính/QLDT/src/GUI/SideBar/PhieuNhapGUI.java</file>
-            <file>file:/C:/Users/nguyen/OneDrive/Máy%20tính/QLDT/src/GUI/Panel/TaoPhieuNhap.java</file>
-            <file>file:/C:/Users/nguyen/OneDrive/Máy%20tính/QLDT/src/GUI/DiaLog/PhieuNhapDiaLog.java</file>
             <file>file:/C:/Users/thaoh/OneDrive/Desktop/QLDT/src/GUI/SideBar/ThuocTinhGUI.java</file>
             <file>file:/C:/Users/thaoh/OneDrive/Desktop/QLDT/src/GUI/Component/itemTaskbar.java</file>
+            <file>file:/C:/Users/thaoh/OneDrive/Desktop/QLDT/src/BLL/BUS/NhaCungCapBLL.java</file>
+            <file>file:/C:/Users/thaoh/OneDrive/Desktop/QLDT/src/GUI/SideBar/SanPhamGUI.java</file>
+            <file>file:/C:/Users/thaoh/OneDrive/Desktop/QLDT/src/GUI/SideBar/PhieuNhapGUI.java</file>
+            <file>file:/C:/Users/thaoh/OneDrive/Desktop/QLDT/src/GUI/Panel/SideBar.java</file>
+            <file>file:/C:/Users/thaoh/OneDrive/Desktop/QLDT/src/util/JdbcUtil.java</file>
         </group>
     </open-files>
 </project-private>
