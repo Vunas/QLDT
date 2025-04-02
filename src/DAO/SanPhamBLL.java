@@ -10,7 +10,7 @@ import java.util.List;
 import DTO.SanPhamDTO;
 import util.JdbcUtil;
 
-public class SanPhamDao {
+public class SanPhamBLL {
     
      public boolean addSanPham(SanPhamDTO SanPham){
         String query = "INSERT INTO SanPham (maSP, tenSP, img, soLuong, giaNhap, giaBan , mauSac , thuongHieu , Ram , Rom , Chip , thoiGianBaoHanh) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -108,7 +108,7 @@ public class SanPhamDao {
     }
     
 
-    public List<SanPhamDTO> getAllSanPham() {
+        public List<SanPhamDTO> getAllSanPham() {
         List<SanPhamDTO> SanPhamList = new ArrayList<>();
         String query = "SELECT * FROM SanPham";
         try (Connection conn = JdbcUtil.getConnection();
@@ -136,4 +136,5 @@ public class SanPhamDao {
         }
         return SanPhamList;
     }
+        
 }

@@ -108,4 +108,41 @@ public class NhaCungCapDao {
         }
         return nhaCungCapList;
     }
+    public String[] getNameNhaCungCap(){
+        List<String> listNCC = new ArrayList<>();
+        String sql ="SELECT ten FROM nha_cung_cap";
+        try(Connection conn = JdbcUtil.getConnection()) {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()){
+                listNCC.add(rs.getString("ten"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listNCC.toArray(new String[0]);
+    }
+    
+    public NhaCungCapDTO getNhaCungCapByName(String ten) {
+        String sql = "SELECT * FROM nha_cung_cap WHERE ten = ?";
+        try (Connection connection = JdbcUtil.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, ten);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return new NhaCungCapDTO(
+                        resultSet.getInt("maNCC"),
+                        resultSet.getString("ten"),
+                        resultSet.getString("diaChi"),
+                        resultSet.getString("sdt")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

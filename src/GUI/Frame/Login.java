@@ -142,6 +142,8 @@ public class Login extends JFrame {
                     JOptionPane.showMessageDialog(null, "Đăng nhập thất bại.", "Lỗi", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
+                
+                TaiKhoanDTO.setTaiKhoanHienTai(taiKhoanDTO);
                 dispose();
                 new Main(taiKhoanDTO).setVisible(true);
             }

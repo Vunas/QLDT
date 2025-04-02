@@ -9,7 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-import BLL.BUS.SanPhamBLL;
+import BLL.BUS.SanPhamDAO;
 import DTO.SanPhamDTO;
 import GUI.DiaLog.SanPhamDiaLog;//1
 import GUI.Panel.TopNav;
@@ -29,10 +29,10 @@ public class SanPhamGUI extends JPanel{
     TopNav topNav;
     JPanel pnlBot;
     JTable tbl;
-    SanPhamBLL sanPhamBLL;
+    SanPhamDAO sanPhamBLL;
 
     public SanPhamGUI(TopNav topNav) {
-        sanPhamBLL = new SanPhamBLL();
+        sanPhamBLL = new SanPhamDAO();
         initComponent(topNav);
         chucNang();
         addSearchFunctionality();

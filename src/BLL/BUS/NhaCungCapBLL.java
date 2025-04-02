@@ -35,6 +35,10 @@ public class NhaCungCapBLL {
     public NhaCungCapDTO getNhaCungCapById(int maNCC) {
         return nhaCungCapDao.getNhaCungCapById(maNCC);
     }
+    
+    public NhaCungCapDTO getNhaCungCapByName(String ten){
+        return nhaCungCapDao.getNhaCungCapByName(ten);
+    }
 
     // Lấy danh sách tất cả nhà cung cấp
     public List<NhaCungCapDTO> getAllNhaCungCap() {
@@ -79,5 +83,9 @@ public class NhaCungCapBLL {
         // Giả định danh sách được sắp xếp theo mã tăng dần
         List<NhaCungCapDTO> allNhaCungCap = nhaCungCapDao.getAllNhaCungCap();
         return allNhaCungCap.get(allNhaCungCap.size() - 1).getMaNhaCungCap() + 1;
+    }
+    
+    public String[] getNameNhaCungCap(){
+        return nhaCungCapDao.getNameNhaCungCap();
     }
 }
