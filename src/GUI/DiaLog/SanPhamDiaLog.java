@@ -1,8 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package GUI.DiaLog;
+import BLL.BUS.BrandBLL;
+import BLL.BUS.ColorBLL;
+import BLL.BUS.RamBLL;
+import BLL.BUS.RomBLL;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,11 +11,20 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 import DTO.SanPhamDTO;
+
+import GUI.Component.SelectForm;
 import GUI.Panel.InputType.InputText;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 public class SanPhamDiaLog extends JDialog{
     private InputText tfMaSP;
@@ -24,22 +33,33 @@ public class SanPhamDiaLog extends JDialog{
     private InputText tfSoLuong;
     private InputText tfGiaNhap;
     private InputText tfGiaBan;
-    private InputText tfMauSac;
-    private InputText tfThuongHieu;
-    private InputText tfRam;
-    private InputText tfRom;
     private InputText tfChip;
     private InputText tfThoiGianBaoHanh;
+    SelectForm cbxRam , cbxRom , cbxColor , cbxBrand;
     private boolean isSaved = false;
-
+    private ImageIcon resizedIcon;
+    private JLabel lblIcon;
+    BrandBLL brandBLL = new BrandBLL();
+    ColorBLL colorBLL = new ColorBLL();
+    RomBLL romBLL = new RomBLL();
+    RamBLL ramBLL = new RamBLL();
+    
     public SanPhamDiaLog(JFrame owner, SanPhamDTO sanPham, String titleString) {
         super(owner, titleString, true);
         initComponents(sanPham, titleString);
         setLocationRelativeTo(owner); // Căn giữa so với cửa sổ cha
+   
     }
 
     private void initComponents(SanPhamDTO sanPham, String titleString) {
-        setSize(400, 450); // Kích thước hợp lý
+        
+        // Main container to hold pnlMain (left) and panelRight (right)
+        JPanel pnlContainer = new JPanel();
+        pnlContainer.setLayout(new BoxLayout(pnlContainer, BoxLayout.X_AXIS));
+        pnlContainer.setBorder(new EmptyBorder(10, 10, 10, 10)); // Padding
+        pnlContainer.setPreferredSize(new Dimension(600, 700));
+ 
+        setSize(900, 600); // Kích thước hợp lý
         setLayout(new BorderLayout(10, 10)); // Tạo khoảng cách giữa các phần
 
         JLabel lblContent = new JLabel(titleString);
@@ -49,19 +69,72 @@ public class SanPhamDiaLog extends JDialog{
 
         JPanel pnlMain = new JPanel();
         pnlMain.setLayout(new BoxLayout(pnlMain, BoxLayout.Y_AXIS));
-        pnlMain.setBorder(new EmptyBorder(5, 10, 5, 10));
-        pnlMain.setPreferredSize(new Dimension(380, 1000)); // Chiều cao lớn hơn cửa sổ
-
-
+//        pnlMain.setBorder(new EmptyBorder(10, 10, 10, 10));
+        pnlMain.setPreferredSize(new Dimension(380, 500)); // Chiều cao lớn hơn cửa sổ
+        // Set pnlMain to take more width
+//        pnlMain.setPreferredSize(new Dimension(500, 600)); // Adjust width
+        pnlMain.setMaximumSize(new Dimension(500, Integer.MAX_VALUE)); // Expand height
+        
+        
+        JPanel panelRight = new JPanel();
+        panelRight.setLayout(new BoxLayout(panelRight, BoxLayout.Y_AXIS));
+//        panelRight.setMaximumSize(new Dimension(500, 200));
+        // Set panelRight (ComboBox group) to take up less width
+        panelRight.setPreferredSize(new Dimension(400, 500)); // Adjust width
+        panelRight.setMaximumSize(new Dimension(300, Integer.MAX_VALUE)); // Expand height
+        
         tfMaSP = new InputText("Mã sản phẩm");
         tfTenSP = new InputText("Tên sản phẩm");
         
-        
-        
+        cbxBrand = new SelectForm("Thương hiệu",brandBLL.getArrTenThuongHieu());
+        cbxBrand.setMaximumSize(new Dimension(Integer.MAX_VALUE , 60));
+        cbxRom = new SelectForm("ROM", romBLL.getArrKichThuoc());
+        cbxRom.setMaximumSize(new Dimension(Integer.MAX_VALUE , 60));
+        cbxRam = new SelectForm("RAM", ramBLL.getArrKichThuoc());
+        cbxRam.setMaximumSize(new Dimension(Integer.MAX_VALUE , 60));
+        cbxColor = new SelectForm("Màu sắc", colorBLL.getArrTenMauSac());
+        cbxColor.setMaximumSize(new Dimension(Integer.MAX_VALUE , 60));
         JButton btnChooseImage = new JButton("Chọn Ảnh"); 
         
         tfImg = new InputText("");
         tfImg.getTxtForm().setEditable(false);
+        tfImg.getTxtForm().getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                onTextChanged();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                onTextChanged();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                onTextChanged();  // This is usually for styled text, not plain text.
+            }
+
+            private void onTextChanged() {
+                    File file = new File(tfImg.getText());
+                    if (!file.exists()) {
+                        JOptionPane.showMessageDialog(null, "Tệp không tồn tại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                    } else {     
+                                
+                        try {
+                            BufferedImage originalImage = ImageIO.read(file);
+                            BufferedImage resizedImg = resizeImage(originalImage, 300, 300);
+                            lblIcon.setIcon(new ImageIcon(resizedImg));
+                        } catch (IOException ex) {
+                            Logger.getLogger(SanPhamDiaLog.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                                
+                            }
+            }
+        });
+        ImageIcon icon = new ImageIcon("scr/resources/img/1619198933.jpg");
+        Image img = icon.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH); // Resize
+        resizedIcon = new ImageIcon(img);
+        lblIcon = new JLabel(resizedIcon);
         btnChooseImage.addActionListener(e -> {
             JFileChooser fileChooser = new JFileChooser();
             fileChooser.setDialogTitle("Chọn ảnh sản phẩm");
@@ -81,7 +154,22 @@ public class SanPhamDiaLog extends JDialog{
                     Files.copy(selectedFile.toPath(), destFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
 
                     // Set the relative path to the text field
-                    tfImg.setText(destFolder + selectedFile.getName()); 
+                    
+                    tfImg.setText(destFolder + selectedFile.getName());  
+                    File file = new File(destFolder + selectedFile.getName());
+                            if (!file.exists()) {
+                                JOptionPane.showMessageDialog(null, "Tệp không tồn tại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                            } else {     
+                                
+                                try {
+                                    BufferedImage originalImage = ImageIO.read(file);
+                                    BufferedImage resizedImg = resizeImage(originalImage, 300, 300);
+                                    lblIcon.setIcon(new ImageIcon(resizedImg));
+                                } catch (IOException ex) {
+                                    Logger.getLogger(SanPhamDiaLog.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                
+                            }
                 } catch (IOException ex) {
                     ex.printStackTrace();
                     JOptionPane.showMessageDialog(null, "Lỗi khi sao chép ảnh!", "Lỗi", JOptionPane.ERROR_MESSAGE);
@@ -93,10 +181,8 @@ public class SanPhamDiaLog extends JDialog{
         tfSoLuong = new InputText("Số lượng");
         tfGiaNhap = new InputText("Giá nhập");
         tfGiaBan = new InputText("Giá bán");
-        tfMauSac = new InputText("Màu sắc");
-        tfThuongHieu = new InputText("Thương hiệu");
-        tfRam = new InputText("Ram");
-        tfRom = new InputText("Rom");
+      
+        
         tfChip = new InputText("Chip");
         tfThoiGianBaoHanh = new InputText("Thời gian bảo hành");
         
@@ -104,14 +190,19 @@ public class SanPhamDiaLog extends JDialog{
             tfMaSP = new InputText("Mã sản phẩm");
             tfMaSP.setText(String.valueOf(sanPham.getMaSP()));
             tfTenSP.setText(sanPham.getTenSP());
+            ImageIcon newIcon = new ImageIcon(sanPham.getImg()); // Load image               
+            Image newImg = newIcon.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH); // Resize
+            lblIcon.setIcon(new ImageIcon(newImg));     
             tfImg.setText(sanPham.getImg());
             tfSoLuong.setText(sanPham.getSoLuong()+"");
             tfGiaNhap.setText(sanPham.getGiaNhap()+"");
             tfGiaBan.setText(sanPham.getGiaBan()+"");
-            tfMauSac.setText(sanPham.getMauSac());
-            tfThuongHieu.setText(sanPham.getThuongHieu());
-            tfRam.setText(sanPham.getRam()+"");
-            tfRom.setText(sanPham.getRom()+"");
+            
+            cbxBrand.getCbb().setSelectedItem(sanPham.getThuongHieu());
+            cbxColor.getCbb().setSelectedItem(sanPham.getMauSac());
+            cbxRam.getCbb().setSelectedItem(sanPham.getRam()+"");
+            cbxRom.getCbb().setSelectedItem(sanPham.getRom()+"");
+                
             tfChip.setText(sanPham.getChip());
             tfThoiGianBaoHanh.setText(sanPham.getThoiGianBaoHanh()+"");
 
@@ -125,27 +216,40 @@ public class SanPhamDiaLog extends JDialog{
                 tfSoLuong.getTxtForm().setEditable(false);
                 tfGiaNhap.getTxtForm().setEditable(false);
                 tfGiaBan.getTxtForm().setEditable(false);
-                tfMauSac.getTxtForm().setEditable(false);
-                tfThuongHieu.getTxtForm().setEditable(false);
-                tfRam.getTxtForm().setEditable(false);
-                tfRom.getTxtForm().setEditable(false);
+                
+                cbxColor.getCbb().setEnabled(false);
+                cbxBrand.getCbb().setEnabled(false);
+                cbxRam.getCbb().setEnabled(false);
+                cbxRom.getCbb().setEnabled(false);
+                
                 tfChip.getTxtForm().setEditable(false);
                 tfThoiGianBaoHanh.getTxtForm().setEditable(false);
             }
         }
-
+        pnlMain.add(Box.createHorizontalGlue());
         pnlMain.add(tfTenSP);
         pnlMain.add(tfImg);
-        pnlMain.add(btnChooseImage);
+//        pnlMain.add(lblIcon);
+//        pnlMain.add(btnChooseImage);
         pnlMain.add(tfSoLuong);
         pnlMain.add(tfGiaNhap);
         pnlMain.add(tfGiaBan);
-        pnlMain.add(tfMauSac);
-        pnlMain.add(tfThuongHieu);
-        pnlMain.add(tfRam);
-        pnlMain.add(tfRom);
         pnlMain.add(tfChip);
         pnlMain.add(tfThoiGianBaoHanh);
+        
+        
+        panelRight.add(cbxColor);
+        panelRight.add(Box.createRigidArea(new Dimension(0,10)));
+        panelRight.add(cbxBrand);
+        panelRight.add(Box.createRigidArea(new Dimension(0,10)));
+        panelRight.add(cbxRam);
+        panelRight.add(Box.createRigidArea(new Dimension(0,10)));
+        panelRight.add(cbxRom);
+        panelRight.add(Box.createRigidArea(new Dimension(0,10)));
+        panelRight.add(tfImg);
+        panelRight.add(lblIcon);
+        panelRight.add(btnChooseImage);
+        pnlMain.add(panelRight);
 
         // Buttons
         JPanel pnlButtons = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -163,15 +267,38 @@ public class SanPhamDiaLog extends JDialog{
                     validateSanPham();
                     if (isSaved) {
                         if (sanPham != null) {
-                            sanPham.setTenSP(tfTenSP.getText());
+                            sanPham.setTenSP(tfTenSP.getText());    
+                            
+
+//                          Image newImg = newIcon.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH); // Resize            
+//                          ImageIcon newIcon = new ImageIcon(tfImg.getText());
+
+                            File file = new File(tfImg.getText());
+                            if (!file.exists()) {
+                                JOptionPane.showMessageDialog(null, "Tệp không tồn tại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                            } else {     
+                                
+                                try {
+                                    BufferedImage originalImage = ImageIO.read(file);
+                                    BufferedImage resizedImg = resizeImage(originalImage, 300, 300);
+                                    lblIcon.setIcon(new ImageIcon(resizedImg));
+                                } catch (IOException ex) {
+                                    Logger.getLogger(SanPhamDiaLog.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                
+                            }
+
+                            
                             sanPham.setImg(tfImg.getText());
                             sanPham.setSoLuong(Integer.parseInt(tfSoLuong.getText()));
                             sanPham.setGiaNhap(Integer.parseInt(tfGiaNhap.getText()));
                             sanPham.setGiaBan(Integer.parseInt(tfGiaBan.getText()));
-                            sanPham.setMauSac(tfMauSac.getText());
-                            sanPham.setThuongHieu(tfThuongHieu.getText());
-                            sanPham.setRam(Integer.parseInt(tfRam.getText()));
-                            sanPham.setRom(Integer.parseInt(tfRom.getText()));
+                            
+                            sanPham.setMauSac(cbxColor.getValue());
+                            sanPham.setThuongHieu(cbxBrand.getValue());
+                            sanPham.setRam(Integer.parseInt(cbxRam.getValue()));
+                            sanPham.setRom(Integer.parseInt(cbxRom.getValue()));
+                            
                             sanPham.setChip(tfChip.getText());
                             sanPham.setThoiGianBaoHanh(Float.parseFloat(tfThoiGianBaoHanh.getText()));
                         }
@@ -182,7 +309,26 @@ public class SanPhamDiaLog extends JDialog{
             });
             pnlButtons.add(btnSave);
         }
-        JScrollPane scrollPane = new JScrollPane(pnlMain);
+        
+//        JScrollPane mainScrollPane = new JScrollPane(pnlMain);
+//        mainScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+//        mainScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+//        
+//        mainScrollPane.getVerticalScrollBar().setUnitIncrement(16);
+//        mainScrollPane.getVerticalScrollBar().setBlockIncrement(50);
+        
+        
+        
+        // Add components horizontally
+        pnlContainer.add(pnlMain);
+        pnlContainer.add(Box.createHorizontalStrut(10)); // Spacing between panels
+        pnlContainer.add(panelRight);
+
+        // Add pnlContainer to the JFrame
+//        add(pnlContainer, BorderLayout.CENTER);
+        
+//        JScrollPane scrollPane = new JScrollPane(pnlMain);
+        JScrollPane scrollPane = new JScrollPane(pnlContainer);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         
@@ -193,9 +339,25 @@ public class SanPhamDiaLog extends JDialog{
         add(pnlContent, BorderLayout.NORTH);
         getContentPane().add(scrollPane, BorderLayout.CENTER);
         add(pnlButtons, BorderLayout.SOUTH);
-
+        
         // Configure the dialog
         setResizable(false); // Không cho phép thay đổi kích thước
+    }
+    
+    public static BufferedImage resizeImage(BufferedImage originalImage, int width, int height) {
+        BufferedImage resizedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2d = resizedImage.createGraphics();
+
+        // Kích hoạt chế độ khử răng cưa (anti-aliasing)
+        g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+        g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+        // Vẽ ảnh với chất lượng cao
+        g2d.drawImage(originalImage, 0, 0, width, height, null);
+        g2d.dispose();
+
+        return resizedImage;
     }
 
     public void validateSanPham() {
@@ -219,10 +381,13 @@ public class SanPhamDiaLog extends JDialog{
     public boolean isSaved() {
         return isSaved;
     }
-
+    
     public SanPhamDTO getSanPhamData(int maKH) {
         return new SanPhamDTO(maKH, tfTenSP.getText(), tfImg.getText(), Integer.parseInt(tfSoLuong.getText()),
-                Integer.parseInt(tfGiaNhap.getText()),Integer.parseInt(tfGiaBan.getText()) , tfMauSac.getText() , tfThuongHieu.getText() ,
-                Integer.parseInt(tfRam.getText()) , Integer.parseInt(tfRom.getText()) , tfChip.getText(), Float.parseFloat(tfThoiGianBaoHanh.getText()));
+                Integer.parseInt(tfGiaNhap.getText()),Integer.parseInt(tfGiaBan.getText()) , cbxColor.getValue() , cbxBrand.getValue(),
+                Integer.parseInt(cbxRam.getValue()) , Integer.parseInt(cbxRom.getValue()) , tfChip.getText(), Float.parseFloat(tfThoiGianBaoHanh.getText()));
     }
+    
 }
+
+
