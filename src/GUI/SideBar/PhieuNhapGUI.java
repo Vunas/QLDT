@@ -3,7 +3,9 @@ package GUI.SideBar;
 import BLL.BUS.ChiTietPhieuNhapBLL;
 import BLL.BUS.NhaCungCapBLL;
 import BLL.BUS.PhieuNhapBLL;
+import DAO.TaiKhoanDao;
 import DTO.ChiTietPhieuNhapDTO;
+import DTO.KhachHangDTO;
 import DTO.NhaCungCapDTO;
 import DTO.PhieuNhapDTO;
 import DTO.TaiKhoanDTO;
@@ -20,6 +22,9 @@ import javax.swing.table.JTableHeader;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PhieuNhapGUI extends JPanel {
@@ -87,6 +92,8 @@ public class PhieuNhapGUI extends JPanel {
 
    private void chucNang(){
     JButton[] btn = topNav.getBtn();
+    JButton reFresh = topNav.getBtnRefresh();
+    JTextField textSearch = topNav.getTextSearch();
     btn[1].setVisible(false);
     btn[0].addActionListener(new ActionListener(){
         @Override
@@ -118,6 +125,7 @@ public class PhieuNhapGUI extends JPanel {
                     int maPN = Integer.parseInt(tbmtb1.getValueAt(selectedRow, 0).toString());
                     new ChiTietPhieuNhapBLL().deleteChiTietPhieuNhap(maPN);
                     new PhieuNhapBLL().deletePhieuNhap(maPN);
+                    loaddata();
                     JOptionPane.showMessageDialog(null, "Xóa thành công");
                 }
             }
@@ -126,10 +134,87 @@ public class PhieuNhapGUI extends JPanel {
             }
     }
      });
+     reFresh.addActionListener(new ActionListener(){
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            topNav.getFindFor().setSelectedIndex(0);
+            topNav.getTextSearch().setText("");
+            loaddata();
+        }
+     });
+     
+     textSearch.addKeyListener(new KeyAdapter() {
+    @Override
+    public void keyReleased(KeyEvent e) {
+        String type = topNav.getFindFor().getSelectedItem().toString().toLowerCase();
+        String keyword = textSearch.getText().trim();
+        
+        List<PhieuNhapDTO> list = new PhieuNhapBLL().getAllPhieuNhap();
+
+        // Tạo danh sách kết quả để lưu khách hàng phù hợp
+        List<PhieuNhapDTO> filteredList = new ArrayList<>();
+        NhaCungCapDTO tenNCC;
+        TaiKhoanDTO taikhoanhientai = TaiKhoanDTO.getTaiKhoanHienTai();
+        
+        // Lọc dữ liệu theo tiêu chí tìm kiếm
+        for (PhieuNhapDTO pn : list) {
+            tenNCC = new NhaCungCapBLL().getNhaCungCapById(pn.getMaNhaCungCap());
+            
+            boolean isMatch = false;
+            switch (type.toLowerCase()) {
+                case "tất cả":
+                    // Lọc tất cả các tiêu chí
+                    if (String.valueOf(pn.getMaPhieuNhap()).toLowerCase().contains(keyword.toLowerCase()) ||
+                        tenNCC.getTen().toLowerCase().contains(keyword.toLowerCase()) ||
+                        taikhoanhientai.getTenDangNhap().toLowerCase().contains(keyword.toLowerCase())) {
+                        isMatch = true;
+                    }
+                    break;
+                case "mã phiếu nhập":
+                    if (String.valueOf(pn.getMaPhieuNhap()).toLowerCase().contains(keyword.toLowerCase())) {
+                        isMatch = true;
+                    }
+                    break;
+                case "nhà cung cấp":
+                    if (tenNCC.getTen().toLowerCase().contains(keyword.toLowerCase())) {
+                        isMatch = true;
+                    }
+                    break;
+                case "nhân viên nhập":
+                    if (taikhoanhientai.getTenDangNhap().toLowerCase().contains(keyword.toLowerCase())) {
+                        isMatch = true;
+                    }
+                    break;
+            }
+
+            // Nếu có kết quả phù hợp, thêm vào danh sách lọc
+            if (isMatch) {
+                filteredList.add(pn);
+            }
+        }
+
+        // Cập nhật lại bảng với dữ liệu đã lọc
+        tbmtb1.setRowCount(0); // Xóa dữ liệu cũ trên bảng
+        for (PhieuNhapDTO pn : filteredList) {
+            NhaCungCapDTO ncc = new NhaCungCapBLL().getNhaCungCapById(pn.getMaNhaCungCap());
+            TaiKhoanDTO taiKhoan = TaiKhoanDTO.getTaiKhoanHienTai();
+            
+            int tongtien = 0;
+            List<ChiTietPhieuNhapDTO> ctpn = new ChiTietPhieuNhapBLL().getChiTietPhieuNhapByPhieuNhap(pn.getMaPhieuNhap());
+            for (ChiTietPhieuNhapDTO ct : ctpn) {
+                tongtien += ct.getDonGia() * ct.getSoLuong();
+            }
+            tbmtb1.addRow(new Object[]{pn.getMaPhieuNhap(), ncc.getTen(), taiKhoan.getTenDangNhap(), pn.getNgayNhap(), tongtien});
+        }
+    }
+});
+
+     
 }
 
     private void loaddata() {
         List<PhieuNhapDTO> list = new PhieuNhapBLL().getAllPhieuNhap();
+        tbmtb1.setRowCount(0);
         for (PhieuNhapDTO pn : list) {
             NhaCungCapDTO ncc = new NhaCungCapBLL().getNhaCungCapById(pn.getMaNhaCungCap());
             TaiKhoanDTO taiKhoan = TaiKhoanDTO.getTaiKhoanHienTai();
@@ -139,7 +224,6 @@ public class PhieuNhapGUI extends JPanel {
             for (ChiTietPhieuNhapDTO ct : ctpn) {
                 tongtien += ct.getDonGia() * ct.getSoLuong();
             }
-            
             tbmtb1.addRow(new Object[]{pn.getMaPhieuNhap(), ncc.getTen(), taiKhoan.getTenDangNhap(), pn.getNgayNhap(), tongtien});
         }
     }

@@ -91,19 +91,20 @@ public class PhieuNhapDao {
       return false;
   }
   
-    public int getMaPhieuNhap() {
-        String sql = "SELECT MAX(maPhieuNhap) AS maxMa FROM phieunhap";
-        try (Connection conn = JdbcUtil.getConnection()){
-             PreparedStatement stmt = conn.prepareStatement(sql);
-             ResultSet rs = stmt.executeQuery();
+   public int getMaPhieuNhap() {
+    String sql = "SHOW TABLE STATUS WHERE Name = 'phieunhap'";
 
-            if (rs.next()) {
-                int mapn=rs.getInt("maxMa")+1;
-                return mapn;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+    try (Connection conn = JdbcUtil.getConnection();
+         PreparedStatement stmt = conn.prepareStatement(sql);
+         ResultSet rs = stmt.executeQuery()) {
+
+        if (rs.next()) {
+            return rs.getInt("Auto_increment"); // Lấy giá trị tiếp theo của AUTO_INCREMENT
         }
-        return -1; // Nếu không có phiếu nhập nào
+    } catch (Exception e) {
+        e.printStackTrace();
     }
+    return -1;
+
+}
 }
