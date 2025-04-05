@@ -3,6 +3,7 @@ package GUI.pages;
 
 import java.awt.*;
 import javax.swing.*;
+import javax.swing.border.MatteBorder;
 
 import GUI.DiaLog.DungLuongRamDialog;
 import GUI.DiaLog.DungLuongRomDialog;
@@ -116,8 +117,14 @@ public class ThuocTinhGUI extends JPanel {
     public void initPadding() {
 
         pnlBorder1 = new JPanel();
-        pnlBorder1.setPreferredSize(new Dimension(0, 40));
+        pnlBorder1.setPreferredSize(new Dimension(0, 150));
         pnlBorder1.setBackground(BackgroundColor);
+
+        JLabel lblContent = new JLabel("Vui lòng chọn thuộc tính!");
+        lblContent.putClientProperty("FlatLaf.style", "font: 300% $medium.font");
+        lblContent.setBorder(new MatteBorder(0, 0, 3, 0, new Color(100, 149, 237)));
+        
+        pnlBorder1.add(lblContent);
         this.add(pnlBorder1, BorderLayout.NORTH);
 
         pnlBorder2 = new JPanel();

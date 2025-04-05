@@ -69,6 +69,7 @@ public class TrangChuGUI extends JPanel {
         JLabel lblHeaderTitle = new JLabel("Phone Store - Trang Chủ");
         lblHeaderTitle.setFont(new Font("Poppins", Font.BOLD, 32));
         pnlHeader.setBorder(new EmptyBorder(25, 10, 10, 10));
+        pnlHeader.setBackground(Color.WHITE);
         pnlHeader.add(lblHeaderTitle);
 
         // Content Panel
