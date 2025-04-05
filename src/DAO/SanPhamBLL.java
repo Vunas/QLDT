@@ -80,7 +80,7 @@ public class SanPhamBLL {
     }
     
     public SanPhamDTO getSanPhamById(int maSP) {
-        String query = "SELECT * FROM SanPham WHERE maSP = ?";
+        String query = "SELECT * FROM sanpham WHERE maSP = ?";
         try (Connection conn = JdbcUtil.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
     
