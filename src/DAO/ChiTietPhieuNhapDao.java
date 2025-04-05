@@ -27,7 +27,8 @@ public class ChiTietPhieuNhapDao {
             stmt.setInt(3, ctpn.getMaPhieuNhap());
             stmt.setInt(4, ctpn.getMaSanPham());
             int check = stmt.executeUpdate();
-            return check>0;      
+            if( check>0)
+            return true;      
         } catch (Exception e) {
             e.printStackTrace();
         }

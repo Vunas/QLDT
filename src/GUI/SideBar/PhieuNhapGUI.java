@@ -26,6 +26,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
+import util.ExportExcelUtility;
 
 public class PhieuNhapGUI extends JPanel {
     private TopNav topNav;
@@ -134,6 +135,14 @@ public class PhieuNhapGUI extends JPanel {
             }
     }
      });
+     
+     btn[5].addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            ExportExcelUtility.saveTableToExcel(tbl, "Phiếu Nhập");
+       }
+     });
+     
      reFresh.addActionListener(new ActionListener(){
         @Override
         public void actionPerformed(ActionEvent e) {
