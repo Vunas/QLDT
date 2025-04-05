@@ -1,8 +1,7 @@
-package GUI.Component;
+package GUI.Panel.Component;
 
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import java.awt.*;
-import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 

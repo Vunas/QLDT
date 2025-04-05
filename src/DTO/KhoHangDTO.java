@@ -1,14 +1,16 @@
 package DTO;
 
 public class KhoHangDTO {
-    int maKho;
-    String tenKho;
-    String diaChi;
-    
-    public KhoHangDTO(int maKho, String tenKho, String diaChi) {
+    private int maKho;
+    private String tenKho;
+    private String diaChi;
+    private int trangThai; // Trạng thái (0: xóa mềm, 1: còn hiệu lực)
+
+    public KhoHangDTO(int maKho, String tenKho, String diaChi, int trangThai) {
         this.maKho = maKho;
         this.tenKho = tenKho;
         this.diaChi = diaChi;
+        this.trangThai = trangThai;
     }
 
     public int getMaKho() {
@@ -35,5 +37,13 @@ public class KhoHangDTO {
         this.diaChi = diaChi;
     }
 
-    
+    public int getTrangThai() {
+        return trangThai;
+    }
+
+    public void setTrangThai(int trangThai) {
+        this.trangThai = trangThai;
+    }
+
+
 }

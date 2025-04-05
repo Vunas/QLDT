@@ -143,7 +143,7 @@ public class TaiKhoanDialog extends JDialog {
     }
 
     public TaiKhoanDTO getTaiKhoanData() {
-        return new TaiKhoanDTO(Integer.parseInt(tfMaNV.getText()), tfTenDangNhap.getText(), matKhau == null? tfMatKhau.getPassWord() : matKhau, Integer.parseInt(tfMaQuyen.getText()));
+        return new TaiKhoanDTO(Integer.parseInt(tfMaNV.getText()), tfTenDangNhap.getText(), matKhau == null? tfMatKhau.getPassWord() : matKhau, Integer.parseInt(tfMaQuyen.getText()),1);
     }
 
     private JTable createTableNVChuaCoTK() {

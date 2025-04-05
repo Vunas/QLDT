@@ -4,12 +4,15 @@ public class QuyenDTO {
     private int maQuyen; // Mã quyền
     private String tenQuyen; // Tên quyền
     private String danhSachChucNang; // Danh sách chức năng
+    private int trangThai; 
 
-    public QuyenDTO(){}
+    // Constructor không tham số
+    public QuyenDTO() {}
 
-    public QuyenDTO(String tenQuyen, String danhSachChucNang) {
-        this.tenQuyen = tenQuyen;
+    // Constructor có tham số
+    public QuyenDTO(String tenQuyen, String danhSachChucNang, int trangThai){
         this.danhSachChucNang = danhSachChucNang;
+        this.trangThai = trangThai;
     }
 
     // Các phương thức getter và setter
@@ -35,5 +38,13 @@ public class QuyenDTO {
 
     public void setDanhSachChucNang(String danhSachChucNang) {
         this.danhSachChucNang = danhSachChucNang;
+    }
+
+    public int getTrangThai() {
+        return trangThai;
+    }
+
+    public void setTrangThai(int trangThai) {
+        this.trangThai = trangThai;
     }
 }

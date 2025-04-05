@@ -119,6 +119,6 @@ public class KhoHangDialog extends JDialog {
     }
 
     public KhoHangDTO getKhoHangData(int maKho) {
-        return new KhoHangDTO(maKho, tfTenKho.getText(), tfDiaChi.getText());
+        return new KhoHangDTO(maKho, tfTenKho.getText(), tfDiaChi.getText(),1);
     }
 }

@@ -1,6 +1,4 @@
-
 package DTO;
-
 
 public class SanPhamDTO {
     private int maSP;
@@ -15,10 +13,11 @@ public class SanPhamDTO {
     private int Rom;
     private String Chip;
     private float thoiGianBaoHanh;
+    private int trangThai; // Trạng thái (0: xóa mềm, 1: còn hiệu lực)
 
-    public SanPhamDTO(){}
-    
-    public SanPhamDTO(int maSP, String tenSP, String img, int soLuong, int giaNhap, int giaBan, String mauSac, String thuongHieu, int Ram, int Rom, String Chip, float thoiGianBaoHanh) {
+    public SanPhamDTO() {}
+
+    public SanPhamDTO(int maSP, String tenSP, String img, int soLuong, int giaNhap, int giaBan, String mauSac, String thuongHieu, int Ram, int Rom, String Chip, float thoiGianBaoHanh, int trangThai) {
         this.maSP = maSP;
         this.tenSP = tenSP;
         this.img = img;
@@ -31,6 +30,7 @@ public class SanPhamDTO {
         this.Rom = Rom;
         this.Chip = Chip;
         this.thoiGianBaoHanh = thoiGianBaoHanh;
+        this.trangThai = trangThai;
     }
 
     public int getMaSP() {
@@ -129,10 +129,12 @@ public class SanPhamDTO {
         this.thoiGianBaoHanh = thoiGianBaoHanh;
     }
 
-    @Override
-    public String toString() {
-        return "SanPhamDTO{" + "maSP=" + maSP + ", tenSP=" + tenSP + ", img=" + img + ", soLuong=" + soLuong + ", giaNhap=" + giaNhap + ", giaBan=" + giaBan + ", mauSac=" + mauSac + ", thuongHieu=" + thuongHieu + ", Ram=" + Ram + ", Rom=" + Rom + ", Chip=" + Chip + ", thoiGianBaoHanh=" + thoiGianBaoHanh + '}';
+    public int getTrangThai() {
+        return trangThai;
     }
-    
-    
+
+    public void setTrangThai(int trangThai) {
+        this.trangThai = trangThai;
+    }
+
 }

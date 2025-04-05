@@ -5,16 +5,18 @@ public class KhachHangDTO {
     private String hoTen;
     private String diaChi;
     private String sdt;
+    private int trangThai; 
 
     // Constructor
-    public KhachHangDTO(int maKH, String hoTen, String diaChi, String sdt) {
+    public KhachHangDTO(int maKH, String hoTen, String diaChi, String sdt, int trangThai) {
         this.maKH = maKH;
         this.hoTen = hoTen;
         this.diaChi = diaChi;
         this.sdt = sdt;
+        this.trangThai = trangThai;
     }
 
-    // Getters and Setters
+    // Getters và Setters
     public int getMaKH() {
         return maKH;
     }
@@ -45,5 +47,13 @@ public class KhachHangDTO {
 
     public void setSdt(String sdt) {
         this.sdt = sdt;
+    }
+
+    public int getTrangThai() {
+        return trangThai;
+    }
+
+    public void setTrangThai(int trangThai) {
+        this.trangThai = trangThai;
     }
 }

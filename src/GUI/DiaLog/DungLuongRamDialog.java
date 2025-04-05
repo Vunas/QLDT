@@ -4,16 +4,14 @@
  */
 package GUI.DiaLog;
 
-import java.util.Collections;
 import BLL.BUS.RamBLL;
-import BLL.BUS.QuyenBLL;
 import DAO.RamDao;
 import DTO.ThuocTinhSanPham.RamDTO;
-import GUI.Component.ButtonCustom;
-import GUI.Component.HeaderTitle;
-import GUI.Component.InputForm;
-import GUI.Component.NumericDocumentFilter;
-import GUI.SideBar.ThuocTinhGUI;
+import GUI.Panel.Component.ButtonCustom;
+import GUI.Panel.Component.HeaderTitle;
+import GUI.Panel.Component.NumericDocumentFilter;
+import GUI.Panel.InputType.InputForm;
+import GUI.pages.ThuocTinhGUI;
 import util.Validation;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -47,7 +45,7 @@ public final class DungLuongRamDialog extends JDialog implements MouseListener {
     RamBLL dlrBUS = new RamBLL();
     ArrayList<RamDTO> list = dlrBUS.getAll();
     ThuocTinhGUI qltt;
-    private final QuyenBLL nhomquyenBus = new QuyenBLL();
+    // private final QuyenBLL nhomquyenBus = new QuyenBLL();
 
     public DungLuongRamDialog(JFrame owner, ThuocTinhGUI qltt, String title, boolean modal) {
         super(owner, title, modal);

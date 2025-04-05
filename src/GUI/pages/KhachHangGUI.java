@@ -1,4 +1,4 @@
-package GUI.SideBar;
+package GUI.pages;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -114,7 +114,7 @@ public class KhachHangGUI extends JPanel {
                 String sdt = (String) tbl.getValueAt(selectedRow, 3);
 
                 // Tạo đối tượng DTO từ dữ liệu bảng
-                KhachHangDTO kh = new KhachHangDTO(maKH, hoTen, diaChi, sdt);
+                KhachHangDTO kh = new KhachHangDTO(maKH, hoTen, diaChi, sdt,1);
 
                 // Hiển thị JDialog KhachHangDiaLog
                 JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(KhachHangGUI.this);
@@ -173,7 +173,7 @@ public class KhachHangGUI extends JPanel {
                 String sdt = (String) tbl.getValueAt(selectedRow, 3);
 
                 // Create a KhachHangDTO object
-                KhachHangDTO khachHang = new KhachHangDTO(maKH, hoTen, diaChi, sdt);
+                KhachHangDTO khachHang = new KhachHangDTO(maKH, hoTen, diaChi, sdt,1);
 
                 // Open KhachHangDiaLog in "Xem chi tiết" mode
                 JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(KhachHangGUI.this);

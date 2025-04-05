@@ -1,13 +1,13 @@
 package GUI.DiaLog;
 
-import BLL.BUS.QuyenBLL;
+// import BLL.BUS.QuyenBLL;
 import BLL.BUS.BrandBLL;
 import DAO.BrandDao;
 import DTO.ThuocTinhSanPham.BrandDTO;
-import GUI.Component.ButtonCustom;
-import GUI.Component.HeaderTitle;
-import GUI.Component.InputForm;
-import GUI.SideBar.ThuocTinhGUI;
+import GUI.Panel.Component.ButtonCustom;
+import GUI.Panel.Component.HeaderTitle;
+import GUI.Panel.InputType.InputForm;
+import GUI.pages.ThuocTinhGUI;
 import util.Validation;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -17,7 +17,6 @@ import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
-import java.util.Comparator;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -45,7 +44,7 @@ public final class ThuongHieuDialog extends JDialog implements MouseListener {
     BrandBLL thBUS = new BrandBLL();
     ArrayList<BrandDTO> list = thBUS.getAll();
     ThuocTinhGUI qltt;
-    private final QuyenBLL nhomquyenBus = new QuyenBLL();
+    // private final QuyenBLL nhomquyenBus = new QuyenBLL();
 
     public ThuongHieuDialog(JFrame owner, ThuocTinhGUI qlttsp, String title, boolean modal) {
         super(owner, title, modal);

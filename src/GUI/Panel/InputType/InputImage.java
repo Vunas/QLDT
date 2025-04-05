@@ -1,5 +1,5 @@
 
-package GUI.Component;
+package GUI.Panel.InputType;
 
 import java.awt.Color;
 import java.awt.Dimension;

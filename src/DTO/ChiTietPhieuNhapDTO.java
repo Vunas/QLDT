@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package DTO;
 
 /**
@@ -14,16 +10,18 @@ public class ChiTietPhieuNhapDTO {
     private int donGia;
     private int maPhieuNhap;
     private int maSanPham;
+    private int trangThai; // Trạng thái (0: xóa mềm, 1: còn hiệu lực)
 
     public ChiTietPhieuNhapDTO() {
     }
 
-    public ChiTietPhieuNhapDTO(int maCTPhieuNhap, int soLuong, int donGia, int maPhieuNhap, int maSanPham) {
+    public ChiTietPhieuNhapDTO(int maCTPhieuNhap, int soLuong, int donGia, int maPhieuNhap, int maSanPham, int trangThai) {
         this.maCTPhieuNhap = maCTPhieuNhap;
         this.soLuong = soLuong;
         this.donGia = donGia;
         this.maPhieuNhap = maPhieuNhap;
         this.maSanPham = maSanPham;
+        this.trangThai = trangThai;
     }
 
     public int getMaCTPhieuNhap() {
@@ -46,6 +44,10 @@ public class ChiTietPhieuNhapDTO {
         return maSanPham;
     }
 
+    public int getTrangThai() {
+        return trangThai;
+    }
+
     public void setMaCTPhieuNhap(int maCTPhieuNhap) {
         this.maCTPhieuNhap = maCTPhieuNhap;
     }
@@ -65,6 +67,9 @@ public class ChiTietPhieuNhapDTO {
     public void setMaSanPham(int maSanPham) {
         this.maSanPham = maSanPham;
     }
-    
-    
+
+    public void setTrangThai(int trangThai) {
+        this.trangThai = trangThai;
+    }
+
 }

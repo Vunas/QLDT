@@ -1,7 +1,6 @@
 
-package GUI.Component;
+package GUI.Panel.Component;
 
-import java.awt.Color;
 import java.awt.GridLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;

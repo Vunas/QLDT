@@ -1,4 +1,4 @@
-package GUI.SideBar;
+package GUI.pages;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -8,34 +8,33 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.time.LocalDate;
+import java.util.List;
 
-import BLL.BUS.NhanVienBLL;
-import DTO.NhanVienDTO;
-import GUI.DiaLog.NhanVienDialog;
+import BLL.BUS.NhaCungCapBLL;
+import DTO.NhaCungCapDTO;
+import GUI.DiaLog.NhaCungCapDiaLog;
 import GUI.Panel.TopNav;
 import util.ExportExcelUtility;
 
 import java.awt.*;
-import java.util.List;
 
-public class NhanVienGUI extends JPanel {
+public class NhaCungCapGUI extends JPanel {
     TopNav topNav;
     JPanel pnlBot;
     JTable tbl;
-    NhanVienBLL nhanVienBLL;
+    NhaCungCapBLL nhaCungCapBLL;
 
-    public NhanVienGUI(TopNav topNav) {
-        nhanVienBLL = new NhanVienBLL();
+    public NhaCungCapGUI(TopNav topNav) {
+        nhaCungCapBLL = new NhaCungCapBLL();
         initComponent(topNav);
         chucNang();
         addSearchFunctionality();
-        loadData(nhanVienBLL.getAllNhanVien());
+        loadData(nhaCungCapBLL.getAllNhaCungCap());
     }
 
     private void initComponent(TopNav topNav) {
         this.topNav = topNav;
-        String[] itemFindFor = { "Tất Cả", "Theo tên", "Theo SDT" };
+        String[] itemFindFor = { "Tất Cả", "Theo Tên", "Theo SDT" };
         topNav.setItemComboBox(itemFindFor);
 
         // Panel dưới
@@ -64,7 +63,7 @@ public class NhanVienGUI extends JPanel {
         pnlBot.setBorder(new EmptyBorder(10, 15, 10, 15));
         pnlBot.add(scrollPane, BorderLayout.CENTER);
 
-        // Thiết lập layout cho NhanVien
+        // Thiết lập layout cho NhaCungCap
         this.setLayout(new BorderLayout());
         this.add(topNav, BorderLayout.NORTH);
         this.add(pnlBot, BorderLayout.CENTER);
@@ -72,60 +71,61 @@ public class NhanVienGUI extends JPanel {
 
     private void chucNang() {
         JButton[] btn = topNav.getBtn();
+
+        // Add new supplier
         btn[0].addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(NhanVienGUI.this);
-                NhanVienDialog dialog = new NhanVienDialog(parentFrame, 0, null, null, 0, null, "Thêm Nhân Viên");
+                JFrame owner = (JFrame) SwingUtilities.getWindowAncestor(NhaCungCapGUI.this);
+                NhaCungCapDiaLog dialog = new NhaCungCapDiaLog(owner, null, "Thêm Nhà Cung Cấp");
                 dialog.setVisible(true);
 
                 if (dialog.isSaved()) {
                     try {
                         // Assign a new unique ID
-                        int maNV = nhanVienBLL.generateNewId();
-                        NhanVienDTO newNhanVien = dialog.getDataNhanVienDTO(maNV);
-                        if (nhanVienBLL.addNhanVien(newNhanVien)) {
-                            JOptionPane.showMessageDialog(null, "Thêm nhân viên thành công!");
-                            loadData(nhanVienBLL.getAllNhanVien());
+                        int maNCC = nhaCungCapBLL.generateNewId();
+                        NhaCungCapDTO newNhaCungCap = dialog.getNhaCungCapData(maNCC);
+                        if (nhaCungCapBLL.addNhaCungCap(newNhaCungCap)) {
+                            JOptionPane.showMessageDialog(null, "Thêm nhà cung cấp thành công!");
+                            loadData(nhaCungCapBLL.getAllNhaCungCap());
                         } else {
-                            JOptionPane.showMessageDialog(null, "Thêm nhân viên thất bại!");
+                            JOptionPane.showMessageDialog(null, "Thêm nhà cung cấp thất bại!");
                         }
                     } catch (Exception ex) {
-                        JOptionPane.showMessageDialog(null, "Lỗi khi thêm nhân viên: " + ex.getMessage());
+                        JOptionPane.showMessageDialog(null, "Lỗi khi thêm nhà cung cấp: " + ex.getMessage());
                     }
                 }
             }
         });
 
+        // Edit supplier
         btn[1].addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int selectedRow = tbl.getSelectedRow();
                 if (selectedRow == -1) {
-                    JOptionPane.showMessageDialog(null, "Hãy chọn một nhân viên để sửa!");
+                    JOptionPane.showMessageDialog(null, "Hãy chọn một nhà cung cấp để sửa!");
                     return;
                 }
 
-                // Lấy dữ liệu nhân viên từ bảng
-                int maNV = (int) tbl.getValueAt(selectedRow, 0);
-                String hoTen = (String) tbl.getValueAt(selectedRow, 1);
-                String ngaySinhStr = (String) tbl.getValueAt(selectedRow, 2);
-                LocalDate ngaySinh = LocalDate.parse(ngaySinhStr);
-                int gioiTinh = "Nam".equals(tbl.getValueAt(selectedRow, 3)) ? 0 : 1;
-                String sDT = (String) tbl.getValueAt(selectedRow, 4);
+                // Retrieve supplier data from the table
+                int maNCC = (int) tbl.getValueAt(selectedRow, 0);
+                String ten = (String) tbl.getValueAt(selectedRow, 1);
+                String diaChi = (String) tbl.getValueAt(selectedRow, 2);
+                String sDT = (String) tbl.getValueAt(selectedRow, 3);
 
-                // Hiển thị JDialog NhanVienDialog
-                JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(NhanVienGUI.this);
-                NhanVienDialog dialog = new NhanVienDialog(parentFrame, maNV, hoTen, ngaySinh, gioiTinh, sDT,
-                        "Chỉnh Sửa Nhân Viên");
+                // Show NhaCungCapDiaLog dialog
+                JFrame owner = (JFrame) SwingUtilities.getWindowAncestor(NhaCungCapGUI.this);
+                NhaCungCapDiaLog dialog = new NhaCungCapDiaLog(owner, new NhaCungCapDTO(maNCC, ten, diaChi, sDT,1),
+                        "Chỉnh Sửa Nhà Cung Cấp");
                 dialog.setVisible(true);
 
-                // Sau khi dialog đóng, cập nhật dữ liệu
+                // Update supplier data if the dialog is saved
                 if (dialog.isSaved()) {
-                    NhanVienDTO updatedNhanVien = dialog.getDataNhanVienDTO(maNV);
-                    if (nhanVienBLL.updateNhanVien(updatedNhanVien)) {
-                        JOptionPane.showMessageDialog(null, "Cập nhật thông tin nhân viên thành công!");
-                        loadData(nhanVienBLL.getAllNhanVien()); // Tải lại bảng
+                    NhaCungCapDTO updatedNhaCungCap = dialog.getNhaCungCapData(maNCC);
+                    if (nhaCungCapBLL.updateNhaCungCap(updatedNhaCungCap)) {
+                        JOptionPane.showMessageDialog(null, "Cập nhật thông tin nhà cung cấp thành công!");
+                        loadData(nhaCungCapBLL.getAllNhaCungCap());
                     } else {
                         JOptionPane.showMessageDialog(null, "Cập nhật thông tin thất bại!");
                     }
@@ -133,56 +133,58 @@ public class NhanVienGUI extends JPanel {
             }
         });
 
+        // Delete supplier
         btn[2].addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int selectedRow = tbl.getSelectedRow();
                 if (selectedRow == -1) {
-                    JOptionPane.showMessageDialog(null, "Hãy chọn một nhân viên để xóa!");
+                    JOptionPane.showMessageDialog(null, "Hãy chọn một nhà cung cấp để xóa!");
                     return;
                 }
 
-                int maNV = (int) tbl.getValueAt(selectedRow, 0);
+                int maNCC = (int) tbl.getValueAt(selectedRow, 0);
 
-                int confirm = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn xóa nhân viên này?",
-                        "Xóa Nhân Viên", JOptionPane.YES_NO_OPTION);
+                int confirm = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn xóa nhà cung cấp này?",
+                        "Xóa Nhà Cung Cấp", JOptionPane.YES_NO_OPTION);
                 if (confirm == JOptionPane.YES_OPTION) {
-                    if (nhanVienBLL.deleteNhanVien(maNV)) {
-                        JOptionPane.showMessageDialog(null, "Xóa nhân viên thành công!");
-                        loadData(nhanVienBLL.getAllNhanVien());
+                    if (nhaCungCapBLL.deleteNhaCungCap(maNCC)) {
+                        JOptionPane.showMessageDialog(null, "Xóa nhà cung cấp thành công!");
+                        loadData(nhaCungCapBLL.getAllNhaCungCap());
                     } else {
-                        JOptionPane.showMessageDialog(null, "Xóa nhân viên thất bại!");
+                        JOptionPane.showMessageDialog(null, "Xóa nhà cung cấp thất bại!");
                     }
                 }
             }
         });
 
+        // View supplier details
         btn[3].addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int selectedRow = tbl.getSelectedRow();
                 if (selectedRow == -1) {
-                    JOptionPane.showMessageDialog(null, "Hãy chọn một nhân viên để xem chi tiết!");
+                    JOptionPane.showMessageDialog(null, "Hãy chọn một nhà cung cấp để xem chi tiết!");
                     return;
                 }
 
-                int maNV = (int) tbl.getValueAt(selectedRow, 0);
-                String hoTen = (String) tbl.getValueAt(selectedRow, 1);
-                String ngaySinhStr = (String) tbl.getValueAt(selectedRow, 2);
-                LocalDate ngaySinh = LocalDate.parse(ngaySinhStr);
-                int gioiTinh = "Nam".equals(tbl.getValueAt(selectedRow, 3)) ? 0 : 1;
-                String sDT = (String) tbl.getValueAt(selectedRow, 4);
+                int maNCC = (int) tbl.getValueAt(selectedRow, 0);
+                String ten = (String) tbl.getValueAt(selectedRow, 1);
+                String diaChi = (String) tbl.getValueAt(selectedRow, 2);
+                String sDT = (String) tbl.getValueAt(selectedRow, 3);
 
-                JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(NhanVienGUI.this);
-                NhanVienDialog dialog = new NhanVienDialog(parentFrame, maNV, hoTen, ngaySinh, gioiTinh, sDT,
+                JFrame owner = (JFrame) SwingUtilities.getWindowAncestor(NhaCungCapGUI.this);
+                NhaCungCapDiaLog dialog = new NhaCungCapDiaLog(owner, new NhaCungCapDTO(maNCC, ten, diaChi, sDT,1),
                         "Xem chi tiết");
                 dialog.setVisible(true);
             }
         });
+
+        // Export to Excel
         btn[5].addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ExportExcelUtility.saveTableToExcel(tbl, "Nhân viên");
+                ExportExcelUtility.saveTableToExcel(tbl, "Nhà cung cấp");
             }
         });
     }
@@ -197,7 +199,7 @@ public class NhanVienGUI extends JPanel {
                 String type = topNav.getFindFor().getSelectedItem().toString().toLowerCase();
                 String keyword = textSearch.getText().trim();
 
-                loadData(nhanVienBLL.getnhanVienByNameSearch(keyword, type));
+                loadData(nhaCungCapBLL.getNhaCungCapByNameSearch(keyword, type));
             }
         });
 
@@ -206,24 +208,23 @@ public class NhanVienGUI extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 topNav.getFindFor().setSelectedIndex(0);
                 textSearch.setText(""); // Xóa từ khóa tìm kiếm
-                loadData(nhanVienBLL.getAllNhanVien()); // Tải lại toàn bộ dữ liệu
+                loadData(nhaCungCapBLL.getAllNhaCungCap()); // Tải lại toàn bộ dữ liệu
             }
         });
     }
-    
-    private void loadData(List<NhanVienDTO> nhanVienList) {
-        // Lấy danh sách tất cả nhân viên từ BLL
-        String[] columnNames = { "Mã NV", "Họ Tên", "Ngày Sinh", "Giới Tính", "SĐT" };
+
+    private void loadData(List<NhaCungCapDTO> nhaCungCapList) {
+        // Lấy danh sách tất cả nhà cung cấp từ BLL
+        String[] columnNames = { "Mã NCC", "Tên", "Địa Chỉ", "SĐT" };
         DefaultTableModel model = new DefaultTableModel(columnNames, 0);
 
-        // Thêm dữ liệu từ danh sách nhân viên vào bảng
-        for (NhanVienDTO nv : nhanVienList) {
+        // Thêm dữ liệu từ danh sách nhà cung cấp vào bảng
+        for (NhaCungCapDTO ncc : nhaCungCapList) {
             Object[] rowData = {
-                    nv.getMaNV(),
-                    nv.getHoTen(),
-                    nv.getNgaySinh().toString(),
-                    nv.getGioiTinh() == 0 ? "Nam" : "Nữ",
-                    nv.getSDT()
+                    ncc.getMaNhaCungCap(),
+                    ncc.getTen(),
+                    ncc.getDiaChi(),
+                    ncc.getsDT()
             };
             model.addRow(rowData);
         }
@@ -231,5 +232,4 @@ public class NhanVienGUI extends JPanel {
         // Gán model mới vào bảng
         tbl.setModel(model);
     }
-
 }

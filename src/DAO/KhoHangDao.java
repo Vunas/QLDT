@@ -14,12 +14,13 @@ public class KhoHangDao {
 
     // Thêm kho hàng mới
     public boolean addKhoHang(KhoHangDTO khoHang) {
-        String sql = "INSERT INTO kho_hang (tenKho, diaChi) VALUES (?, ?)";
+        String sql = "INSERT INTO kho_hang (tenKho, diaChi, trangthai) VALUES (?, ?, ?)";
         try (Connection connection = JdbcUtil.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, khoHang.getTenKho());
             statement.setString(2, khoHang.getDiaChi());
+            statement.setInt(3, 1); // Mặc định trạng thái là 1 (còn hiệu lực)
 
             return statement.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -30,7 +31,7 @@ public class KhoHangDao {
 
     // Cập nhật thông tin kho hàng
     public boolean updateKhoHang(KhoHangDTO khoHang) {
-        String sql = "UPDATE kho_hang SET tenKho = ?, diaChi = ? WHERE maKho = ?";
+        String sql = "UPDATE kho_hang SET tenKho = ?, diaChi = ? WHERE maKho = ? AND trangthai = 1";
         try (Connection connection = JdbcUtil.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
@@ -45,15 +46,14 @@ public class KhoHangDao {
         return false;
     }
 
-    // Xóa kho hàng
-    public boolean deleteKhoHang(int maKho) {
-        String sql = "DELETE FROM kho_hang WHERE maKho = ?";
+    // Xóa mềm kho hàng
+    public boolean xoaMemKhoHang(int maKho) {
+        String sql = "UPDATE kho_hang SET trangthai = 0 WHERE maKho = ?";
         try (Connection connection = JdbcUtil.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, maKho);
-
-            return statement.executeUpdate() > 0;
+            return statement.executeUpdate() > 0; // Trả về true nếu có dòng bị ảnh hưởng
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -62,7 +62,7 @@ public class KhoHangDao {
 
     // Lấy thông tin kho hàng theo mã
     public KhoHangDTO getKhoHangById(int maKho) {
-        String sql = "SELECT * FROM kho_hang WHERE maKho = ?";
+        String sql = "SELECT * FROM kho_hang WHERE maKho = ? AND trangthai = 1"; // Chỉ lấy kho còn hiệu lực
         try (Connection connection = JdbcUtil.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
@@ -73,7 +73,8 @@ public class KhoHangDao {
                 return new KhoHangDTO(
                         resultSet.getInt("maKho"),
                         resultSet.getString("tenKho"),
-                        resultSet.getString("diaChi")
+                        resultSet.getString("diaChi"),
+                        resultSet.getInt("trangThai")
                 );
             }
         } catch (SQLException e) {
@@ -82,10 +83,10 @@ public class KhoHangDao {
         return null;
     }
 
-    // Lấy danh sách tất cả kho hàng
+    // Lấy danh sách tất cả kho hàng còn hiệu lực
     public List<KhoHangDTO> getAllKhoHang() {
         List<KhoHangDTO> khoHangList = new ArrayList<>();
-        String sql = "SELECT * FROM kho_hang";
+        String sql = "SELECT * FROM kho_hang WHERE trangthai = 1"; // Chỉ lấy kho còn hiệu lực
         try (Connection connection = JdbcUtil.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql);
              ResultSet resultSet = statement.executeQuery()) {
@@ -94,7 +95,8 @@ public class KhoHangDao {
                 KhoHangDTO khoHang = new KhoHangDTO(
                         resultSet.getInt("maKho"),
                         resultSet.getString("tenKho"),
-                        resultSet.getString("diaChi")
+                        resultSet.getString("diaChi"),
+                        resultSet.getInt("trangThai")
                 );
                 khoHangList.add(khoHang);
             }

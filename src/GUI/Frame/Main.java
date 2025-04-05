@@ -8,7 +8,7 @@ import javax.swing.JPanel;
 
 import DTO.TaiKhoanDTO;
 import GUI.Panel.SideBar;
-import GUI.SideBar.TrangChuGUI;
+import GUI.pages.TrangChuGUI;
 
 public class Main extends JFrame {
     SideBar sideBar;

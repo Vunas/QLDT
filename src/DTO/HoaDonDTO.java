@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package DTO;
 
 import java.time.LocalDate;
@@ -12,20 +8,22 @@ import java.time.LocalDate;
  */
 public class HoaDonDTO {
     private int maHoaDon;
-    private LocalDate ngayXuat;	
+    private LocalDate ngayXuat; 
     private int maKH;
     private int maNhanVien;
     private int makhuyenmai;
+    private int trangThai; // Trạng thái (0: xóa mềm, 1: còn hiệu lực)
 
     public HoaDonDTO() {
     }
 
-    public HoaDonDTO(int maHoaDon, LocalDate ngayXuat, int maKH, int maNhanVien, int makhuyenmai) {
+    public HoaDonDTO(int maHoaDon, LocalDate ngayXuat, int maKH, int maNhanVien, int makhuyenmai, int trangThai) {
         this.maHoaDon = maHoaDon;
         this.ngayXuat = ngayXuat;
         this.maKH = maKH;
         this.maNhanVien = maNhanVien;
         this.makhuyenmai = makhuyenmai;
+        this.trangThai = trangThai;
     }
 
     public int getMaHoaDon() {
@@ -48,6 +46,10 @@ public class HoaDonDTO {
         return makhuyenmai;
     }
 
+    public int getTrangThai() {
+        return trangThai;
+    }
+
     public void setMaHoaDon(int maHoaDon) {
         this.maHoaDon = maHoaDon;
     }
@@ -67,7 +69,9 @@ public class HoaDonDTO {
     public void setMakhuyenmai(int makhuyenmai) {
         this.makhuyenmai = makhuyenmai;
     }
-  
-    
-    
+
+    public void setTrangThai(int trangThai) {
+        this.trangThai = trangThai;
+    }
+
 }

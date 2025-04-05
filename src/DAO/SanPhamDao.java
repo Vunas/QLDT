@@ -10,13 +10,14 @@ import java.util.List;
 import DTO.SanPhamDTO;
 import util.JdbcUtil;
 
-public class SanPhamBLL {
-    
-     public boolean addSanPham(SanPhamDTO SanPham){
-        String query = "INSERT INTO SanPham (maSP, tenSP, img, soLuong, giaNhap, giaBan , mauSac , thuongHieu , Ram , Rom , Chip , thoiGianBaoHanh) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+public class SanPhamDao {
+
+    // Thêm sản phẩm mới
+    public boolean addSanPham(SanPhamDTO SanPham) {
+        String query = "INSERT INTO SanPham (maSP, tenSP, img, soLuong, giaNhap, giaBan, mauSac, thuongHieu, Ram, Rom, Chip, thoiGianBaoHanh, trangThai) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection conn = JdbcUtil.getConnection();
-            PreparedStatement stmt = conn.prepareStatement(query)) {
-    
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
             stmt.setInt(1, SanPham.getMaSP());
             stmt.setString(2, SanPham.getTenSP());
             stmt.setString(3, SanPham.getImg());
@@ -29,22 +30,21 @@ public class SanPhamBLL {
             stmt.setInt(10, SanPham.getRom());
             stmt.setString(11, SanPham.getChip());
             stmt.setFloat(12, SanPham.getThoiGianBaoHanh());
-            
-            
-    
+            stmt.setInt(13, 1); // Mặc định trạng thái là còn hiệu lực
+
             return stmt.executeUpdate() > 0; // Trả về true nếu thêm thành công
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return false; // Thêm thất bại
     }
-    
-    
+
+    // Cập nhật thông tin sản phẩm
     public boolean updateSanPham(SanPhamDTO SanPham) {
-        String query = "UPDATE SanPham SET tenSP = ?, img = ?, soLuong = ?, giaNhap = ?, giaBan = ?, mauSac = ?, thuongHieu = ?, Ram = ?, Rom = ?, Chip = ?, thoiGianBaoHanh = ? WHERE maSP = ?;";
+        String query = "UPDATE SanPham SET tenSP = ?, img = ?, soLuong = ?, giaNhap = ?, giaBan = ?, mauSac = ?, thuongHieu = ?, Ram = ?, Rom = ?, Chip = ?, thoiGianBaoHanh = ? WHERE maSP = ? AND trangThai = 1";
         try (Connection conn = JdbcUtil.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
-    
+
             stmt.setString(1, SanPham.getTenSP());
             stmt.setString(2, SanPham.getImg());
             stmt.setInt(3, SanPham.getSoLuong());
@@ -57,33 +57,34 @@ public class SanPhamBLL {
             stmt.setString(10, SanPham.getChip());
             stmt.setFloat(11, SanPham.getThoiGianBaoHanh());
             stmt.setInt(12, SanPham.getMaSP());
-    
+
             return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return false;
     }
-    
-    
+
+    // Xóa mềm sản phẩm
     public boolean deleteSanPham(int maSP) {
-        String query = "DELETE FROM SanPham WHERE maSP = ?";
+        String query = "UPDATE SanPham SET trangThai = 0 WHERE maSP = ?";
         try (Connection conn = JdbcUtil.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
-    
+
             stmt.setInt(1, maSP);
-            return stmt.executeUpdate() > 0;
+            return stmt.executeUpdate() > 0; // Trả về true nếu xóa mềm thành công
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return false;
     }
-    
+
+    // Lấy sản phẩm theo mã (chỉ sản phẩm còn hiệu lực)
     public SanPhamDTO getSanPhamById(int maSP) {
-        String query = "SELECT * FROM sanpham WHERE maSP = ?";
+        String query = "SELECT * FROM SanPham WHERE maSP = ? AND trangThai = 1";
         try (Connection conn = JdbcUtil.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
-    
+
             stmt.setInt(1, maSP);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
@@ -96,9 +97,11 @@ public class SanPhamBLL {
                     String thuongHieu = rs.getString("thuongHieu");
                     int Ram = rs.getInt("Ram");
                     int Rom = rs.getInt("Rom");
-                    String Chip= rs.getString("Chip");
+                    String Chip = rs.getString("Chip");
                     float thoiGianBaoHanh = rs.getFloat("thoiGianBaoHanh");
-                    return new SanPhamDTO(maSP, tenSP, img, soLuong, giaNhap, giaBan , mauSac , thuongHieu , Ram , Rom , Chip , thoiGianBaoHanh);
+                    int trangThai = rs.getInt("trangThai");
+
+                    return new SanPhamDTO(maSP, tenSP, img, soLuong, giaNhap, giaBan, mauSac, thuongHieu, Ram, Rom, Chip, thoiGianBaoHanh, trangThai);
                 }
             }
         } catch (SQLException e) {
@@ -106,11 +109,11 @@ public class SanPhamBLL {
         }
         return null;
     }
-    
 
-        public List<SanPhamDTO> getAllSanPham() {
+    // Lấy danh sách tất cả sản phẩm (chỉ sản phẩm còn hiệu lực)
+    public List<SanPhamDTO> getAllSanPham() {
         List<SanPhamDTO> SanPhamList = new ArrayList<>();
-        String query = "SELECT * FROM SanPham";
+        String query = "SELECT * FROM SanPham WHERE trangThai = 1";
         try (Connection conn = JdbcUtil.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query);
              ResultSet rs = stmt.executeQuery()) {
@@ -126,28 +129,29 @@ public class SanPhamBLL {
                 String thuongHieu = rs.getString("thuongHieu");
                 int Ram = rs.getInt("Ram");
                 int Rom = rs.getInt("Rom");
-                String Chip= rs.getString("Chip");
+                String Chip = rs.getString("Chip");
                 float thoiGianBaoHanh = rs.getFloat("thoiGianBaoHanh");
+                int trangThai = rs.getInt("trangThai");
 
-                SanPhamList.add(new SanPhamDTO(maSP, tenSP, img, soLuong, giaNhap, giaBan , mauSac , thuongHieu , Ram , Rom , Chip , thoiGianBaoHanh));
+                SanPhamList.add(new SanPhamDTO(maSP, tenSP, img, soLuong, giaNhap, giaBan, mauSac, thuongHieu, Ram, Rom, Chip, thoiGianBaoHanh, trangThai));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return SanPhamList;
     }
-        
-        public boolean updateSoluong(int maSP, int soluongMoi){
-             String query = "UPDATE SanPham SET soLuong = ? WHERE maSP = ?;";
+
+    // Cập nhật số lượng sản phẩm
+    public boolean updateSoluong(int maSP, int soluongMoi) {
+        String query = "UPDATE SanPham SET soLuong = ? WHERE maSP = ? AND trangThai = 1";
         try (Connection conn = JdbcUtil.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
-            stmt.setInt(1,soluongMoi);
-            stmt.setInt(2,maSP);
+            stmt.setInt(1, soluongMoi);
+            stmt.setInt(2, maSP);
             return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return false;
-        }
-        
+    }
 }

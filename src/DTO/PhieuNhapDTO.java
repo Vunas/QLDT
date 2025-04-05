@@ -1,11 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package DTO;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 /**
  *
@@ -16,15 +11,17 @@ public class PhieuNhapDTO {
    private LocalDate ngayNhap;
    private int maNhaCungCap;
    private int maNhanVien;
+   private int trangThai; // Trạng thái (0: xóa mềm, 1: còn hiệu lực)
 
     public PhieuNhapDTO() {
     }
 
-    public PhieuNhapDTO(int maPhieuNhap, LocalDate ngayNhap, int maNhaCungCap, int maNhanVien) {
+    public PhieuNhapDTO(int maPhieuNhap, LocalDate ngayNhap, int maNhaCungCap, int maNhanVien, int trangThai) {
         this.maPhieuNhap = maPhieuNhap;
         this.ngayNhap = ngayNhap;
         this.maNhaCungCap = maNhaCungCap;
         this.maNhanVien = maNhanVien;
+        this.trangThai = trangThai;
     }
 
     public int getMaPhieuNhap() {
@@ -43,6 +40,10 @@ public class PhieuNhapDTO {
         return maNhanVien;
     }
 
+    public int getTrangThai() {
+        return trangThai;
+    }
+
     public void setMaPhieuNhap(int maPhieuNhap) {
         this.maPhieuNhap = maPhieuNhap;
     }
@@ -58,9 +59,9 @@ public class PhieuNhapDTO {
     public void setMaNhanVien(int maNhanVien) {
         this.maNhanVien = maNhanVien;
     }
-    
-    
-    
-    
-    
+
+    public void setTrangThai(int trangThai) {
+        this.trangThai = trangThai;
+    }
+
 }

@@ -1,4 +1,4 @@
-package GUI.SideBar;
+package GUI.pages;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -154,7 +154,7 @@ public class TaiKhoanGUI extends JPanel {
 
                 JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(TaiKhoanGUI.this);
                 TaiKhoanDialog dialog = new TaiKhoanDialog(parentFrame,
-                        new TaiKhoanDTO(maNV, tenDangNhap, matKhau, maQuyen), "Chỉnh Sửa Tài Khoản");
+                        new TaiKhoanDTO(maNV, tenDangNhap, matKhau, maQuyen,1), "Chỉnh Sửa Tài Khoản");
                 dialog.setVisible(true);
 
                 if (dialog.isSaved()) {
@@ -212,7 +212,7 @@ public class TaiKhoanGUI extends JPanel {
 
                 JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(TaiKhoanGUI.this);
                 TaiKhoanDialog dialog = new TaiKhoanDialog(parentFrame,
-                        new TaiKhoanDTO(maNV, tenDangNhap, matKhau, maQuyen), "Xem chi tiết");
+                        new TaiKhoanDTO(maNV, tenDangNhap, matKhau, maQuyen,1), "Xem chi tiết");
                 dialog.setVisible(true);
             }
         });

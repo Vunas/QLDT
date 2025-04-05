@@ -1,4 +1,4 @@
-package GUI.SideBar;
+package GUI.pages;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -9,30 +9,28 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-import BLL.BUS.SanPhamDAO;
+import BLL.BUS.SanPhamBLL;
 import DTO.SanPhamDTO;
 import GUI.DiaLog.SanPhamDiaLog;//1
 import GUI.Panel.TopNav;
 import util.ExportExcelUtility;
 
 import java.awt.*;
-import java.io.File;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.List;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.table.DefaultTableCellRenderer;
 
 public class SanPhamGUI extends JPanel{
     TopNav topNav;
     JPanel pnlBot;
     JTable tbl;
-    SanPhamDAO sanPhamBLL;
+    SanPhamBLL sanPhamBLL;
 
     public SanPhamGUI(TopNav topNav) {
-        sanPhamBLL = new SanPhamDAO();
+        sanPhamBLL = new SanPhamBLL();
         initComponent(topNav);
         chucNang();
         addSearchFunctionality();
@@ -145,7 +143,7 @@ public class SanPhamGUI extends JPanel{
                 float thoiGianBaoHanh = (float) tbl.getValueAt(selectedRow, 12);
 
                 // Tạo đối tượng DTO từ dữ liệu bảng
-                SanPhamDTO sanPham = new SanPhamDTO(maSP, tenSP, Img, soLuong ,giaNhap ,giaBan,mauSac,thuongHieu,Ram , Rom,Chip , thoiGianBaoHanh);
+                SanPhamDTO sanPham = new SanPhamDTO(maSP, tenSP, Img, soLuong ,giaNhap ,giaBan,mauSac,thuongHieu,Ram , Rom,Chip , thoiGianBaoHanh,1);
 
                 // Hiển thị JDialog
                 JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(SanPhamGUI.this);
@@ -228,7 +226,7 @@ public class SanPhamGUI extends JPanel{
                 float thoiGianBaoHanh = (float) tbl.getValueAt(selectedRow, 12);
 
                 // Create a object
-                SanPhamDTO sanPham = new SanPhamDTO(maSP, tenSP, Img, soLuong ,giaNhap ,giaBan,mauSac,thuongHieu,Ram , Rom,Chip , thoiGianBaoHanh);
+                SanPhamDTO sanPham = new SanPhamDTO(maSP, tenSP, Img, soLuong ,giaNhap ,giaBan,mauSac,thuongHieu,Ram , Rom,Chip , thoiGianBaoHanh,1);
 
                 
                 JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(SanPhamGUI.this);

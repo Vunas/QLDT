@@ -25,10 +25,10 @@ public class NhanVienBLL {
         return NhanVienDao.updateNhanVien(NhanVien);
     }
 
-    // Xóa nhân viên
+    // Xóa mềm nhân viên
     public boolean deleteNhanVien(int manv) {
-        // Kiểm tra logic kinh doanh ở đây nếu cần
-        return NhanVienDao.deleteNhanVien(manv);
+        // Sử dụng phương thức xóa mềm từ DAO
+        return NhanVienDao.xoaMemNhanVien(manv);
     }
 
     // Lấy thông tin nhân viên theo mã
@@ -41,12 +41,13 @@ public class NhanVienBLL {
         return NhanVienDao.getAllNhanVien();
     }
 
+    // Lấy danh sách nhân viên chưa có tài khoản
     public List<NhanVienDTO> getNhanVienChuaCoTaiKhoan() {
         return NhanVienDao.getNhanVienChuaCoTaiKhoan();
     }
 
-    // Lấy danh sách nhân viên theo tên tìm kiếm
-    public List<NhanVienDTO> getnhanVienByNameSearch(String keyword, String type) {
+    // Lấy danh sách nhân viên theo tiêu chí tìm kiếm
+    public List<NhanVienDTO> getNhanVienByNameSearch(String keyword, String type) {
         // Lấy danh sách tất cả nhân viên từ DAO
         List<NhanVienDTO> nhanVienList = NhanVienDao.getAllNhanVien();
 
@@ -75,11 +76,18 @@ public class NhanVienBLL {
             }
         }
 
-        // Trả về danh sách nhân viên nvớp với tiêu chí tìm kiếm
+        // Trả về danh sách nhân viên với tiêu chí tìm kiếm
         return filteredList;
     }
 
+    // Tạo mã ID mới tự động
     public int generateNewId() {
-        return NhanVienDao.getAllNhanVien().getLast().getMaNV() + 1;
+        // Đảm bảo danh sách không rỗng trước khi truy cập phần tử cuối
+        List<NhanVienDTO> nhanVienList = NhanVienDao.getAllNhanVien();
+        if (!nhanVienList.isEmpty()) {
+            return nhanVienList.get(nhanVienList.size() - 1).getMaNV() + 1;
+        } else {
+            return 1; // Nếu danh sách rỗng, trả về ID bắt đầu là 1
+        }
     }
 }

@@ -148,6 +148,6 @@ public class NhanVienDialog extends JDialog {
     }
 
     public NhanVienDTO getDataNhanVienDTO(int maNV){
-        return new NhanVienDTO(maNV, tfHoTen.getText(),inputNgaySinh.getDate(), cbGioiTinh.getSelectedIndex(), tfSdt.getText());
+        return new NhanVienDTO(maNV, tfHoTen.getText(),inputNgaySinh.getDate(), cbGioiTinh.getSelectedIndex(), tfSdt.getText(),1);
     }
 }

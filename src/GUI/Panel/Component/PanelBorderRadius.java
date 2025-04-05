@@ -1,5 +1,5 @@
 
-package GUI.Component;
+package GUI.Panel.Component;
 
 import javax.swing.*;
 import java.awt.*;
