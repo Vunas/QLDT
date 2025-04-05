@@ -137,4 +137,17 @@ public class SanPhamBLL {
         return SanPhamList;
     }
         
+        public boolean updateSoluong(int maSP, int soluongMoi){
+             String query = "UPDATE SanPham SET soLuong = ? WHERE maSP = ?;";
+        try (Connection conn = JdbcUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1,soluongMoi);
+            stmt.setInt(2,maSP);
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+        }
+        
 }

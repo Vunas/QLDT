@@ -501,6 +501,9 @@ public class TaoPhieuNhap extends JPanel{
             ChiTietPhieuNhapDTO chitietphieunhap = new ChiTietPhieuNhapDTO();
             chitietphieunhap.setMaSanPham(Integer.parseInt(sanphamdathemTable.getValueAt(row, 0).toString()));
             chitietphieunhap.setSoLuong(Integer.parseInt(sanphamdathemTable.getValueAt(row, 6).toString()));
+            SanPhamDTO sanphamdto = new SanPhamBLL().getSanPhamById(Integer.parseInt(sanphamdathemTable.getValueAt(row, 0).toString()));
+            int soluongMoi=Integer.parseInt(sanphamdathemTable.getValueAt(row, 6).toString())+ sanphamdto.getSoLuong() ;
+            new SanPhamBLL().updateSoluong(Integer.parseInt(sanphamdathemTable.getValueAt(row, 0).toString()), soluongMoi );
             chitietphieunhap.setDonGia(Integer.parseInt(sanphamdathemTable.getValueAt(row, 5).toString()));
             chitietphieunhap.setMaPhieuNhap(Integer.parseInt(maphieunhaptxt.getText()));
             ChiTietPhieuNhapBLL bll = new ChiTietPhieuNhapBLL();

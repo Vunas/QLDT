@@ -24,7 +24,10 @@ public class SanPhamDAO {
         
         return SanPhamDao.updateSanPham(SanPham);
     }
-
+    
+    public boolean updateSoluong(int maSP, int soluongMoi){
+        return SanPhamDao.updateSoluong(maSP, soluongMoi);
+    }
    
     public boolean deleteSanPham(int maSP) {
         
