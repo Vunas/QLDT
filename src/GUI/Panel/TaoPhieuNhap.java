@@ -5,11 +5,13 @@
 package GUI.Panel;
 
 import BLL.BUS.ChiTietPhieuNhapBLL;
+import BLL.BUS.ChiTietSanPhamBLL;
 import BLL.BUS.NhaCungCapBLL;
 import BLL.BUS.PhieuNhapBLL;
 import DAO.PhieuNhapDao;
 import DAO.SanPhamBLL;
 import DTO.ChiTietPhieuNhapDTO;
+import DTO.ChiTietSanPhamDTO;
 import DTO.NhaCungCapDTO;
 import DTO.PhieuNhapDTO;
 import DTO.SanPhamDTO;
@@ -74,7 +76,6 @@ public class TaoPhieuNhap extends JPanel{
         chonsanphamdethem();
         chonsanphamdexoasua();
         setThongPhieuNhap();
-        suaxoasanpham();
     }
     
     public void initComponent(Main main){
@@ -121,6 +122,7 @@ public class TaoPhieuNhap extends JPanel{
             public void actionPerformed(ActionEvent e) {
                 themphieunhap();
                 themchitietphieunhap();
+                themchitietsanpham();
                 main.setPanel(new PhieuNhapGUI(main));
             }
            
@@ -423,6 +425,9 @@ public class TaoPhieuNhap extends JPanel{
     
     public void chonsanphamdexoasua(){
             sanphamdathemTable.getSelectionModel().addListSelectionListener(event -> {
+                addsp.setEnabled(false);
+                sua.setEnabled(true);
+                xoa.setEnabled(true);
             int selectedRow = sanphamdathemTable.getSelectedRow();
             if(selectedRow != -1)
             {
@@ -441,18 +446,6 @@ public class TaoPhieuNhap extends JPanel{
         });
     }
     
-    public void suaxoasanpham(){
-        sanphamdathemTable.getSelectionModel().addListSelectionListener(event -> {
-            int selectedRow = sanphamdathemTable.getSelectedRow();
-            if(selectedRow != -1)
-            {
-                addsp.setEnabled(false);
-                sua.setEnabled(true);
-                xoa.setEnabled(true);
-            }
-            
-        });
-    }
     
     public void setTongTien(){
         int tong=0;
@@ -513,6 +506,20 @@ public class TaoPhieuNhap extends JPanel{
             ChiTietPhieuNhapBLL bll = new ChiTietPhieuNhapBLL();
             bll.addChiTietPhieuNhap(chitietphieunhap);
         } 
+    }
+    
+    public void themchitietsanpham(){
+        ChiTietSanPhamBLL ctspbll = new ChiTietSanPhamBLL();
+        for(int row = 0; row< sanphamdathemTable.getRowCount();row ++){
+            String maimeiStr = tbmsanphamdathemTable.getValueAt(row, 7).toString().trim();
+            for(int i=0;i<Integer.parseInt(sanphamdathemTable.getValueAt(row, 6).toString());i++){
+                ChiTietSanPhamDTO ctsp = new ChiTietSanPhamDTO();
+                ctsp.setMaImei(String.valueOf(Long.parseLong(maimeiStr) + i));
+                ctsp.setMaPhieuNhap(Integer.parseInt(maphieunhaptxt.getText()));
+                ctsp.setMaSanpham(Integer.parseInt(sanphamdathemTable.getValueAt(row, 0).toString()));
+                ctspbll.addChiTietSanPham(ctsp);
+            }
+        }
     }
   
     

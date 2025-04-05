@@ -5,6 +5,7 @@
 package GUI.DiaLog;
 
 import BLL.BUS.ChiTietPhieuNhapBLL;
+import BLL.BUS.ChiTietSanPhamBLL;
 import BLL.BUS.NhaCungCapBLL;
 import BLL.BUS.NhanVienBLL;
 import BLL.BUS.PhieuNhapBLL;
@@ -51,6 +52,7 @@ public class PhieuNhapDiaLog extends JDialog{
         this.setLocationRelativeTo(main);
         this.setVisible(true);
         loaddata();
+        loaddataimei();
         
     }
     
@@ -164,6 +166,22 @@ public class PhieuNhapDiaLog extends JDialog{
             int soluong = pdto.getSoLuong();
             dftmthongtinchitiet.addRow(new Object[]{masp,tensp,ram,rom,mausac,dongia,soluong});
         }
+    }
+    public void loaddataimei(){
+        thongtinchitiet.getSelectionModel().addListSelectionListener(event -> {
+            int selectedRow = thongtinchitiet.getSelectedRow();
+            if(selectedRow!=-1){
+                dftmchitietimei.setRowCount(0);
+                int masp=Integer.parseInt(thongtinchitiet.getValueAt(selectedRow, 0).toString());
+                int mapn = Integer.parseInt(maphieunhap.getText());
+                List<String> imeilist = new ChiTietSanPhamBLL().getImeisByPhieuNhapAndSanPham(mapn, masp);
+                for (int i = 0;i < imeilist.size(); i++) {
+                int stt = i + 1;
+                String imei = imeilist.get(i);
+                dftmchitietimei.addRow(new Object[]{stt,imei});
+                }
+            }
+        });
     }
     
 }
