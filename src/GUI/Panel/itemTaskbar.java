@@ -54,13 +54,13 @@ public class itemTaskbar extends JPanel implements MouseListener {
         this.addMouseListener(this);
 
         lblIcon = new JLabel();
-        lblIcon.setPreferredSize(new Dimension(110, 110));
-        lblIcon.setIcon(new FlatSVGIcon("./resources/icon/" + linkIcon+".svg"));
+        lblIcon.setPreferredSize(new Dimension(250, 110));
+        lblIcon.setIcon(new FlatSVGIcon("./resources/icon/" + linkIcon+".svg",(float)2));
 
         this.add(lblIcon);
 
         pnlContent = new JLabel(content1);
-        pnlContent.setPreferredSize(new Dimension(170, 30));
+        pnlContent.setPreferredSize(new Dimension(170, 80));
         pnlContent.putClientProperty("FlatLaf.style", "font: 200% $medium.font");
         pnlContent.setForeground(FontColor);
         this.add(pnlContent);
