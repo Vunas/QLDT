@@ -79,4 +79,12 @@ public class KhachHangBLL {
     public int generateNewId() {
         return khachHangDao.getAllKhachHang().getLast().getMaKH() + 1;
     }
+    
+    public String[] getNameKhachHang(){
+        return khachHangDao.getNameKhachHang();
+    }
+    
+    public KhachHangDTO getKhachHangByName(String ten){
+        return khachHangDao.getKhachHangByName(ten);
+    }
 }
