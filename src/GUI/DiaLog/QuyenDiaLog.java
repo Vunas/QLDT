@@ -152,7 +152,7 @@ public class QuyenDiaLog extends JDialog {
     }
 
     public QuyenDTO getDataQuyenDTO() {
-        return new QuyenDTO(tf.getText(), danhSachChucNang);
+        return new QuyenDTO(tf.getText(), danhSachChucNang,1);
     }
 
     private void updateTableWithPermissions(String danhSachCN) {

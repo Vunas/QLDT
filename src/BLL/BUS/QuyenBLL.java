@@ -25,7 +25,7 @@ public class QuyenBLL {
 
     // Xóa quyền
     public boolean deleteQuyen(int maQuyen) {
-        return quyenDao.deleteQuyen(maQuyen);
+        return quyenDao.xoaMemQuyen(maQuyen);
     }
 
     // Lấy thông tin quyền theo mã

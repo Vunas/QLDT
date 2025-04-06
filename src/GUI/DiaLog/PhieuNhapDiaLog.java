@@ -7,7 +7,6 @@ package GUI.DiaLog;
 import BLL.BUS.ChiTietPhieuNhapBLL;
 import BLL.BUS.ChiTietSanPhamBLL;
 import BLL.BUS.NhaCungCapBLL;
-import BLL.BUS.NhanVienBLL;
 import BLL.BUS.PhieuNhapBLL;
 import BLL.BUS.SanPhamBLL;
 import DTO.ChiTietPhieuNhapDTO;

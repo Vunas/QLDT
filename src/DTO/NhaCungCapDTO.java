@@ -1,21 +1,21 @@
 package DTO;
 
 public class NhaCungCapDTO {
-    int maNhaCungCap;
-    String ten;
-    String diaChi;
-    String sDT;
+    private int maNhaCungCap; // Mã nhà cung cấp
+    private String ten;       // Tên nhà cung cấp
+    private String diaChi;    // Địa chỉ nhà cung cấp
+    private String sDT;       // Số điện thoại nhà cung cấp
+    private int trangThai;    // Trạng thái (0: xóa mềm, 1: còn hiệu lực)
 
     public NhaCungCapDTO() {
     }
     
-    
-    
-    public NhaCungCapDTO(int maNhaCungCap, String ten, String diaChi, String sDT) {
+    public NhaCungCapDTO(int maNhaCungCap, String ten, String diaChi, String sDT, int trangThai) {
         this.maNhaCungCap = maNhaCungCap;
         this.ten = ten;
         this.diaChi = diaChi;
         this.sDT = sDT;
+        this.trangThai = trangThai;
     }
 
     public int getMaNhaCungCap() {
@@ -50,7 +50,12 @@ public class NhaCungCapDTO {
         this.sDT = sDT;
     }
 
-    
+    public int getTrangThai() {
+        return trangThai;
+    }
 
-    
+    public void setTrangThai(int trangThai) {
+        this.trangThai = trangThai;
+    }
+
 }

@@ -40,7 +40,7 @@ public class KhoHangBLL {
             System.out.println("Mã kho không hợp lệ!");
             return false;
         }
-        return khoHangDao.deleteKhoHang(maKho);
+        return khoHangDao.xoaMemKhoHang(maKho);
     }
 
     // Lấy thông tin kho hàng theo mã

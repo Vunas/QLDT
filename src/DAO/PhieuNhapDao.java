@@ -46,7 +46,8 @@ public class PhieuNhapDao {
                         rs.getInt("maPhieuNhap"),
                         rs.getDate("ngayNhap").toLocalDate(),
                         rs.getInt("maNhaCungCap"),
-                        rs.getInt("maNhanVien")
+                        rs.getInt("maNhanVien"),
+                        rs.getInt("trangThai")
                 ));
             }
         } catch (SQLException e) {
@@ -67,7 +68,8 @@ public class PhieuNhapDao {
                       rs.getInt("maPhieuNhap"),
                       rs.getDate("ngayNhap").toLocalDate(),
                       rs.getInt("maNhaCungCap"),
-                      rs.getInt("maNhanVien")
+                      rs.getInt("maNhanVien"),
+                      rs.getInt("trangThai")
               );
           }  
       } catch (Exception e) {

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package DTO;
 
 /**
@@ -13,17 +9,19 @@ public class ChiTietSanPhamDTO {
     private int maSanpham;
     private int maPhieuNhap;
     private int maHoadon;
-    private int tinhTrang;
+    private int tinhTrang; // Tình trạng sản phẩm
+    private int trangThai; // Trạng thái (0: xóa mềm, 1: còn hiệu lực)
 
     public ChiTietSanPhamDTO() {
     }
 
-    public ChiTietSanPhamDTO(String maImei, int maSanpham, int maPhieuNhap, int maHoadon, int tinhTrang) {
+    public ChiTietSanPhamDTO(String maImei, int maSanpham, int maPhieuNhap, int maHoadon, int tinhTrang, int trangThai) {
         this.maImei = maImei;
         this.maSanpham = maSanpham;
         this.maPhieuNhap = maPhieuNhap;
         this.maHoadon = maHoadon;
         this.tinhTrang = tinhTrang;
+        this.trangThai = trangThai;
     }
 
     public String getMaImei() {
@@ -46,6 +44,10 @@ public class ChiTietSanPhamDTO {
         return tinhTrang;
     }
 
+    public int getTrangThai() {
+        return trangThai;
+    }
+
     public void setMaImei(String maImei) {
         this.maImei = maImei;
     }
@@ -66,11 +68,9 @@ public class ChiTietSanPhamDTO {
         this.tinhTrang = tinhTrang;
     }
 
-    @Override
-    public String toString() {
-        return "ChiTietSanPhamDTO{" + "maImei=" + maImei + ", maSanpham=" + maSanpham + ", maPhieuNhap=" + maPhieuNhap + ", maHoadon=" + maHoadon + ", tinhTrang=" + tinhTrang + '}';
+    public void setTrangThai(int trangThai) {
+        this.trangThai = trangThai;
     }
-    
-    
-    
+
+
 }

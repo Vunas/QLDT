@@ -18,6 +18,7 @@ public class ChiTietHoaDonDTO {
     private int mabaohanh;
     private int trangThai;
 
+
     public ChiTietHoaDonDTO() {
     }
 
@@ -88,6 +89,7 @@ public class ChiTietHoaDonDTO {
     }
     
     
+
     
     
 }

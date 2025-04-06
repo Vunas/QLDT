@@ -10,6 +10,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 import DAO.SanPhamDAO;
+import BLL.BUS.SanPhamBLL;
 import DTO.SanPhamDTO;
 import GUI.DiaLog.SanPhamDiaLog;//1
 import GUI.Panel.TopNav;
@@ -29,10 +30,11 @@ public class SanPhamGUI extends JPanel{
     TopNav topNav;
     JPanel pnlBot;
     JTable tbl;
-    SanPhamDAO sanPhamBLL;
+
+    SanPhamBLL sanPhamBLL;
 
     public SanPhamGUI(TopNav topNav) {
-        sanPhamBLL = new SanPhamDAO();
+        sanPhamBLL = new SanPhamBLL();
         initComponent(topNav);
         chucNang();
         addSearchFunctionality();
@@ -145,7 +147,8 @@ public class SanPhamGUI extends JPanel{
                 float thoiGianBaoHanh = (float) tbl.getValueAt(selectedRow, 12);
 
                 // Tạo đối tượng DTO từ dữ liệu bảng
-                SanPhamDTO sanPham = new SanPhamDTO(maSP, tenSP, Img, soLuong ,giaNhap ,giaBan,mauSac,thuongHieu,Ram , Rom,Chip , thoiGianBaoHanh);
+
+                SanPhamDTO sanPham = new SanPhamDTO(maSP, tenSP, Img, soLuong ,giaNhap ,giaBan,mauSac,thuongHieu,Ram , Rom,Chip , thoiGianBaoHanh,1);
 
                 // Hiển thị JDialog
                 JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(SanPhamGUI.this);
@@ -228,7 +231,8 @@ public class SanPhamGUI extends JPanel{
                 float thoiGianBaoHanh = (float) tbl.getValueAt(selectedRow, 12);
 
                 // Create a object
-                SanPhamDTO sanPham = new SanPhamDTO(maSP, tenSP, Img, soLuong ,giaNhap ,giaBan,mauSac,thuongHieu,Ram , Rom,Chip , thoiGianBaoHanh);
+
+                SanPhamDTO sanPham = new SanPhamDTO(maSP, tenSP, Img, soLuong ,giaNhap ,giaBan,mauSac,thuongHieu,Ram , Rom,Chip , thoiGianBaoHanh,1);
 
                 
                 JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(SanPhamGUI.this);

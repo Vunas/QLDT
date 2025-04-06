@@ -10,7 +10,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.ArrayList;
 
 public class RamDao implements DaoInterface<RamDTO>{
 public static RamDao getInstance() {

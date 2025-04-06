@@ -1,12 +1,14 @@
 
 package GUI.pages;
 
+
 import GUI.Component.IntegratedSearch;
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import GUI.Component.PanelBorderRadius;
 import GUI.Component.itemTaskbar;
+import javax.swing.border.MatteBorder;
 import GUI.DiaLog.DungLuongRamDialog;
 import GUI.DiaLog.DungLuongRomDialog;
 import GUI.DiaLog.MauSacDialog;
@@ -14,6 +16,8 @@ import GUI.DiaLog.ThuongHieuDialog;
 import GUI.Frame.Main;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import GUI.Panel.itemTaskbar;
+import GUI.Panel.Component.IntegratedSearch;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -37,7 +41,9 @@ public class ThuocTinhGUI extends JPanel {
     Main m;
     public itemTaskbar[] listitem;
 
-    String iconst[] = {"phoneBrandIcon.png","romIcon.png", "phoneRamIcon.png", "colorIcon.png"};
+
+    String iconst[] = {"brand","ram", "rom", "color"};
+
 
     String header[] = {"Thương hiệu","Ram", "Rom", "Màu sắc"};
     Color BackgroundColor = new Color(240, 247, 250);
@@ -118,8 +124,14 @@ public class ThuocTinhGUI extends JPanel {
     public void initPadding() {
 
         pnlBorder1 = new JPanel();
-        pnlBorder1.setPreferredSize(new Dimension(0, 40));
+        pnlBorder1.setPreferredSize(new Dimension(0, 150));
         pnlBorder1.setBackground(BackgroundColor);
+
+        JLabel lblContent = new JLabel("Vui lòng chọn thuộc tính!");
+        lblContent.putClientProperty("FlatLaf.style", "font: 300% $medium.font");
+        lblContent.setBorder(new MatteBorder(0, 0, 3, 0, new Color(100, 149, 237)));
+        
+        pnlBorder1.add(lblContent);
         this.add(pnlBorder1, BorderLayout.NORTH);
 
         pnlBorder2 = new JPanel();

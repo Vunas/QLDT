@@ -117,6 +117,6 @@ public class KhachHangDiaLog extends JDialog {
     }
 
     public KhachHangDTO getKhachHangData(int maKH) {
-        return new KhachHangDTO(maKH, tfHoTen.getText(), tfDiaChi.getText(), tfSdt.getText());
+        return new KhachHangDTO(maKH, tfHoTen.getText(), tfDiaChi.getText(), tfSdt.getText(),1);
     }
 }

@@ -43,7 +43,7 @@ public class TaiKhoanBLL {
     // 4. Xóa một tài khoản
     public boolean deleteTaiKhoan(int maNV) {
         // Thực hiện các logic trước khi xóa (ví dụ: kiểm tra quyền hạn, ...)
-        return taiKhoanDao.deleteTaiKhoan(maNV);
+        return taiKhoanDao.xoaMemTaiKhoan(maNV);
     }
 
     // 5. Kiểm tra thông tin đăng nhập

@@ -118,6 +118,6 @@ public class NhaCungCapDiaLog extends JDialog {
     }
 
     public NhaCungCapDTO getNhaCungCapData(int maNCC) {
-        return new NhaCungCapDTO(maNCC, tfTen.getText(), tfDiaChi.getText(), tfSdt.getText());
+        return new NhaCungCapDTO(maNCC, tfTen.getText(), tfDiaChi.getText(), tfSdt.getText(),1);
     }
 }
