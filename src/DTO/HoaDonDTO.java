@@ -23,7 +23,7 @@ public class HoaDonDTO {
         this.maKH = maKH;
         this.maNhanVien = maNhanVien;
         this.makhuyenmai = makhuyenmai;
-        this.trangthai = trangthai;
+        this.trangThai = trangThai;
 
     }
 

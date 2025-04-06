@@ -17,7 +17,7 @@ public class KhachHangDTO {
         this.hoTen = hoTen;
         this.diaChi = diaChi;
         this.sdt = sdt;
-        this.trangThai = trangThai;
+        this.trangthai = trangthai;
     }
 
     // Getters và Setters

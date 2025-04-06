@@ -12,8 +12,11 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/nguyen/OneDrive/Máy%20tính/QLDT/src/DAO/ChiTietSanPhamDao.java</file>
             <file>file:/C:/Users/nguyen/OneDrive/Máy%20tính/QLDT/src/DAO/KhachHangDao.java</file>
+            <file>file:/C:/Users/nguyen/OneDrive/Máy%20tính/QLDT/src/DTO/KhachHangDTO.java</file>
             <file>file:/C:/Users/nguyen/OneDrive/Máy%20tính/QLDT/src/BLL/BUS/SanPhamBLL.java</file>
+            <file>file:/C:/Users/nguyen/OneDrive/Máy%20tính/QLDT/src/DTO/HoaDonDTO.java</file>
         </group>
     </open-files>
 </project-private>
