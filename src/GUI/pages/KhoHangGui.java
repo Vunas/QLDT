@@ -153,7 +153,9 @@ public class KhoHangGui extends JPanel {
                 String diaChi = (String) tbl.getValueAt(selectedRow, 2);
 
                 JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(KhoHangGui.this);
+
                 KhoHangDialog dialog = new KhoHangDialog(parentFrame, new KhoHangDTO(maKho, tenKho, diaChi,1), "Chỉnh Sửa Kho");
+
                 dialog.setVisible(true);
 
                 if (dialog.isSaved()) {

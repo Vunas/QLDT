@@ -15,10 +15,12 @@ import com.formdev.flatlaf.extras.FlatSVGIcon;
 
 import BLL.BUS.QuyenBLL;
 import BLL.BUS.TaiKhoanBLL;
+import DAO.SanPhamDAO;
 import DTO.QuyenDTO;
 import DTO.TaiKhoanDTO;
 import GUI.Frame.Login;
 import GUI.Frame.Main;
+import GUI.pages.HoaDonGUI;
 import GUI.pages.KhachHangGUI;
 import GUI.pages.NhaCungCapGUI;
 import GUI.pages.NhanVienGUI;
@@ -36,8 +38,9 @@ public class SideBar extends JPanel {
     QuyenDTO quyenDTO;
     JPanel pnlTop, pnlMid, pnlBot;
     ItemBar[] itemBars;
+
     String[] menuBars = { "Trang chủ", "Sản phẩm", "Thuộc tính",
-            "Phiếu nhập", "Phiếu xuất", "Khách hàng", "Nhà cung cấp",
+            "Phiếu nhập", "Hóa đơn", "Khách hàng", "Nhà cung cấp",
             "Nhân viên", "Tài khoản", "Phân quyền", "Thống kê" };
 
     String[] icons = { "home", "phone", "attributes", "import", "export", "user", "supplier", "employee", "account", "protect", "stats" };
@@ -159,7 +162,7 @@ public class SideBar extends JPanel {
             @Override
             public void mousePressed(MouseEvent evt) {
                 changePage(4);
-                main.setPanel(new KhachHangGUI(topNav));
+                main.setPanel(new HoaDonGUI(main));
             }
         });
 

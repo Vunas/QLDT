@@ -23,7 +23,8 @@ public class HoaDonDTO {
         this.maKH = maKH;
         this.maNhanVien = maNhanVien;
         this.makhuyenmai = makhuyenmai;
-        this.trangThai = trangThai;
+        this.trangthai = trangthai;
+
     }
 
     public int getMaHoaDon() {
@@ -46,7 +47,7 @@ public class HoaDonDTO {
         return makhuyenmai;
     }
 
-    public int getTrangThai() {
+   public int getTrangThai() {
         return trangThai;
     }
 

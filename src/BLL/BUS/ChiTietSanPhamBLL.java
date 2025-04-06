@@ -26,4 +26,13 @@ public class ChiTietSanPhamBLL {
      public List<String> getImeisByPhieuNhapAndSanPham(int maphieunhap, int masanpham){
          return chiTietSanPhamDao.getImeisByPhieuNhapAndSanPham(maphieunhap, masanpham);
      }
+     
+     public List<String> getImeisByHoaDonAndSanPham(int mahoadon, int masanpham){
+         return chiTietSanPhamDao.getImeisByHoaDonAndSanPham(mahoadon, masanpham);
+     }
+     
+      public List<String> getImeisBySanPham(int masanpham){
+          return chiTietSanPhamDao.getImeisBySanPham(masanpham);
+      }
+      
 }

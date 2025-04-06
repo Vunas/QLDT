@@ -154,6 +154,7 @@ public class TaiKhoanGUI extends JPanel {
 
                 JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(TaiKhoanGUI.this);
                 TaiKhoanDialog dialog = new TaiKhoanDialog(parentFrame,
+
                         new TaiKhoanDTO(maNV, tenDangNhap, matKhau, maQuyen,1), "Chỉnh Sửa Tài Khoản");
                 dialog.setVisible(true);
 
@@ -212,7 +213,9 @@ public class TaiKhoanGUI extends JPanel {
 
                 JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(TaiKhoanGUI.this);
                 TaiKhoanDialog dialog = new TaiKhoanDialog(parentFrame,
+
                         new TaiKhoanDTO(maNV, tenDangNhap, matKhau, maQuyen,1), "Xem chi tiết");
+
                 dialog.setVisible(true);
             }
         });

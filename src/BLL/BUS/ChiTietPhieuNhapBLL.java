@@ -26,4 +26,5 @@ public class ChiTietPhieuNhapBLL {
     public boolean deleteChiTietPhieuNhap(int maPhieuNhap) {
         return chiTietPhieuNhapDAO.xoaMemCTPhieuNhap(maPhieuNhap);
     }
+
 }

@@ -1,5 +1,6 @@
 package GUI.pages;
 
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -126,3 +127,4 @@ public class TrangChuGUI extends JPanel {
         add(pnlFooter, BorderLayout.SOUTH);
     }
 }
+

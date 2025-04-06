@@ -1,18 +1,23 @@
 
 package GUI.pages;
 
+
+import GUI.Component.IntegratedSearch;
 import java.awt.*;
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import GUI.Component.PanelBorderRadius;
+import GUI.Component.itemTaskbar;
 import javax.swing.border.MatteBorder;
-
 import GUI.DiaLog.DungLuongRamDialog;
 import GUI.DiaLog.DungLuongRomDialog;
 import GUI.DiaLog.MauSacDialog;
 import GUI.DiaLog.ThuongHieuDialog;
 import GUI.Frame.Main;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import GUI.Panel.itemTaskbar;
 import GUI.Panel.Component.IntegratedSearch;
-
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -36,7 +41,9 @@ public class ThuocTinhGUI extends JPanel {
     Main m;
     public itemTaskbar[] listitem;
 
+
     String iconst[] = {"brand","ram", "rom", "color"};
+
 
     String header[] = {"Thương hiệu","Ram", "Rom", "Màu sắc"};
     Color BackgroundColor = new Color(240, 247, 250);
