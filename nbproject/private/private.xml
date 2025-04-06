@@ -5,12 +5,25 @@
             <url>src/GUI/pages/HoaDonGUI.java</url>
             <bookmark id="1">
                 <name/>
-                <line>107</line>
+                <line>0</line>
                 <key/>
             </bookmark>
         </file>
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/nguyen/OneDrive/Máy%20tính/QLDT/src/GUI/Panel/TaoHoaDon.java</file>
+            <file>file:/C:/Users/nguyen/OneDrive/Máy%20tính/QLDT/src/GUI/pages/ThuocTinhGUI.java</file>
+            <file>file:/C:/Users/nguyen/OneDrive/Máy%20tính/QLDT/src/GUI/Panel/SideBar.java</file>
+            <file>file:/C:/Users/nguyen/OneDrive/Máy%20tính/QLDT/src/GUI/pages/NhaCungCapGUI.java</file>
+            <file>file:/C:/Users/nguyen/OneDrive/Máy%20tính/QLDT/src/DAO/SanPhamDao.java</file>
+            <file>file:/C:/Users/nguyen/OneDrive/Máy%20tính/QLDT/src/DAO/HoaDonDao.java</file>
+            <file>file:/C:/Users/nguyen/OneDrive/Máy%20tính/QLDT/src/BLL/BUS/HoaDonBLL.java</file>
+            <file>file:/C:/Users/nguyen/OneDrive/Máy%20tính/QLDT/src/GUI/pages/NhanVienGUI.java</file>
+            <file>file:/C:/Users/nguyen/OneDrive/Máy%20tính/QLDT/src/BLL/BUS/ChiTietHoaDonBLL.java</file>
+            <file>file:/C:/Users/nguyen/OneDrive/Máy%20tính/QLDT/src/GUI/pages/HoaDonGUI.java</file>
+            <file>file:/C:/Users/nguyen/OneDrive/Máy%20tính/QLDT/src/DAO/ChiTietHoaDonDao.java</file>
+            <file>file:/C:/Users/nguyen/OneDrive/Máy%20tính/QLDT/src/DTO/HoaDonDTO.java</file>
+        </group>
     </open-files>
 </project-private>
