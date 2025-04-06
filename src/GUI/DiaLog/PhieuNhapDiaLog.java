@@ -9,7 +9,7 @@ import BLL.BUS.ChiTietSanPhamBLL;
 import BLL.BUS.NhaCungCapBLL;
 import BLL.BUS.NhanVienBLL;
 import BLL.BUS.PhieuNhapBLL;
-import DAO.SanPhamBLL;
+import BLL.BUS.SanPhamBLL;
 import DTO.ChiTietPhieuNhapDTO;
 import DTO.NhaCungCapDTO;
 import DTO.PhieuNhapDTO;

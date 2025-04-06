@@ -8,10 +8,10 @@ import java.util.List;
 
 
 public class SanPhamDAO {
-        private final DAO.SanPhamBLL SanPhamDao;
+        private final BLL.BUS.SanPhamBLL SanPhamDao;
 
     public SanPhamDAO() {
-        SanPhamDao = new DAO.SanPhamBLL();
+        SanPhamDao = new BLL.BUS.SanPhamBLL();
     }
 
     

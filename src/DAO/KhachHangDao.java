@@ -100,7 +100,8 @@ public class KhachHangDao {
                         resultSet.getInt("maKH"),
                         resultSet.getString("ten"),
                         resultSet.getString("diaChi"),
-                        resultSet.getString("sdt")
+                        resultSet.getString("sdt"),
+                        resultSet.getInt("trangthai")
                 );
                 khachHangList.add(khachHang);
             }
@@ -108,5 +109,44 @@ public class KhachHangDao {
             e.printStackTrace();
         }
         return khachHangList;
+    }
+    
+    public String[] getNameKhachHang(){
+       List<String> listKH = new ArrayList<>();
+        String sql = "SELECT ten FROM khach_hang WHERE trangthai = 1";
+        try (Connection conn = JdbcUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                listKH.add(rs.getString("ten"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listKH.toArray(new String[0]);
+    }
+    
+    public KhachHangDTO getKhachHangByName(String ten) {
+        String sql = "SELECT * FROM khach_hang WHERE ten = ? AND trangthai = 1"; // Lọc nhà cung cấp còn hiệu lực
+        try (Connection connection = JdbcUtil.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, ten);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return new KhachHangDTO(
+                        resultSet.getInt("maKH"),
+                        resultSet.getString("ten"),
+                        resultSet.getString("diaChi"),
+                        resultSet.getString("sdt"),
+                        resultSet.getInt("trangThai")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

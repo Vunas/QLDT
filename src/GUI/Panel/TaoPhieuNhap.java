@@ -9,7 +9,7 @@ import BLL.BUS.ChiTietSanPhamBLL;
 import BLL.BUS.NhaCungCapBLL;
 import BLL.BUS.PhieuNhapBLL;
 import DAO.PhieuNhapDao;
-import DAO.SanPhamBLL;
+import BLL.BUS.SanPhamBLL;
 import DTO.ChiTietPhieuNhapDTO;
 import DTO.ChiTietSanPhamDTO;
 import DTO.NhaCungCapDTO;
@@ -21,7 +21,7 @@ import GUI.Frame.Main;
 import GUI.Panel.InputType.ButtonCustom;
 import GUI.Panel.InputType.InputText;
 import GUI.Panel.InputType.SelectForm;
-import GUI.SideBar.PhieuNhapGUI;
+import GUI.pages.PhieuNhapGUI;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -75,7 +75,7 @@ public class TaoPhieuNhap extends JPanel{
         loaddatasanpham();
         chonsanphamdethem();
         chonsanphamdexoasua();
-        setThongPhieuNhap();
+        setThongTinPhieuNhap();
     }
     
     public void initComponent(Main main){
@@ -243,7 +243,7 @@ public class TaoPhieuNhap extends JPanel{
         thongtinsanpham = new JPanel();
         thongtinsanpham.setLayout(new BorderLayout());
         String [] arr = {""} ;
-        cbxcauhinh = new SelectForm("Cấu hình",arr );
+        cbxcauhinh = new SelectForm("Ram-Rom-Màu",arr );
         cbxcauhinh.setBackground(Color.white);
         cbxcauhinh.setPreferredSize(new Dimension(cbxcauhinh.getPreferredSize().width+50,60));
         masptxt = new InputText("Mã SP");
@@ -288,29 +288,7 @@ public class TaoPhieuNhap extends JPanel{
         sua.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(checkInput(sanphamdathemTable)){
-                    int selectedRow = sanphamdathemTable.getSelectedRow();
-                if(selectedRow != -1){
-                    String masp = masptxt.getText();
-                    sanphamdathemTable.setValueAt(masp, selectedRow, 0);
-                    String tensp = tensptxt.getText();
-                    sanphamdathemTable.setValueAt(tensp, selectedRow, 1);
-                    String [] cauhinh = cbxcauhinh.getValue().split("-");
-                    String ram = cauhinh[0];
-                    sanphamdathemTable.setValueAt(ram, selectedRow, 2);
-                    String rom = cauhinh[1];
-                    sanphamdathemTable.setValueAt(rom, selectedRow, 3);
-                    String mausac = cauhinh[2];
-                    sanphamdathemTable.setValueAt(mausac, selectedRow, 4);
-                    String dongia = gianhaptxt.getText();
-                    sanphamdathemTable.setValueAt(dongia, selectedRow, 5);
-                    String soluong = soluongtxt.getText();
-                    sanphamdathemTable.setValueAt(soluong, selectedRow, 6);
-                    setTongTien();
-                    
-                }
-                JOptionPane.showMessageDialog(null, "Đã sửa thành công");
-                }
+                suasp();
             }
         });
         
@@ -456,6 +434,7 @@ public class TaoPhieuNhap extends JPanel{
         NumberFormat kieuhienthi = NumberFormat.getInstance(Locale.US);
         sotien.setText(kieuhienthi.format(tong) + "đ");
     }
+    
     public String cauhinh(JTable table){
             int selectedRow = table.getSelectedRow();
             if(selectedRow == -1)
@@ -526,7 +505,7 @@ public class TaoPhieuNhap extends JPanel{
     }
   
     
-    public void setThongPhieuNhap(){
+    public void setThongTinPhieuNhap(){
         TaiKhoanDTO taiKhoan = TaiKhoanDTO.getTaiKhoanHienTai();
         nhanviennhaptxt.setText(taiKhoan.getTenDangNhap());
         int maphieunhap = new PhieuNhapBLL().getMaPhieuNhap();
@@ -589,5 +568,29 @@ public class TaoPhieuNhap extends JPanel{
 
         return check;
     }
-
+    public void suasp(){
+        if(checkInput(sanphamdathemTable)){
+                    int selectedRow = sanphamdathemTable.getSelectedRow();
+                if(selectedRow != -1){
+                    String masp = masptxt.getText();
+                    sanphamdathemTable.setValueAt(masp, selectedRow, 0);
+                    String tensp = tensptxt.getText();
+                    sanphamdathemTable.setValueAt(tensp, selectedRow, 1);
+                    String [] cauhinh = cbxcauhinh.getValue().split("-");
+                    String ram = cauhinh[0];
+                    sanphamdathemTable.setValueAt(ram, selectedRow, 2);
+                    String rom = cauhinh[1];
+                    sanphamdathemTable.setValueAt(rom, selectedRow, 3);
+                    String mausac = cauhinh[2];
+                    sanphamdathemTable.setValueAt(mausac, selectedRow, 4);
+                    String dongia = gianhaptxt.getText();
+                    sanphamdathemTable.setValueAt(dongia, selectedRow, 5);
+                    String soluong = soluongtxt.getText();
+                    sanphamdathemTable.setValueAt(soluong, selectedRow, 6);
+                    setTongTien();
+                    
+                }
+                JOptionPane.showMessageDialog(null, "Đã sửa thành công");
+                }
+    }
 }

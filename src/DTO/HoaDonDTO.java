@@ -16,16 +16,18 @@ public class HoaDonDTO {
     private int maKH;
     private int maNhanVien;
     private int makhuyenmai;
+    private int trangthai;
 
     public HoaDonDTO() {
     }
 
-    public HoaDonDTO(int maHoaDon, LocalDate ngayXuat, int maKH, int maNhanVien, int makhuyenmai) {
+    public HoaDonDTO(int maHoaDon, LocalDate ngayXuat, int maKH, int maNhanVien, int makhuyenmai, int trangthai) {
         this.maHoaDon = maHoaDon;
         this.ngayXuat = ngayXuat;
         this.maKH = maKH;
         this.maNhanVien = maNhanVien;
         this.makhuyenmai = makhuyenmai;
+        this.trangthai = trangthai;
     }
 
     public int getMaHoaDon() {
@@ -48,6 +50,10 @@ public class HoaDonDTO {
         return makhuyenmai;
     }
 
+    public int getTrangthai() {
+        return trangthai;
+    }
+
     public void setMaHoaDon(int maHoaDon) {
         this.maHoaDon = maHoaDon;
     }
@@ -67,7 +73,10 @@ public class HoaDonDTO {
     public void setMakhuyenmai(int makhuyenmai) {
         this.makhuyenmai = makhuyenmai;
     }
-  
-    
+
+    public void setTrangthai(int trangthai) {
+        this.trangthai = trangthai;
+    }
+
     
 }

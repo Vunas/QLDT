@@ -8,7 +8,7 @@ import GUI.Component.ButtonCustom;
 import GUI.Component.HeaderTitle;
 import GUI.Component.InputForm;
 import GUI.Component.NumericDocumentFilter;
-import GUI.SideBar.ThuocTinhGUI;
+import GUI.pages.ThuocTinhGUI;
 import util.Validation;
 import java.awt.BorderLayout;
 import java.awt.Color;

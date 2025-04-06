@@ -13,21 +13,24 @@ import javax.swing.border.MatteBorder;
 
 import BLL.BUS.QuyenBLL;
 import BLL.BUS.TaiKhoanBLL;
-import BLL.BUS.SanPhamDAO;
+import DAO.SanPhamDAO;
 import DTO.QuyenDTO;
 import DTO.TaiKhoanDTO;
 import DTO.SanPhamDTO;
 import GUI.Frame.Login;
 import GUI.Frame.Main;
-import GUI.SideBar.SanPhamGUI;
-import GUI.SideBar.KhachHangGUI;
-import GUI.SideBar.NhaCungCapGUI;
-import GUI.SideBar.NhanVienGUI;
-import GUI.SideBar.PhieuNhapGUI;
-import GUI.SideBar.QuyenGUI;
-import GUI.SideBar.TaiKhoanGUI;
-import GUI.SideBar.ThuocTinhGUI;
-import GUI.SideBar.TrangChuGUI;
+
+import GUI.pages.HoaDonGUI;
+import GUI.pages.KhachHangGUI;
+import GUI.pages.NhaCungCapGUI;
+import GUI.pages.NhanVienGUI;
+import GUI.pages.PhieuNhapGUI;
+import GUI.pages.QuyenGUI;
+import GUI.pages.SanPhamGUI;
+import GUI.pages.TaiKhoanGUI;
+import GUI.pages.ThuocTinhGUI;
+import GUI.pages.TrangChuGUI;
+
 
 public class SideBar extends JPanel {
     Main main;
@@ -36,9 +39,11 @@ public class SideBar extends JPanel {
     QuyenDTO quyenDTO;
     JPanel pnlTop, pnlMid, pnlBot;
     ItemBar[] itemBars;
-    String[] menuBars = {"Trang chủ", "Sản phẩm", "Thuộc tính",  
-                     "Phiếu nhập", "Phiếu xuất", "Khách hàng", "Nhà cung cấp", 
-                     "Nhân viên", "Tài khoản",  "Phân quyền","Thống kê"};
+
+    String[] menuBars = { "Trang chủ", "Sản phẩm", "Thuộc tính",
+            "Phiếu nhập", "Hóa đơn", "Khách hàng", "Nhà cung cấp",
+            "Nhân viên", "Tài khoản", "Phân quyền", "Thống kê" };
+
 
     String[] icons ={"home","phone","del","home","user","home","user","home","account","protect","home"};
     int thisPage= 0;
@@ -157,7 +162,7 @@ public class SideBar extends JPanel {
             @Override
             public void mousePressed(MouseEvent evt) {
                 changePage(4);
-                main.setPanel(new KhachHangGUI(topNav));
+                main.setPanel(new HoaDonGUI(main));
             }
         });
 
