@@ -62,4 +62,19 @@ public class ChiTietHoaDonDao {
         }
         return false;
     }
+    
+    public boolean deleteCTHoaDon(int mahoadon){
+      String sql = "DELETE FROM chitiethoadon WHERE mahoadon= ?";
+      try(Connection conn = JdbcUtil.getConnection()) {
+          PreparedStatement stmt = conn.prepareStatement(sql);
+          stmt.setInt(1,mahoadon);
+          int check = stmt.executeUpdate();
+          return check>0;
+      } catch (Exception e) {
+          e.printStackTrace();
+      }
+        return false;
+  }
+    
+    
 }

@@ -166,7 +166,7 @@ public class HoaDonGUI extends JPanel{
         }
      });
      
-     textSearch.addKeyListener(new KeyAdapter() {
+   textSearch.addKeyListener(new KeyAdapter() {
     @Override
     public void keyReleased(KeyEvent e) {
         String type = topNav.getFindFor().getSelectedItem().toString().toLowerCase();
@@ -176,12 +176,11 @@ public class HoaDonGUI extends JPanel{
 
         // Tạo danh sách kết quả để lưu khách hàng phù hợp
         List<HoaDonDTO> filteredList = new ArrayList<>();
-        KhachHangDTO tenKH;
-        TaiKhoanDTO taikhoanhientai = TaiKhoanDTO.getTaiKhoanHienTai();
         
         // Lọc dữ liệu theo tiêu chí tìm kiếm
         for (HoaDonDTO hd : list) {
-            tenKH = new KhachHangBLL().getKhachHangById(hd.getMaKH());
+            KhachHangDTO tenKH = new KhachHangBLL().getKhachHangById(hd.getMaKH());
+            TaiKhoanDTO taiKhoan = TaiKhoanDTO.getTaiKhoanHienTai(); // Giả sử phương thức này trả về tài khoản hiện tại
             
             boolean isMatch = false;
             switch (type.toLowerCase()) {
@@ -189,22 +188,22 @@ public class HoaDonGUI extends JPanel{
                     // Lọc tất cả các tiêu chí
                     if (String.valueOf(hd.getMaHoaDon()).toLowerCase().contains(keyword.toLowerCase()) ||
                         tenKH.getHoTen().toLowerCase().contains(keyword.toLowerCase()) ||
-                        taikhoanhientai.getTenDangNhap().toLowerCase().contains(keyword.toLowerCase())) {
+                        taiKhoan.getTenDangNhap().toLowerCase().contains(keyword.toLowerCase())) {
                         isMatch = true;
                     }
                     break;
-                case "Mã Hóa Đơn":
+                case "mã hóa đơn":
                     if (String.valueOf(hd.getMaHoaDon()).toLowerCase().contains(keyword.toLowerCase())) {
                         isMatch = true;
                     }
                     break;
-                case "Khách Hàng":
+                case "khách hàng":
                     if (tenKH.getHoTen().toLowerCase().contains(keyword.toLowerCase())) {
                         isMatch = true;
                     }
                     break;
-                case "Nhân Viên Nhập":
-                    if (taikhoanhientai.getTenDangNhap().toLowerCase().contains(keyword.toLowerCase())) {
+                case "nhân viên nhập":
+                    if (taiKhoan.getTenDangNhap().toLowerCase().contains(keyword.toLowerCase())) {
                         isMatch = true;
                     }
                     break;
@@ -231,6 +230,7 @@ public class HoaDonGUI extends JPanel{
         }
     }
 });
+
 
      
 }

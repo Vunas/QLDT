@@ -15,7 +15,6 @@ import com.formdev.flatlaf.extras.FlatSVGIcon;
 
 import BLL.BUS.QuyenBLL;
 import BLL.BUS.TaiKhoanBLL;
-import DAO.SanPhamDAO;
 import DTO.QuyenDTO;
 import DTO.TaiKhoanDTO;
 import GUI.Frame.Login;

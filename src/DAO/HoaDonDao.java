@@ -112,5 +112,17 @@ public class HoaDonDao {
     }
     return -1;
   }
+  
+  public boolean xoaMemHoaDon(int maHoaDon) {
+        String sql = "UPDATE hoadon SET trangthai = 0 WHERE maHoaDon = ?";
+        try (Connection conn = JdbcUtil.getConnection()) {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, maHoaDon);
+            return stmt.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
 }

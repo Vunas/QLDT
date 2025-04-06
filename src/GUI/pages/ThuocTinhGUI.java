@@ -2,12 +2,10 @@
 package GUI.pages;
 
 
-import GUI.Component.IntegratedSearch;
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import GUI.Component.PanelBorderRadius;
-import GUI.Component.itemTaskbar;
+
 import javax.swing.border.MatteBorder;
 import GUI.DiaLog.DungLuongRamDialog;
 import GUI.DiaLog.DungLuongRomDialog;

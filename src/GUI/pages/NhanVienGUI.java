@@ -197,8 +197,7 @@ public class NhanVienGUI extends JPanel {
                 String type = topNav.getFindFor().getSelectedItem().toString().toLowerCase();
                 String keyword = textSearch.getText().trim();
 
-                loadData(nhanVienBLL.getnhanVienByNameSearch(keyword, type));
-
+                loadData(nhanVienBLL.getNhanVienByNameSearch(keyword, type));
             }
         });
 
