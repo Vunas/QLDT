@@ -1,4 +1,4 @@
-package GUI.Component;
+package GUI.Panel.Component;
 
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;

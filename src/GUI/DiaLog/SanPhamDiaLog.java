@@ -11,15 +11,13 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 import DTO.SanPhamDTO;
-
-import GUI.Component.SelectForm;
+import GUI.Panel.Component.SelectForm;
 import GUI.Panel.InputType.InputText;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -385,7 +383,7 @@ public class SanPhamDiaLog extends JDialog{
     public SanPhamDTO getSanPhamData(int maKH) {
         return new SanPhamDTO(maKH, tfTenSP.getText(), tfImg.getText(), Integer.parseInt(tfSoLuong.getText()),
                 Integer.parseInt(tfGiaNhap.getText()),Integer.parseInt(tfGiaBan.getText()) , cbxColor.getValue() , cbxBrand.getValue(),
-                Integer.parseInt(cbxRam.getValue()) , Integer.parseInt(cbxRom.getValue()) , tfChip.getText(), Float.parseFloat(tfThoiGianBaoHanh.getText()));
+                Integer.parseInt(cbxRam.getValue()) , Integer.parseInt(cbxRom.getValue()) , tfChip.getText(), Float.parseFloat(tfThoiGianBaoHanh.getText()),1);
     }
     
 }

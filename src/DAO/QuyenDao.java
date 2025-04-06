@@ -1,24 +1,21 @@
 package DAO;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-
 import DTO.QuyenDTO;
 import util.JdbcUtil;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class QuyenDao {
     
     // Thêm quyền mới
     public boolean addQuyen(QuyenDTO quyen) {
-        String sql = "INSERT INTO Quyen (tenQuyen, danhSachChucNang) VALUES (?, ?)";
+        String sql = "INSERT INTO Quyen (tenQuyen, danhSachChucNang, trangThai) VALUES (?, ?, ?)";
         try (Connection conn = JdbcUtil.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, quyen.getTenQuyen());
             stmt.setString(2, quyen.getDanhSachChucNang());
+            stmt.setInt(3, 1); // Mặc định trạng thái là 1 (hoạt động)
             return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -28,12 +25,13 @@ public class QuyenDao {
 
     // Cập nhật thông tin quyền
     public boolean updateQuyen(QuyenDTO quyen) {
-        String sql = "UPDATE Quyen SET tenQuyen = ?, danhSachChucNang = ? WHERE maQuyen = ?";
+        String sql = "UPDATE Quyen SET tenQuyen = ?, danhSachChucNang = ?, trangThai = ? WHERE maQuyen = ?";
         try (Connection conn = JdbcUtil.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, quyen.getTenQuyen());
             stmt.setString(2, quyen.getDanhSachChucNang());
-            stmt.setInt(3, quyen.getMaQuyen());
+            stmt.setInt(3, quyen.getTrangThai());
+            stmt.setInt(4, quyen.getMaQuyen());
             return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -41,9 +39,9 @@ public class QuyenDao {
         return false;
     }
 
-    // Xóa quyền
-    public boolean deleteQuyen(int maQuyen) {
-        String sql = "DELETE FROM Quyen WHERE maQuyen = ?";
+    // Xóa mềm quyền
+    public boolean xoaMemQuyen(int maQuyen) {
+        String sql = "UPDATE Quyen SET trangThai = 0 WHERE maQuyen = ?"; // Đánh dấu trạng thái = 0
         try (Connection conn = JdbcUtil.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, maQuyen);
@@ -54,9 +52,9 @@ public class QuyenDao {
         return false;
     }
 
-    // Lấy thông tin tất cả quyền
+    // Lấy thông tin tất cả quyền (trừ quyền đã bị xóa mềm)
     public List<QuyenDTO> getAllQuyen() {
-        String sql = "SELECT maQuyen, tenQuyen, danhSachChucNang FROM Quyen";
+        String sql = "SELECT maQuyen, tenQuyen, danhSachChucNang FROM Quyen WHERE trangThai != 0";
         List<QuyenDTO> list = new ArrayList<>();
         try (Connection conn = JdbcUtil.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
@@ -76,7 +74,7 @@ public class QuyenDao {
 
     // Lấy thông tin quyền theo ID
     public QuyenDTO getQuyenById(int maQuyen) {
-        String sql = "SELECT maQuyen, tenQuyen, danhSachChucNang FROM Quyen WHERE maQuyen = ?";
+        String sql = "SELECT maQuyen, tenQuyen, danhSachChucNang, trangThai FROM Quyen WHERE maQuyen = ? AND trangThai != 0";
         try (Connection conn = JdbcUtil.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, maQuyen);
@@ -86,6 +84,7 @@ public class QuyenDao {
                     quyen.setMaQuyen(rs.getInt("maQuyen"));
                     quyen.setTenQuyen(rs.getString("tenQuyen"));
                     quyen.setDanhSachChucNang(rs.getString("danhSachChucNang"));
+                    quyen.setTrangThai(rs.getInt("trangThai"));
                     return quyen;
                 }
             }

@@ -10,7 +10,7 @@ public class TaiKhoanDao {
 
     // 1. Thêm tài khoản mới
     public boolean addTaiKhoan(TaiKhoanDTO taiKhoan) {
-        String sql = "INSERT INTO taikhoan (MaNV, TenDangNhap, MatKhau, MaQuyen) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO taikhoan (MaNV, TenDangNhap, MatKhau, MaQuyen, TrangThai) VALUES (?, ?, ?, ?, ?)";
         try (Connection conn = JdbcUtil.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
@@ -18,6 +18,7 @@ public class TaiKhoanDao {
             ps.setString(2, taiKhoan.getTenDangNhap());
             ps.setString(3, taiKhoan.getMatKhau());
             ps.setInt(4, taiKhoan.getMaQuyen());
+            ps.setInt(5, taiKhoan.getTrangThai());
             return ps.executeUpdate() > 0;
 
         } catch (SQLException e) {
@@ -29,7 +30,7 @@ public class TaiKhoanDao {
     // 2. Lấy danh sách tài khoản
     public List<TaiKhoanDTO> getAllTaiKhoan() {
         List<TaiKhoanDTO> list = new ArrayList<>();
-        String sql = "SELECT * FROM taikhoan";
+        String sql = "SELECT * FROM taikhoan WHERE TrangThai != 0"; // Lọc những tài khoản chưa bị xóa mềm
         try (Connection conn = JdbcUtil.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
@@ -39,7 +40,8 @@ public class TaiKhoanDao {
                         rs.getInt("MaNV"),
                         rs.getString("TenDangNhap"),
                         rs.getString("MatKhau"),
-                        rs.getInt("MaQuyen")
+                        rs.getInt("MaQuyen"),
+                        rs.getInt("TrangThai")
                 );
                 list.add(taiKhoan);
             }
@@ -52,14 +54,15 @@ public class TaiKhoanDao {
 
     // 3. Cập nhật tài khoản
     public boolean updateTaiKhoan(TaiKhoanDTO taiKhoan) {
-        String sql = "UPDATE taikhoan SET TenDangNhap = ?, MatKhau = ?, MaQuyen = ? WHERE MaNV = ?";
+        String sql = "UPDATE taikhoan SET TenDangNhap = ?, MatKhau = ?, MaQuyen = ?, TrangThai = ? WHERE MaNV = ?";
         try (Connection conn = JdbcUtil.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, taiKhoan.getTenDangNhap());
             ps.setString(2, taiKhoan.getMatKhau());
             ps.setInt(3, taiKhoan.getMaQuyen());
-            ps.setInt(4, taiKhoan.getMaNV());
+            ps.setInt(4, taiKhoan.getTrangThai());
+            ps.setInt(5, taiKhoan.getMaNV());
             return ps.executeUpdate() > 0;
 
         } catch (SQLException e) {
@@ -68,9 +71,9 @@ public class TaiKhoanDao {
         }
     }
 
-    // 4. Xóa tài khoản
-    public boolean deleteTaiKhoan(int maNV) {
-        String sql = "DELETE FROM taikhoan WHERE MaNV = ?";
+    // 4. Xóa mềm tài khoản
+    public boolean xoaMemTaiKhoan(int maNV) {
+        String sql = "UPDATE taikhoan SET TrangThai = 0 WHERE MaNV = ?"; // Đánh dấu trạng thái = 0
         try (Connection conn = JdbcUtil.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
@@ -85,7 +88,7 @@ public class TaiKhoanDao {
 
     // 5. Kiểm tra thông tin đăng nhập
     public TaiKhoanDTO login(String tenDangNhap, String matKhau) {
-        String sql = "SELECT * FROM taikhoan WHERE TenDangNhap = ? AND MatKhau = ?";
+        String sql = "SELECT * FROM taikhoan WHERE TenDangNhap = ? AND MatKhau = ? AND TrangThai != 0";
         try (Connection conn = JdbcUtil.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
@@ -94,10 +97,11 @@ public class TaiKhoanDao {
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     return new TaiKhoanDTO(
-                            rs.getInt("maNV"),
-                            rs.getString("tenDangNhap"),
-                            rs.getString("matKhau"),
-                            rs.getInt("maQuyen")
+                            rs.getInt("MaNV"),
+                            rs.getString("TenDangNhap"),
+                            rs.getString("MatKhau"),
+                            rs.getInt("MaQuyen"),
+                            rs.getInt("TrangThai")
                     );
                 }
             }
@@ -107,12 +111,11 @@ public class TaiKhoanDao {
         }
         return null; // Đăng nhập thất bại
     }
-    
-    
-    
+
+    // 6. Lấy tài khoản theo tên đăng nhập
     public TaiKhoanDTO getTaiKhoanByTenDangNhap(String tenDangNhap) {
         TaiKhoanDTO taiKhoan = null;
-        String query = "SELECT * FROM taikhoan WHERE TenDangNhap = ?";
+        String query = "SELECT * FROM taikhoan WHERE TenDangNhap = ? AND TrangThai != 0";
         try (Connection conn = JdbcUtil.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, tenDangNhap);
@@ -121,7 +124,8 @@ public class TaiKhoanDao {
                     int maNV = rs.getInt("MaNV");
                     String matKhau = rs.getString("MatKhau");
                     int maQuyen = rs.getInt("MaQuyen");
-                    taiKhoan = new TaiKhoanDTO(maNV, tenDangNhap, matKhau, maQuyen);
+                    int trangThai = rs.getInt("TrangThai");
+                    taiKhoan = new TaiKhoanDTO(maNV, tenDangNhap, matKhau, maQuyen, trangThai);
                 }
             }
         } catch (SQLException e) {

@@ -5,22 +5,23 @@ public class TaiKhoanDTO {
     private String tenDangNhap;  // Tên đăng nhập
     private String matKhau;      // Mật khẩu
     private int maQuyen;         // Mã quyền (quản lý, nhân viên, v.v.)
+    private int trangThai;    // Trạng thái được thêm vào
 
     private static TaiKhoanDTO taiKhoanHienTai;
     
     // Constructor không tham số
     public TaiKhoanDTO() {}
-    
 
     // Constructor có tham số
-    public TaiKhoanDTO(int maNV, String tenDangNhap, String matKhau, int maQuyen) {
+    public TaiKhoanDTO(int maNV, String tenDangNhap, String matKhau, int maQuyen, int trangThai) {
         this.maNV = maNV;
         this.tenDangNhap = tenDangNhap;
         this.matKhau = matKhau;
         this.maQuyen = maQuyen;
+        this.trangThai = trangThai;
     }
 
-     public static TaiKhoanDTO getTaiKhoanHienTai() {
+    public static TaiKhoanDTO getTaiKhoanHienTai() {
         return taiKhoanHienTai;
     }
 
@@ -61,16 +62,12 @@ public class TaiKhoanDTO {
         this.maQuyen = maQuyen;
     }
 
-    // Phương thức toString() để dễ dàng kiểm tra thông tin
-    @Override
-    public String toString() {
-        return "TaiKhoanDTO{" +
-                "maNV=" + maNV +
-                ", tenDangNhap='" + tenDangNhap + '\'' +
-                ", matKhau='***'" +  // Bảo mật mật khẩu khi hiển thị
-                ", maQuyen=" + maQuyen +
-                '}';
+    public int getTrangThai() {
+        return trangThai;
     }
+
+    public void setTrangThai(int trangThai) {
+        this.trangThai = trangThai;
+    }
+
 }
-
-

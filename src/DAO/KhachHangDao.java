@@ -14,7 +14,7 @@ public class KhachHangDao {
 
     // Thêm khách hàng mới
     public boolean addKhachHang(KhachHangDTO khachHang) {
-        String sql = "INSERT INTO khach_hang (maKH, ten, diaChi, sdt) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO khach_hang (maKH, ten, diaChi, sdt, trangthai) VALUES (?, ?, ?, ?, ?)";
         try (Connection connection = JdbcUtil.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
@@ -22,6 +22,7 @@ public class KhachHangDao {
             statement.setString(2, khachHang.getHoTen());
             statement.setString(3, khachHang.getDiaChi());
             statement.setString(4, khachHang.getSdt());
+            statement.setInt(5, 1); // Mặc định trạng thái là 1 (còn hiệu lực)
 
             return statement.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -32,7 +33,7 @@ public class KhachHangDao {
 
     // Cập nhật thông tin khách hàng
     public boolean updateKhachHang(KhachHangDTO khachHang) {
-        String sql = "UPDATE khach_hang SET ten = ?, diaChi = ?, sdt = ? WHERE maKH = ?";
+        String sql = "UPDATE khach_hang SET ten = ?, diaChi = ?, sdt = ? WHERE maKH = ? AND trangthai = 1";
         try (Connection connection = JdbcUtil.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
@@ -48,14 +49,13 @@ public class KhachHangDao {
         return false;
     }
 
-    // Xóa khách hàng
-    public boolean deleteKhachHang(int maKH) {
-        String sql = "DELETE FROM khach_hang WHERE maKH = ?";
+    // Xóa mềm khách hàng
+    public boolean xoaMemKhachHang(int maKH) {
+        String sql = "UPDATE khach_hang SET trangthai = 0 WHERE maKH = ?";
         try (Connection connection = JdbcUtil.getConnection();
-            PreparedStatement statement = connection.prepareStatement(sql)) {
-            
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
             statement.setInt(1, maKH);
-            
             return statement.executeUpdate() > 0; // Trả về true nếu có dòng bị ảnh hưởng
         } catch (SQLException e) {
             e.printStackTrace();
@@ -63,10 +63,9 @@ public class KhachHangDao {
         return false; // Trả về false nếu xảy ra lỗi
     }
 
-
     // Lấy thông tin khách hàng theo mã
     public KhachHangDTO getKhachHangById(int maKH) {
-        String sql = "SELECT * FROM khach_hang WHERE maKH = ?";
+        String sql = "SELECT * FROM khach_hang WHERE maKH = ? AND trangthai = 1"; // Lọc chỉ khách hàng còn hiệu lực
         try (Connection connection = JdbcUtil.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
@@ -78,7 +77,8 @@ public class KhachHangDao {
                         resultSet.getInt("maKH"),
                         resultSet.getString("ten"),
                         resultSet.getString("diaChi"),
-                        resultSet.getString("sdt")
+                        resultSet.getString("sdt"),
+                        resultSet.getInt("trangThai")
                 );
             }
         } catch (SQLException e) {
@@ -87,10 +87,10 @@ public class KhachHangDao {
         return null;
     }
 
-    // Lấy danh sách tất cả khách hàng
+    // Lấy danh sách tất cả khách hàng còn hiệu lực
     public List<KhachHangDTO> getAllKhachHang() {
         List<KhachHangDTO> khachHangList = new ArrayList<>();
-        String sql = "SELECT * FROM khach_hang";
+        String sql = "SELECT * FROM khach_hang WHERE trangthai = 1"; // Chỉ lấy khách hàng còn hiệu lực
         try (Connection connection = JdbcUtil.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql);
              ResultSet resultSet = statement.executeQuery()) {
@@ -101,7 +101,8 @@ public class KhachHangDao {
                         resultSet.getString("ten"),
                         resultSet.getString("diaChi"),
                         resultSet.getString("sdt"),
-                        resultSet.getInt("trangthai")
+                        resultSet.getInt("trangThai")
+
                 );
                 khachHangList.add(khachHang);
             }

@@ -1,4 +1,4 @@
-package GUI.Component;
+package GUI.Panel;
 
 import com.formdev.flatlaf.FlatClientProperties;
 import java.awt.Color;
@@ -10,6 +10,9 @@ import java.awt.event.MouseListener;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
+
+import GUI.Panel.InputType.InputImage;
+
 import java.awt.BorderLayout;
 import javax.swing.ImageIcon;
 import javax.swing.border.EmptyBorder;
@@ -51,13 +54,13 @@ public class itemTaskbar extends JPanel implements MouseListener {
         this.addMouseListener(this);
 
         lblIcon = new JLabel();
-        lblIcon.setPreferredSize(new Dimension(110, 110));
-        lblIcon.setIcon(new FlatSVGIcon("src/resources/icon/" + linkIcon));
+        lblIcon.setPreferredSize(new Dimension(250, 110));
+        lblIcon.setIcon(new FlatSVGIcon("./resources/icon/" + linkIcon+".svg",(float)2));
 
         this.add(lblIcon);
 
         pnlContent = new JLabel(content1);
-        pnlContent.setPreferredSize(new Dimension(170, 30));
+        pnlContent.setPreferredSize(new Dimension(170, 80));
         pnlContent.putClientProperty("FlatLaf.style", "font: 200% $medium.font");
         pnlContent.setForeground(FontColor);
         this.add(pnlContent);

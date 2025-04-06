@@ -4,22 +4,22 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.Label;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.*;
-import javax.swing.border.MatteBorder;
+
+import com.formdev.flatlaf.extras.FlatSVGIcon;
 
 import BLL.BUS.QuyenBLL;
 import BLL.BUS.TaiKhoanBLL;
 import DAO.SanPhamDAO;
 import DTO.QuyenDTO;
 import DTO.TaiKhoanDTO;
-import DTO.SanPhamDTO;
 import GUI.Frame.Login;
 import GUI.Frame.Main;
-
 import GUI.pages.HoaDonGUI;
 import GUI.pages.KhachHangGUI;
 import GUI.pages.NhaCungCapGUI;
@@ -30,7 +30,6 @@ import GUI.pages.SanPhamGUI;
 import GUI.pages.TaiKhoanGUI;
 import GUI.pages.ThuocTinhGUI;
 import GUI.pages.TrangChuGUI;
-
 
 public class SideBar extends JPanel {
     Main main;
@@ -44,20 +43,19 @@ public class SideBar extends JPanel {
             "Phiếu nhập", "Hóa đơn", "Khách hàng", "Nhà cung cấp",
             "Nhân viên", "Tài khoản", "Phân quyền", "Thống kê" };
 
+    String[] icons = { "home", "phone", "attributes", "import", "export", "user", "supplier", "employee", "account", "protect", "stats" };
+    int thisPage = 0;
 
-    String[] icons ={"home","phone","del","home","user","home","user","home","account","protect","home"};
-    int thisPage= 0;
+    Color mainColor = new Color(100, 149, 237);
 
-    Color mainColor = Color.GRAY;
-
-    public SideBar(Main main,TaiKhoanDTO taiKhoanDTO) {
+    public SideBar(Main main, TaiKhoanDTO taiKhoanDTO) {
         this.taiKhoanDTO = taiKhoanDTO;
         this.quyenDTO = new QuyenBLL().getQuyenById(taiKhoanDTO.getMaQuyen());
         initComponent(main);
     }
 
     private void initComponent(Main main) {
-        this.main= main;
+        this.main = main;
 
         topNav = new TopNav();
 
@@ -65,53 +63,55 @@ public class SideBar extends JPanel {
         setPreferredSize(new Dimension(190, 200));
 
         // Top panel
-        pnlTop = new JPanel();
-        pnlTop.setBackground(new Color(64, 64, 64));  // Màu tối cho top panel
-        pnlTop.setPreferredSize(new Dimension(230, 120));
+        pnlTop = new JPanel(new BorderLayout());
+        pnlTop.setPreferredSize(new Dimension(230, 60)); // Chiều cao cố định cho top panel
+        pnlTop.setBackground(Color.WHITE); // Nền trắng cho top panel
 
-        JLabel lblAvatar = new JLabel(new ImageIcon("path/to/avatar/image"));  // Thay đổi đường dẫn ảnh avatar
-        JLabel lblName = new JLabel("");
-        JLabel lblTitle = new JLabel("Quản lý kho");
-        lblName.setForeground(Color.WHITE);
-        lblTitle.setForeground(Color.LIGHT_GRAY);
+        // Avatar
+        FlatSVGIcon svgIcon = new FlatSVGIcon("./resources/icon/logo.svg");
+        JLabel lblAvatar = new JLabel(svgIcon);
+        lblAvatar.setPreferredSize(new Dimension(70, 30)); // Kích thước cố định
 
-        pnlTop.add(lblAvatar);
-        pnlTop.add(lblName);
-        pnlTop.add(lblTitle);
-        pnlTop.setLayout(new BoxLayout(pnlTop, BoxLayout.Y_AXIS));
+        // Tên cửa hàng
+        JLabel lblName = new JLabel("Phone Store");
+        lblName.setFont(new Font("Arial", Font.BOLD, 16)); // Font lớn và đậm
+        lblName.setForeground(Color.BLACK); // Đổi màu chữ sang đen để dễ nhìn
+
+        // Căn chỉnh tên bên phải, avatar bên trái
+        pnlTop.add(lblAvatar, BorderLayout.WEST); // Đặt avatar ở bên trái
+        pnlTop.add(lblName, BorderLayout.CENTER); // Đặt tên ở giữa
 
         // Middle panel
         pnlMid = new JPanel();
         pnlMid.setPreferredSize(new Dimension(230, 600));
         pnlMid.setBackground(Color.WHITE);
         pnlMid.setLayout(new FlowLayout(0, 0, 5));
-        pnlMid.setBorder(BorderFactory.createEmptyBorder(5 , 5, 5, 5));
+        pnlMid.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
-        itemBars= new ItemBar[menuBars.length];
-        for (int i=0; i< menuBars.length; i++) {
-            itemBars[i] = new ItemBar(menuBars[i],icons[i]);
+        itemBars = new ItemBar[menuBars.length];
+        for (int i = 0; i < menuBars.length; i++) {
+            itemBars[i] = new ItemBar(menuBars[i], icons[i]);
             pnlMid.add(itemBars[i]);
         }
         itemBars[0].setBackground(mainColor);
 
         // Bottom panel
         pnlBot = new JPanel();
-        pnlBot.setBackground(Color.WHITE);  
+        pnlBot.setBackground(Color.WHITE);
 
-        ItemBar logoutItem= new ItemBar("Đăng xuất","logout");
+        ItemBar logoutItem = new ItemBar("Đăng xuất", "logout");
         logoutItem.addMouseListener(new MouseAdapter() {
             @Override
-            public void mousePressed(MouseEvent e){
+            public void mousePressed(MouseEvent e) {
                 main.dispose();
                 new Login().setVisible(true);
             }
         });
-      
 
-        pnlBot.add(logoutItem,Label.BOTTOM_ALIGNMENT);
+        pnlBot.add(logoutItem, Label.BOTTOM_ALIGNMENT);
         // pnlBot.setLayout(new BoxLayout(pnlBot, BoxLayout.Y_AXIS));
 
-        setBorder(new MatteBorder(0, 0, 0, 1, Color.GRAY));
+        // setBorder(new MatteBorder(0, 0, 0, 1, Color.GRAY));
         setBackground(Color.BLACK);
         // Add panels to the SideNavBar
         add(pnlTop, BorderLayout.NORTH);
@@ -141,13 +141,13 @@ public class SideBar extends JPanel {
                 main.setPanel(new ThuocTinhGUI(main));
             }
         });
-        
+
         // itemBars[3].addMouseListener(new MouseAdapter() {
-        //     @Override
-        //     public void mousePressed(MouseEvent evt) {
-            //         changePage(3);
-        //         main.setPanel(new KhoHangGui(topNav));
-        //     }
+        // @Override
+        // public void mousePressed(MouseEvent evt) {
+        // changePage(3);
+        // main.setPanel(new KhoHangGui(topNav));
+        // }
         // });
 
         itemBars[3].addMouseListener(new MouseAdapter() {
@@ -215,21 +215,21 @@ public class SideBar extends JPanel {
         });
 
         new TaiKhoanBLL().chinhSuaQuyen(this, quyenDTO);
-    
+
     }
 
     public ItemBar[] getItemBars() {
         return this.itemBars;
     }
 
-    private void changePage(int i){
+    private void changePage(int i) {
         itemBars[thisPage].setBackground(Color.WHITE);
         itemBars[thisPage].iselected = false;
-        thisPage= i;
+        thisPage = i;
         itemBars[i].setBackground(mainColor);
-        itemBars[i].iselected= true;
+        itemBars[i].iselected = true;
         topNav = new TopNav();
         new TaiKhoanBLL().chinhSuaChucNang(topNav, quyenDTO, i);
     }
-    
+
 }

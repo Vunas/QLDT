@@ -14,7 +14,7 @@ import util.JdbcUtil;
 public class NhanVienDao {
 
     public boolean addNhanVien(NhanVienDTO nhanVien) {
-        String query = "INSERT INTO nhanvien (maNV, hoTen, ngaySinh, gioiTinh, sDT) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO nhanvien (maNV, hoTen, ngaySinh, gioiTinh, sDT, trangthai) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection conn = JdbcUtil.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(query)) {
 
@@ -23,6 +23,7 @@ public class NhanVienDao {
             stmt.setDate(3, new java.sql.Date(nhanVien.getNgaySinh().getTime()));
             stmt.setInt(4, nhanVien.getGioiTinh());
             stmt.setString(5, nhanVien.getSDT());
+            stmt.setInt(6, 1); // Mặc định trạng thái là 1 (còn hiệu lực)
 
             return stmt.executeUpdate() > 0; // Trả về true nếu thêm thành công
         } catch (SQLException e) {
@@ -32,7 +33,7 @@ public class NhanVienDao {
     }
 
     public boolean updateNhanVien(NhanVienDTO nhanVien) {
-        String query = "UPDATE nhanvien SET hoTen = ?, ngaySinh = ?, gioiTinh = ?, sDT = ? WHERE maNV = ?";
+        String query = "UPDATE nhanvien SET hoTen = ?, ngaySinh = ?, gioiTinh = ?, sDT = ? WHERE maNV = ? AND trangthai = 1";
         try (Connection conn = JdbcUtil.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(query)) {
 
@@ -49,8 +50,9 @@ public class NhanVienDao {
         return false;
     }
 
-    public boolean deleteNhanVien(int maNV) {
-        String query = "DELETE FROM nhanvien WHERE maNV = ?";
+    public boolean xoaMemNhanVien(int maNV) {
+        // Xóa mềm bằng cách cập nhật "trangthai" thành 0
+        String query = "UPDATE nhanvien SET trangthai = 0 WHERE maNV = ?";
         try (Connection conn = JdbcUtil.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(query)) {
 
@@ -63,10 +65,10 @@ public class NhanVienDao {
     }
 
     public NhanVienDTO getNhanVienById(int maNV) {
-        String query = "SELECT * FROM nhanvien WHERE maNV = ?";
+        String query = "SELECT * FROM nhanvien WHERE maNV = ? AND trangthai = 1";
         try (Connection conn = JdbcUtil.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(query)) {
-
+    
             stmt.setInt(1, maNV);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
@@ -74,8 +76,9 @@ public class NhanVienDao {
                     Date ngaySinh = rs.getDate("ngaySinh");
                     int gioiTinh = rs.getInt("gioiTinh");
                     String sDT = rs.getString("sDT");
-
-                    return new NhanVienDTO(maNV, hoTen, ngaySinh, gioiTinh, sDT);
+                    int trangThai = rs.getInt("trangthai");
+    
+                    return new NhanVienDTO(maNV, hoTen, ngaySinh, gioiTinh, sDT, trangThai);
                 }
             }
         } catch (SQLException e) {
@@ -83,48 +86,52 @@ public class NhanVienDao {
         }
         return null;
     }
+    
 
     public List<NhanVienDTO> getAllNhanVien() {
         List<NhanVienDTO> nhanVienList = new ArrayList<>();
-        String query = "SELECT * FROM nhanvien";
+        String query = "SELECT * FROM nhanvien WHERE trangthai = 1"; // Chỉ lấy nhân viên còn hiệu lực
         try (Connection conn = JdbcUtil.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(query);
                 ResultSet rs = stmt.executeQuery()) {
-
+    
             while (rs.next()) {
                 int maNV = rs.getInt("maNV");
                 String hoTen = rs.getString("hoTen");
                 Date ngaySinh = rs.getDate("ngaySinh");
                 int gioiTinh = rs.getInt("gioiTinh");
                 String sDT = rs.getString("sDT");
-
-                nhanVienList.add(new NhanVienDTO(maNV, hoTen, ngaySinh, gioiTinh, sDT));
+                int trangThai = rs.getInt("trangthai");
+    
+                nhanVienList.add(new NhanVienDTO(maNV, hoTen, ngaySinh, gioiTinh, sDT, trangThai));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return nhanVienList;
     }
+    
 
     public List<NhanVienDTO> getNhanVienChuaCoTaiKhoan() {
         List<NhanVienDTO> nhanVienList = new ArrayList<>();
         String query = "SELECT * " +
-                       "FROM NhanVien nv " +
-                       "LEFT JOIN TaiKhoan tk ON nv.MaNV = tk.MaNV " +
-                       "WHERE tk.MaNV IS NULL";
+                       "FROM nhanvien nv " +
+                       "LEFT JOIN taikhoan tk ON nv.maNV = tk.maNV " +
+                       "WHERE tk.maNV IS NULL AND nv.trangthai = 1"; // Chỉ lấy nhân viên còn hiệu lực
     
         try (Connection conn = JdbcUtil.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query);
              ResultSet rs = stmt.executeQuery()) {
     
             while (rs.next()) {
-                int maNV = rs.getInt("MaNV");
+                int maNV = rs.getInt("maNV");
                 String hoTen = rs.getString("hoTen");
                 Date ngaySinh = rs.getDate("ngaySinh");
                 int gioiTinh = rs.getInt("gioiTinh");
                 String sDT = rs.getString("sDT");
+                int trangThai = rs.getInt("trangthai");
     
-                nhanVienList.add(new NhanVienDTO(maNV, hoTen, ngaySinh, gioiTinh, sDT));
+                nhanVienList.add(new NhanVienDTO(maNV, hoTen, ngaySinh, gioiTinh, sDT, trangThai));
             }
         } catch (SQLException e) {
             e.printStackTrace();

@@ -28,7 +28,7 @@ public class NhaCungCapBLL {
     // Xóa nhà cung cấp
     public boolean deleteNhaCungCap(int maNCC) {
         // Kiểm tra logic kinh doanh ở đây nếu cần
-        return nhaCungCapDao.deleteNhaCungCap(maNCC);
+        return nhaCungCapDao.xoaMemNhaCungCap(maNCC);
     }
 
     // Lấy thông tin nhà cung cấp theo mã

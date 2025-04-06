@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package DAO;
 
 import DTO.ChiTietSanPhamDTO;
@@ -18,52 +14,58 @@ import java.sql.ResultSet;
  */
 public class ChiTietSanPhamDao {
     public boolean addChiTietSanPham(ChiTietSanPhamDTO ctsp){
-        String sql = "INSERT INTO ctsanpham(maimei, masanpham, maphieunhap, mahoadon, tinhtrang) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO ctsanpham(maimei, masanpham, maphieunhap, mahoadon, tinhtrang, trangthai) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection conn = JdbcUtil.getConnection()){
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, ctsp.getMaImei());
             stmt.setInt(2, ctsp.getMaSanpham());
             stmt.setInt(3, ctsp.getMaPhieuNhap());
-            stmt.setNull(4, java.sql.Types.INTEGER);
-            stmt.setInt(5, 0);
+            stmt.setNull(4, java.sql.Types.INTEGER); // Để giá trị mahoadon là NULL khi chưa bán
+            stmt.setInt(5, 0); // Giá trị mặc định cho tinhtrang
+            stmt.setInt(6, 1); // Giá trị mặc định cho trạng thái (1 là còn)
             int check = stmt.executeUpdate();
-            if( check>0)
-            return true; 
+            if (check > 0) 
+                return true; 
         } catch (Exception e) {
+            e.printStackTrace();
         }
         return false;
-    }
-    public boolean xacNhanDaBan(ChiTietSanPhamDTO ctsp){
-        String sql = "UPDATE ctsanpham SET trangthai = ?, mahoadon = ? WHERE maimei = ?";
-        try (Connection conn = JdbcUtil.getConnection()){
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setInt(1,1);
-            stmt.setInt(2,ctsp.getMaHoadon());
-            stmt.setString(3,ctsp.getMaImei());
-            int check = stmt.executeUpdate();
-            if( check>0)
-            return true; 
-        } catch (Exception e) {
-        }
-        return false;
-    }
-    public List<String> getImeisByPhieuNhapAndSanPham(int maphieunhap, int masanpham) {
-    List<String> imeiList = new ArrayList<>();
-    String sql = "SELECT maimei FROM ctsanpham WHERE maphieunhap = ? AND masanpham = ?";
-    try (Connection conn = JdbcUtil.getConnection();
-         PreparedStatement stmt = conn.prepareStatement(sql)) {
-        stmt.setInt(1, maphieunhap);
-        stmt.setInt(2, masanpham);
-        ResultSet rs = stmt.executeQuery();
-        while (rs.next()) {
-            imeiList.add(rs.getString("maimei"));
-        }
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
-        return imeiList;
     }
     
+    public boolean xacNhanDaBan(ChiTietSanPhamDTO ctsp){
+        String sql = "UPDATE ctsanpham SET tinhtrang = ?, mahoadon = ?, trangthai = ? WHERE maimei = ?";
+        try (Connection conn = JdbcUtil.getConnection()){
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, 1); // Đánh dấu là đã bán
+            stmt.setInt(2, ctsp.getMaHoadon());
+            stmt.setInt(3, 1); // Trang thái vẫn là "còn"
+            stmt.setString(4, ctsp.getMaImei());
+            int check = stmt.executeUpdate();
+            if (check > 0) 
+                return true; 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public List<String> getImeisByPhieuNhapAndSanPham(int maphieunhap, int masanpham) {
+        List<String> imeiList = new ArrayList<>();
+        String sql = "SELECT maimei FROM ctsanpham WHERE maphieunhap = ? AND masanpham = ? AND trangthai = 1"; // Lọc các bản ghi còn hiệu lực
+        try (Connection conn = JdbcUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, maphieunhap);
+            stmt.setInt(2, masanpham);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                imeiList.add(rs.getString("maimei"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return imeiList;
+    }
+
     public List<String> getImeisByHoaDonAndSanPham(int mahoadon, int masanpham) {
         List<String> imeiList = new ArrayList<>();
         String sql = "SELECT maimei FROM ctsanpham WHERE mahoadon = ? AND masanpham = ? AND trangthai = 1"; // Lọc các bản ghi còn hiệu lực
@@ -114,3 +116,4 @@ public class ChiTietSanPhamDao {
 
 }
 
+}

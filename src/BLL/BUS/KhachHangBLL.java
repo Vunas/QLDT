@@ -28,7 +28,7 @@ public class KhachHangBLL {
     // Xóa khách hàng
     public boolean deleteKhachHang(int maKH) {
         // Kiểm tra logic kinh doanh ở đây nếu cần
-        return khachHangDao.deleteKhachHang(maKH);
+        return khachHangDao.xoaMemKhachHang(maKH);
     }
 
     // Lấy thông tin khách hàng theo mã
