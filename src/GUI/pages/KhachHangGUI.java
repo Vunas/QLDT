@@ -14,6 +14,7 @@ import DTO.KhachHangDTO;
 import GUI.DiaLog.KhachHangDiaLog;
 import GUI.Panel.TopNav;
 import util.ExportExcelUtility;
+import util.ImportExcelUtility;
 
 import java.awt.*;
 import java.util.List;
@@ -179,6 +180,23 @@ public class KhachHangGUI extends JPanel {
                 JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(KhachHangGUI.this);
                 KhachHangDiaLog dialog = new KhachHangDiaLog(parentFrame, khachHang, "Xem chi tiết");
                 dialog.setVisible(true);
+            }
+        });
+
+        btn[4].addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ImportExcelUtility.openAndImportExcel(
+                    (KhachHangDTO dto) -> khachHangBLL.addKhachHang(dto), // Hàm lưu dữ liệu
+                    (Object[] rowData) -> new KhachHangDTO(              // Ánh xạ từ Object[] sang KhachHangDTO
+                        khachHangBLL.generateNewId(),
+                        rowData[0].toString(),
+                        rowData[1].toString(),
+                        rowData[2].toString(),
+                        1
+                    )
+                );
+                loadData(khachHangBLL.getAllKhachHang());
             }
         });
 
