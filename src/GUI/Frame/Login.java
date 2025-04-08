@@ -113,7 +113,7 @@ public class Login extends JFrame {
 
         btnLogin = new JButton("Đăng nhập");
         btnLogin.setFont(new Font("Roboto", Font.BOLD, 16));
-        btnLogin.setBackground(Color.BLACK);
+        btnLogin.setBackground(new Color(100, 149, 237));
         btnLogin.setForeground(Color.WHITE); 
         btnLogin.setPreferredSize(new Dimension(380, 55));
         btnLogin.putClientProperty(FlatClientProperties.STYLE, "arc: 20");
