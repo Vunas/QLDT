@@ -71,10 +71,11 @@ public class TopNav extends JPanel {
         pnlSearch.add(findFor);
 
         // Refresh button
-        btnRefresh = new JButton("Làm Mới",new FlatSVGIcon("./resources/icon/refresh.svg", 0.3f));
+        btnRefresh = new JButton("Làm Mới", new FlatSVGIcon("./resources/icon/refresh.svg", 0.3f));
         btnRefresh.setToolTipText("Làm mới");
-        btnRefresh.putClientProperty(FlatClientProperties.STYLE, "arc: 12; hoverBackground: #E0E0E0"); // Rounded and hover
-                                                                                                    // effect
+        btnRefresh.putClientProperty(FlatClientProperties.STYLE, "arc: 12; hoverBackground: #E0E0E0"); // Rounded and
+                                                                                                       // hover
+                                                                                                       // effect
         btnRefresh.setPreferredSize(new Dimension(110, 50)); // Adjust button size
         pnlSearch.add(btnRefresh);
 
@@ -86,12 +87,13 @@ public class TopNav extends JPanel {
         btn = new JButton[6];
 
         // Configure buttons
-        String[] buttonTexts = { "Thêm", "Sửa", "Xóa", "Chi tiết","Nhập Excel", "Xuất Excel" };
-        String[] icons = {"add","fix","del","detail","import_excel","excel"};
-        float[] iconSizes = { 0.4f, 0.4f, 0.4f, 0.6f,0.4f, 0.45f };
+        String[] buttonTexts = { "Thêm", "Sửa", "Xóa", "Chi tiết", "Nhập Excel", "Xuất Excel" };
+        String[] icons = { "add", "fix", "del", "detail", "import_excel", "excel" };
+        float[] iconSizes = { 0.4f, 0.4f, 0.4f, 0.6f, 0.4f, 0.45f };
 
         for (int i = 0; i < btn.length; i++) {
-            btn[i] = new JButton(buttonTexts[i], new FlatSVGIcon("./resources/icon/"+icons[i]+".svg", iconSizes[i]));
+            btn[i] = new JButton(buttonTexts[i],
+                    new FlatSVGIcon("./resources/icon/" + icons[i] + ".svg", iconSizes[i]));
             btn[i].setToolTipText(buttonTexts[i]);
             btn[i].setVerticalTextPosition(SwingConstants.BOTTOM);
             btn[i].setHorizontalTextPosition(SwingConstants.CENTER);
@@ -122,8 +124,7 @@ public class TopNav extends JPanel {
     }
 
     public void setItemComboBox(String[] items) {
-    findFor.setModel(new DefaultComboBoxModel<>(items));
-}
+        findFor.setModel(new DefaultComboBoxModel<>(items));
+    }
 
-    
 }

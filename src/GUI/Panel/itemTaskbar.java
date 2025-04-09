@@ -5,10 +5,13 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 
 import GUI.Panel.InputType.InputImage;
@@ -31,7 +34,7 @@ public class itemTaskbar extends JPanel implements MouseListener {
         this.setLayout(new FlowLayout(1, 10, 7));
         this.setPreferredSize(new Dimension(225, 45));
         this.setBackground(DefaultColor);
-        this.putClientProperty( FlatClientProperties.STYLE, "arc: 15" );
+        this.putClientProperty(FlatClientProperties.STYLE, "arc: 15");
         this.addMouseListener(this);
         lblIcon = new JLabel();
         lblIcon.setBorder(new EmptyBorder(0, 10, 0, 0));
@@ -47,25 +50,42 @@ public class itemTaskbar extends JPanel implements MouseListener {
     }
 
     public itemTaskbar(String linkIcon, String content1, String content2) {
-        this.setLayout(new FlowLayout(0, 20, 50));
-//        this.setPreferredSize(new Dimension(250, 45));
+        // Sử dụng BorderLayout để dễ dàng canh giữa
+        this.setLayout(new BorderLayout());
+        this.setPreferredSize(new Dimension(250, 150)); // Kích thước lớn hơn
         this.setBackground(DefaultColor);
-        this.putClientProperty( FlatClientProperties.STYLE, "arc: 15" );
+        this.putClientProperty(FlatClientProperties.STYLE, "arc: 15");
         this.addMouseListener(this);
 
+        // Tạo phần chứa icon, đặt ở trung tâm phía trên
         lblIcon = new JLabel();
-        lblIcon.setPreferredSize(new Dimension(250, 110));
-        lblIcon.setIcon(new FlatSVGIcon("./resources/icon/" + linkIcon+".svg",(float)2));
+        lblIcon.setHorizontalAlignment(SwingConstants.CENTER); // Canh giữa icon
+        lblIcon.setIcon(new FlatSVGIcon("./resources/icon/" + linkIcon + ".svg", 4.0f)); // Phóng to icon
+        this.add(lblIcon, BorderLayout.NORTH);
 
-        this.add(lblIcon);
+        // Tạo phần chứa nội dung text, đặt ở trung tâm phía dưới
+        JPanel textPanel = new JPanel(new GridLayout(2, 1, 0, 5));
+        textPanel.setBackground(DefaultColor);
+        textPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 
-        pnlContent = new JLabel(content1);
-        pnlContent.setPreferredSize(new Dimension(170, 80));
-        pnlContent.putClientProperty("FlatLaf.style", "font: 200% $medium.font");
-        pnlContent.setForeground(FontColor);
-        this.add(pnlContent);
+        // Dòng chữ đầu tiên (content1)
+        JLabel lblContent1 = new JLabel(content1);
+        lblContent1.setHorizontalAlignment(SwingConstants.CENTER); // Canh giữa text
+        lblContent1.putClientProperty("FlatLaf.style", "font: 300% $semibold.font"); // Phóng to chữ
+        lblContent1.setForeground(FontColor);
 
-//        box[i].setBorder(new EmptyBorder(20, 20, 20, 20));
+        // Dòng chữ thứ hai (content2)
+        JLabel lblContent2 = new JLabel(content2);
+        lblContent2.setHorizontalAlignment(SwingConstants.CENTER); // Canh giữa text
+        lblContent2.putClientProperty("FlatLaf.style", "font: 200% $medium.font");
+        lblContent2.setForeground(FontColor);
+
+        // Thêm các label vào textPanel
+        // textPanel.add(lblContent1);
+        // textPanel.add(lblContent2);
+
+        // Thêm textPanel vào panel chính
+        this.add(lblContent1, BorderLayout.CENTER);
     }
 
     public itemTaskbar(String linkImg, String tenSP, int soLuong) {
@@ -129,17 +149,23 @@ public class itemTaskbar extends JPanel implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-//        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        // throw new UnsupportedOperationException("Not supported yet."); // Generated
+        // from
+        // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-//        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        // throw new UnsupportedOperationException("Not supported yet."); // Generated
+        // from
+        // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-//        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        // throw new UnsupportedOperationException("Not supported yet."); // Generated
+        // from
+        // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
