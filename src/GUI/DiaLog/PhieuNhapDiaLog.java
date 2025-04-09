@@ -50,11 +50,10 @@ public class PhieuNhapDiaLog extends JDialog{
     
     
     public PhieuNhapDiaLog(JFrame main, int maPN ) {
-        super(main);
+        super(main,"",true);
         this.maPN = maPN;
         initComponent();
         this.setLocationRelativeTo(main);
-        this.setVisible(true);
         loaddata();
         loaddataimei();
         
