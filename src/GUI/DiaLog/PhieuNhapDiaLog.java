@@ -43,6 +43,11 @@ public class PhieuNhapDiaLog extends JDialog{
     JLabel title;
     InputText maphieunhap,nhanviennhap,nhacungcap;
     int maPN;
+
+    public PhieuNhapDiaLog() {
+    }
+    
+    
     
     public PhieuNhapDiaLog(JFrame main, int maPN ) {
         super(main);

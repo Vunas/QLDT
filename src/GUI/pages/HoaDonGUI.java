@@ -49,6 +49,7 @@ public class HoaDonGUI extends JPanel{
     private DefaultTableModel tbmtb1;
     private JScrollPane scrtb1;
     private Main main;
+    private HoaDonDiaLog hddialog;
 
     public HoaDonGUI(Main main) {
         initComponent(main);
@@ -123,9 +124,14 @@ public class HoaDonGUI extends JPanel{
             if(selectedRow==-1){
                  JOptionPane.showMessageDialog(null, "Chọn 1 dòng để xem chi tiết");
             }
-            else{
-                int maHD = Integer.parseInt(tbl.getValueAt(selectedRow, 0).toString());
-                HoaDonDiaLog hddialog = new HoaDonDiaLog(main,maHD);
+           else{
+               int maPN = Integer.parseInt(tbl.getValueAt(selectedRow, 0).toString());
+
+            // Nếu dialog chưa tạo hoặc đã đóng thì tạo mới
+                if (hddialog == null || !hddialog.isDisplayable()) {
+                    hddialog = new HoaDonDiaLog(main, maPN);
+                    hddialog.setVisible(true);
+                }
             }
             
         }

@@ -33,6 +33,8 @@ public class PhieuNhapGUI extends JPanel {
     private DefaultTableModel tbmtb1;
     private JScrollPane scrtb1;
     private Main main;
+    private PhieuNhapDiaLog pndialog; // Khai báo ở đầu lớp
+
 
     public PhieuNhapGUI(Main main) {
         initComponent(main);
@@ -108,8 +110,13 @@ public class PhieuNhapGUI extends JPanel {
                  JOptionPane.showMessageDialog(null, "Chọn 1 dòng để xem chi tiết");
             }
             else{
-                int maPN = Integer.parseInt(tbl.getValueAt(selectedRow, 0).toString());
-                PhieuNhapDiaLog pndialog = new PhieuNhapDiaLog(main,maPN);
+               int maPN = Integer.parseInt(tbl.getValueAt(selectedRow, 0).toString());
+
+            // Nếu dialog chưa tạo hoặc đã đóng thì tạo mới
+                if (pndialog == null || !pndialog.isDisplayable()) {
+                    pndialog = new PhieuNhapDiaLog(main, maPN);
+                    pndialog.setVisible(true);
+                }
             }
             
         }
