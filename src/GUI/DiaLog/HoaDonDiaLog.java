@@ -45,11 +45,10 @@ public class HoaDonDiaLog extends JDialog{
     int maHD;
     
     public HoaDonDiaLog(JFrame main, int maPN ) {
-        super(main);
+        super(main,"",true);
         this.maHD = maPN;
         initComponent();
         this.setLocationRelativeTo(main);
-        this.setVisible(true);
         loaddata();
         loaddataimei();
         
