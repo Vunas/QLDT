@@ -39,7 +39,7 @@ public class HoaDonDao {
       
   public List<HoaDonDTO> getAllHoaDon() {
     List<HoaDonDTO> list = new ArrayList<>();
-    String sql = "SELECT * FROM hoadon";
+    String sql = "SELECT * FROM hoadon WHERE trangthai=1";
     try (Connection conn = JdbcUtil.getConnection();
          PreparedStatement stmt = conn.prepareStatement(sql);
          ResultSet rs = stmt.executeQuery()) {

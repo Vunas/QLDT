@@ -168,7 +168,6 @@ public class HoaDonDiaLog extends JDialog{
     public void loaddataimei(){
         thongtinchitiet.getSelectionModel().addListSelectionListener(event -> {
                 int selectedRow = thongtinchitiet.getSelectedRow();
-                System.out.println(selectedRow);
             if(selectedRow!=-1){
                 dftmchitietimei.setRowCount(0);
                 int masp=Integer.parseInt(thongtinchitiet.getValueAt(selectedRow, 0).toString());

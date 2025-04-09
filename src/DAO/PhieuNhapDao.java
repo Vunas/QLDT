@@ -36,7 +36,7 @@ public class PhieuNhapDao {
     
   public List<PhieuNhapDTO> getAllPhieuNhap() {
         List<PhieuNhapDTO> list = new ArrayList<>();
-        String sql = "SELECT * FROM phieunhap";
+        String sql = "SELECT * FROM phieunhap WHERE trangthai = 1";
         try (Connection conn = JdbcUtil.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery(sql)) {
@@ -87,6 +87,19 @@ public class PhieuNhapDao {
           int check = stmt.executeUpdate();
           return check>0;
           
+      } catch (Exception e) {
+          e.printStackTrace();
+      }
+      return false;
+  }
+  
+  public boolean xoamemPhieuNhap(int maPhieuNhap){
+      String sql = "UPDATE phieunhap SET trangthai=0 WHERE maphieunhap = ?";
+      try(Connection conn = JdbcUtil.getConnection()) {
+          PreparedStatement stmt = conn.prepareStatement(sql);
+          stmt.setInt(1,maPhieuNhap);
+          int check =  stmt.executeUpdate();
+          return check>0;
       } catch (Exception e) {
           e.printStackTrace();
       }

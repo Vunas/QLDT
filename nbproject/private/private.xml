@@ -4,9 +4,23 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/nguyen/OneDrive/Máy%20tính/New%20Folder/QLDT/src/GUI/pages/HoaDonGUI.java</file>
+            <file>file:/C:/Users/nguyen/OneDrive/Máy%20tính/New%20Folder/QLDT/src/BLL/BUS/ChiTietHoaDonBLL.java</file>
+            <file>file:/C:/Users/nguyen/OneDrive/Máy%20tính/New%20Folder/QLDT/src/GUI/Panel/SideBar.java</file>
             <file>file:/C:/Users/nguyen/OneDrive/Máy%20tính/New%20Folder/QLDT/src/GUI/pages/PhieuNhapGUI.java</file>
-            <file>file:/C:/Users/nguyen/OneDrive/Máy%20tính/New%20Folder/QLDT/src/GUI/DiaLog/PhieuNhapDiaLog.java</file>
+            <file>file:/C:/Users/nguyen/OneDrive/Máy%20tính/New%20Folder/QLDT/src/BLL/BUS/PhieuNhapBLL.java</file>
+            <file>file:/C:/Users/nguyen/OneDrive/Máy%20tính/New%20Folder/QLDT/src/GUI/DiaLog/KhachHangDiaLog.java</file>
+            <file>file:/C:/Users/nguyen/OneDrive/Máy%20tính/New%20Folder/QLDT/src/GUI/Panel/TaoPhieuNhap.java</file>
             <file>file:/C:/Users/nguyen/OneDrive/Máy%20tính/New%20Folder/QLDT/src/GUI/DiaLog/HoaDonDiaLog.java</file>
+            <file>file:/C:/Users/nguyen/OneDrive/Máy%20tính/New%20Folder/QLDT/src/GUI/pages/KhachHangGUI.java</file>
+            <file>file:/C:/Users/nguyen/OneDrive/Máy%20tính/New%20Folder/QLDT/src/DAO/ChiTietPhieuNhapDao.java</file>
+            <file>file:/C:/Users/nguyen/OneDrive/Máy%20tính/New%20Folder/QLDT/src/GUI/Panel/TaoHoaDon.java</file>
+            <file>file:/C:/Users/nguyen/OneDrive/Máy%20tính/New%20Folder/QLDT/src/BLL/BUS/ChiTietSanPhamBLL.java</file>
+            <file>file:/C:/Users/nguyen/OneDrive/Máy%20tính/New%20Folder/QLDT/src/GUI/DiaLog/PhieuNhapDiaLog.java</file>
+            <file>file:/C:/Users/nguyen/OneDrive/Máy%20tính/New%20Folder/QLDT/src/BLL/BUS/ChiTietPhieuNhapBLL.java</file>
+            <file>file:/C:/Users/nguyen/OneDrive/Máy%20tính/New%20Folder/QLDT/src/DAO/ChiTietHoaDonDao.java</file>
+            <file>file:/C:/Users/nguyen/OneDrive/Máy%20tính/New%20Folder/QLDT/src/BLL/BUS/HoaDonBLL.java</file>
+            <file>file:/C:/Users/nguyen/OneDrive/Máy%20tính/New%20Folder/QLDT/src/DAO/HoaDonDao.java</file>
+            <file>file:/C:/Users/nguyen/OneDrive/Máy%20tính/New%20Folder/QLDT/src/DAO/ChiTietSanPhamDao.java</file>
         </group>
     </open-files>
 </project-private>

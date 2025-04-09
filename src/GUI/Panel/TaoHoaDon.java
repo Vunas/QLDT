@@ -39,8 +39,10 @@ import java.awt.event.KeyEvent;
 import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
@@ -72,7 +74,8 @@ public class TaoHoaDon extends JPanel {
      Main main;
      JPanel checkbox_imei_button;
      List<JCheckBox> checkBoxes;
-     List<String> selectedImei;
+     List<String> selectedImei= new ArrayList<>();
+//     List<List<String>> imeitheohang;
     public TaoHoaDon(Main main) {
         initComponent(main);
         loaddatasanpham();
@@ -175,7 +178,7 @@ public class TaoHoaDon extends JPanel {
                if(checkInput(sanphamTable))
                {
                    themsanpham();
-                   selectedImei = new ArrayList<>();
+                  
                    for(JCheckBox cb : checkBoxes){
                    if(cb.isSelected()){
                        selectedImei.add(cb.getText());

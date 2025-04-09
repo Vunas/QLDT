@@ -16,6 +16,6 @@ public class ChiTietHoaDonBLL {
     }
 
     public boolean deleteChiTietHoaDon(int maHoaDon) {
-        return chiTietHoaDonDao.deleteCTHoaDon(maHoaDon);
+        return chiTietHoaDonDao.xoaMemChiTietHoaDon(maHoaDon);
     }
 }

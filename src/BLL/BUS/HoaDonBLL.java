@@ -26,7 +26,7 @@ public class HoaDonBLL {
     }
     
      public boolean deleteHoaDon(int mahoadon){
-        return hoadondao.deleteHoaDon(mahoadon);
+        return hoadondao.xoaMemHoaDon(mahoadon);
      }
      
       public int getMaHoaDon(){

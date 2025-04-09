@@ -20,8 +20,10 @@ public class PhieuNhapBLL {
     }
 
     public boolean deletePhieuNhap(int maPhieuNhap) {
-        return phieuNhapDao.xoaPhieuNhap(maPhieuNhap);
+        return phieuNhapDao.xoamemPhieuNhap(maPhieuNhap);
     }
+    
+    
 
     public int getMaPhieuNhap() {
         return phieuNhapDao.getMaPhieuNhap();
