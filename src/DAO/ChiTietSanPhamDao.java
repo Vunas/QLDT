@@ -113,6 +113,18 @@ public class ChiTietSanPhamDao {
         return false;
     }
     
-
+    public boolean capNhatMaBaoHanh(String maimei , String maPBH){
+        String sql = "UPDATE ctsanpham SET maPhieuBH = ? WHERE maimei = ?";
+        try (Connection conn = JdbcUtil.getConnection()) {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, maPBH);
+            stmt.setString(2, maimei);
+            int check = stmt.executeUpdate();
+            return check > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }
 

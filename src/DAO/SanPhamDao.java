@@ -110,6 +110,36 @@ public class SanPhamDao {
         return null;
     }
 
+    public SanPhamDTO getSanPhamByName(String nameSP) {
+        String query = "SELECT * FROM SanPham WHERE tenSP LIKE ? AND trangThai = 1";
+        try (Connection conn = JdbcUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, "%" + nameSP + "%"); // Ensure correct LIKE matching
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    int maSP = rs.getInt("maSP");
+                    String tenSP = rs.getString("tenSP"); // Retrieve correct product name
+                    String img = rs.getString("img");
+                    int soLuong = rs.getInt("soLuong");
+                    int giaNhap = rs.getInt("giaNhap");
+                    int giaBan = rs.getInt("giaBan");
+                    String mauSac = rs.getString("mauSac");
+                    String thuongHieu = rs.getString("thuongHieu");
+                    int Ram = rs.getInt("Ram");
+                    int Rom = rs.getInt("Rom");
+                    String Chip = rs.getString("Chip");
+                    float thoiGianBaoHanh = rs.getFloat("thoiGianBaoHanh");
+                    int trangThai = rs.getInt("trangThai");
+
+                    return new SanPhamDTO(maSP, tenSP, img, soLuong, giaNhap, giaBan, mauSac, thuongHieu, Ram, Rom, Chip, thoiGianBaoHanh, trangThai);
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error fetching product: " + e.getMessage());
+        }
+        return null;
+    }
     // Lấy danh sách tất cả sản phẩm (chỉ sản phẩm còn hiệu lực)
     public List<SanPhamDTO> getAllSanPham() {
         List<SanPhamDTO> SanPhamList = new ArrayList<>();

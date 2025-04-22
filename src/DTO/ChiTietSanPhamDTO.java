@@ -23,7 +23,7 @@ public class ChiTietSanPhamDTO {
         this.tinhTrang = tinhTrang;
         this.trangThai = trangThai;
     }
-
+    
     public String getMaImei() {
         return maImei;
     }

@@ -8,6 +8,8 @@ import javax.accessibility.AccessibleContext;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.EventListenerList;
@@ -19,7 +21,9 @@ public final class InputForm extends JPanel {
     private JLabel lblTitle;
     private JTextField txtForm;
     private JPasswordField txtPass;
-
+    private JTextArea txtArea;
+    private JScrollPane scrollPane;
+    
     public InputForm() {
     }
 
@@ -55,7 +59,35 @@ public final class InputForm extends JPanel {
         this.add(lblTitle);
         this.add(txtForm);
     }
+    public InputForm(String title, boolean isTextArea) {
+        this.setLayout(new GridLayout(2, 1));
+        this.setBackground(Color.white);
+        this.setBorder(new EmptyBorder(0, 10, 5, 10));
+        lblTitle = new JLabel(title);
+        this.add(lblTitle);
+
+        if (isTextArea) {
+            txtArea = new JTextArea(4, 20); // 4 dòng, 20 ký tự mỗi dòng
+            txtArea.setLineWrap(true);
+            txtArea.setWrapStyleWord(true);
+            scrollPane = new JScrollPane(txtArea);
+            this.add(scrollPane);
+        } else {
+            txtForm = new JTextField();
+            this.add(txtForm);
+        }
+    }
     
+    public String getAreaText() {
+        return txtArea != null ? txtArea.getText() : "";
+    }
+
+    public void setAreaText(String text) {
+        if (txtArea != null) {
+            txtArea.setText(text);
+        }
+    }
+
     public void setTitle(String title) {
         this.lblTitle.setText(title);
     }
