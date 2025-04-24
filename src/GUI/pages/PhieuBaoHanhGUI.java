@@ -237,8 +237,10 @@ public class PhieuBaoHanhGUI extends JPanel {
             topNav.getTextSearch().setText("");
             loaddata();
             int row = tblPhieuSC.getSelectedRow();
-            int maSC = Integer.parseInt(modelPhieuSC.getValueAt(row, 0).toString()); 
-            loadPhieuSuaChua(new PhieuSuaChuaBLL().getById(maSC).getMaPhieuBH());
+            if(row != -1){
+                int maSC = Integer.parseInt(modelPhieuSC.getValueAt(row, 0).toString()); 
+                loadPhieuSuaChua(new PhieuSuaChuaBLL().getById(maSC).getMaPhieuBH());
+            }
         });
 
         textSearch.addKeyListener(new KeyAdapter() {
