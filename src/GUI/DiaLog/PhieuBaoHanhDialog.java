@@ -31,7 +31,7 @@ public class PhieuBaoHanhDialog extends JDialog {
     }
 
     private void initComponent() {
-        setSize(1200, 600);
+        setSize(1400, 600);
         setLayout(new BorderLayout());
 
         // Header
