@@ -16,7 +16,7 @@ public class ChiTietHoaDonDao {
         try (Connection conn = JdbcUtil.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setInt(1, cthd.getMaHoaDon());
-            stmt.setInt(2, cthd.getMaBaoHanh());
+            stmt.setString(2, cthd.getMaBaoHanh());
             stmt.setInt(3, cthd.getMaSanPham());
             stmt.setInt(4, cthd.getSoLuong());
             stmt.setInt(5, cthd.getDonGia());
@@ -37,7 +37,7 @@ public class ChiTietHoaDonDao {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 int maCTHD = rs.getInt("maChiTietHoaDon");
-                int maBH = rs.getInt("maBaoHanh");
+                String maBH = rs.getString("maBaoHanh");
                 int maSP = rs.getInt("maSanPham");
                 int soLuong = rs.getInt("soLuong");
                 int donGia = rs.getInt("donGia");
@@ -74,7 +74,21 @@ public class ChiTietHoaDonDao {
           e.printStackTrace();
       }
         return false;
-  }
+    }
+    
+    public boolean capNhatMaBaoHanh(int maHD , String maPBH){
+        String sql = "UPDATE chitiethoadon SET mabaohanh = ? WHERE mahoadon = ?";
+        try(Connection conn = JdbcUtil.getConnection()) {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1,maPBH);
+            stmt.setInt(2,maHD);
+            int check = stmt.executeUpdate();
+            return check>0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+          return false;
+    }
     
     
 }

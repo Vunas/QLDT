@@ -22,5 +22,15 @@
             <file>file:/C:/Users/nguyen/OneDrive/Máy%20tính/New%20Folder/QLDT/src/DAO/HoaDonDao.java</file>
             <file>file:/C:/Users/nguyen/OneDrive/Máy%20tính/New%20Folder/QLDT/src/DAO/ChiTietSanPhamDao.java</file>
         </group>
+        <group name="Group 20250409-05:03:42">
+            <file>file:/C:/Users/thaoh/OneDrive/Desktop/QLDT/src/GUI/Panel/TaoPhieuBaoHanh.java</file>
+            <file>file:/C:/Users/thaoh/OneDrive/Desktop/QLDT/src/GUI/pages/PhieuBaoHanhGUI.java</file>
+            <file>file:/C:/Users/thaoh/OneDrive/Desktop/QLDT/src/BLL/BUS/PhieuSuaChuaBLL.java</file>
+            <file>file:/C:/Users/thaoh/OneDrive/Desktop/QLDT/src/DAO/PhieuSuaChuaDao.java</file>
+            <file>file:/C:/Users/thaoh/OneDrive/Desktop/QLDT/src/GUI/DiaLog/PhieuBaoHanhDialog.java</file>
+            <file>file:/C:/Users/thaoh/OneDrive/Desktop/QLDT/src/BLL/BUS/ChiTietPhieuBaoHanhBLL.java</file>
+            <file>file:/C:/Users/thaoh/OneDrive/Desktop/QLDT/src/DAO/ChiTietPhieuBaoHanhDao.java</file>
+            <file>file:/C:/Users/thaoh/OneDrive/Desktop/QLDT/src/GUI/DiaLog/ChiTietSanPhamDialog.java</file>
+        </group>
     </open-files>
 </project-private>
