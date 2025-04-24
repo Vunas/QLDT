@@ -36,5 +36,7 @@ public class ChiTietSanPhamBLL {
     public boolean capNhatMaBaoHanh(String maIMEI , String maPBH){
          return chiTietSanPhamDao.capNhatMaBaoHanh(maIMEI,maPBH);
      }
-      
+    public int getSoLuongImeisBySanPham(int masp){
+        return chiTietSanPhamDao.getSoLuongImeisBySanPham(masp);
+    }
 }

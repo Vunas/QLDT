@@ -375,7 +375,8 @@ public class TaoHoaDon extends JPanel {
         List<SanPhamDTO> list = sanphamBLL.getAllSanPham();
         tbmsanphamTable.setRowCount(0);
         for(SanPhamDTO sp : list){
-            tbmsanphamTable.addRow(new Object[]{sp.getMaSP(),sp.getTenSP(),sp.getSoLuong()});
+            int soluongton = new ChiTietSanPhamBLL().getSoLuongImeisBySanPham(sp.getMaSP());
+            tbmsanphamTable.addRow(new Object[]{sp.getMaSP(),sp.getTenSP(),soluongton});
         }
     }
     
@@ -609,9 +610,6 @@ public class TaoHoaDon extends JPanel {
             ChiTietHoaDonDTO chitiethoadon = new ChiTietHoaDonDTO();
             chitiethoadon.setMaSanPham(Integer.parseInt(sanphamdathemTable.getValueAt(row, 0).toString()));
             chitiethoadon.setSoLuong(Integer.parseInt(sanphamdathemTable.getValueAt(row, 6).toString()));
-            SanPhamDTO sanphamdto = new SanPhamBLL().getSanPhamById(Integer.parseInt(sanphamdathemTable.getValueAt(row, 0).toString()));
-            int soluongMoi= sanphamdto.getSoLuong()-Integer.parseInt(sanphamdathemTable.getValueAt(row, 6).toString()) ;
-            new SanPhamBLL().updateSoluong(Integer.parseInt(sanphamdathemTable.getValueAt(row, 0).toString()), soluongMoi );
             chitiethoadon.setDonGia(Integer.parseInt(sanphamdathemTable.getValueAt(row, 5).toString()));
             chitiethoadon.setMaHoaDon(Integer.parseInt(mahoadontxt.getText()));
             ChiTietHoaDonBLL bll = new ChiTietHoaDonBLL();

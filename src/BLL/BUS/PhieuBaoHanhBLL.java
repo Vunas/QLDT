@@ -90,7 +90,7 @@ public class PhieuBaoHanhBLL {
     }
 
     public String generateNewId() {
-        List<PhieuBaoHanhDTO> list = phieubaohanhdao.getAll();
+        List<PhieuBaoHanhDTO> list = phieubaohanhdao.getAllAbsolute();
         if (list.isEmpty()) {
             return "PBH01";
         }

@@ -120,5 +120,27 @@ public class PhieuBaoHanhDAO {
         }
         return BaoHanhList;
     }
+    public List<PhieuBaoHanhDTO> getAllAbsolute() {
+        List<PhieuBaoHanhDTO> BaoHanhList = new ArrayList<>();
+        String query = "SELECT * FROM phieubaohanh";
+        try (Connection conn = JdbcUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                String maPhieuBH = rs.getString("maPhieuBH");
+                LocalDate ngayLap = rs.getDate("ngayLap").toLocalDate();
+                int maKH = rs.getInt("maKhachHang");
+                int MaNhanVien = rs.getInt("maNhanVien");
+                String ghiChu = rs.getString("ghiChu");
+                int trangThai = rs.getInt("trangThai");
+
+                BaoHanhList.add(new PhieuBaoHanhDTO(maPhieuBH,ngayLap, maKH, MaNhanVien,ghiChu,trangThai));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return BaoHanhList;
+    }
    
 }

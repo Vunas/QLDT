@@ -32,6 +32,11 @@ public class SanPhamBLL { // Đổi tên lớp từ "SanPhamDAO" thành "SanPham
     public SanPhamDTO getSanPhamById(int maSP) {
         return sanPhamDao.getSanPhamById(maSP);
     }
+    
+    public SanPhamDTO getSanPhamByIdNoStatus(int maSP) {
+        return sanPhamDao.getSanPhamByIdNoStatus(maSP);
+    }
+    
     public SanPhamDTO getSanPhamByName(String nameSP) {
         return sanPhamDao.getSanPhamByName(nameSP);
     }

@@ -40,13 +40,17 @@ public class ChiTietPhieuBaoHanhBLL {
     public List<ChiTietPhieuBaoHanhDTO> getCTBaoHanhByMaPhieuBH(String maPhieuBH) {
         return chitietphieubaohanhdao.getPhieuBaoHanhByMaPhieuBH(maPhieuBH);
     }
-
+    public List<ChiTietPhieuBaoHanhDTO> getCTBaoHanhByMaPhieuBHVaIMEI(String maPhieuBH , String maImei) {
+        return chitietphieubaohanhdao.getCTBaoHanhByMaPhieuBHVaIMEI(maPhieuBH,maImei);
+    }
     public List<ChiTietPhieuBaoHanhDTO> getAll() {
         return chitietphieubaohanhdao.getAll();
     }
-
+    public List<ChiTietPhieuBaoHanhDTO> getAllAbsolute() {
+        return chitietphieubaohanhdao.getAllAbsolute();
+    }
     public int generateNewId() {
-        List<ChiTietPhieuBaoHanhDTO> list = getAll();
+        List<ChiTietPhieuBaoHanhDTO> list = getAllAbsolute();
         if (list.isEmpty()) return 1;
 
         ChiTietPhieuBaoHanhDTO last = list.get(list.size() - 1);
