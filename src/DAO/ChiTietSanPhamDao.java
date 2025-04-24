@@ -100,7 +100,7 @@ public class ChiTietSanPhamDao {
     }
      
      public int getSoLuongImeisBySanPham(int masanpham) {
-        String sql = "SELECT COUNT(maimei) FROM ctsanpham WHERE masanpham = ? AND trangthai = 1"; // Lọc các bản ghi còn hiệu lực
+        String sql = "SELECT COUNT(maimei) FROM ctsanpham WHERE masanpham = ? AND trangthai = 1 AND tinhtrang = 0"; // Lọc các bản ghi còn hiệu lực
         try (Connection conn = JdbcUtil.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, masanpham);
