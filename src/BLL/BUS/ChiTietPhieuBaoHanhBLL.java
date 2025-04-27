@@ -30,17 +30,17 @@ public class ChiTietPhieuBaoHanhBLL {
         return chitietphieubaohanhdao.delete(maPhieuCT);
     }
     
-    public boolean deleteChiTietBH(String maPhieuBH) {
+    public boolean deleteChiTietBH(int maPhieuBH) {
         return chitietphieubaohanhdao.deleteByMaPhieuBH(maPhieuBH);
     }        
     public ChiTietPhieuBaoHanhDTO getCTBaoHanhById(int maPhieuCT) {
         return chitietphieubaohanhdao.getPhieuBaoHanhById(maPhieuCT);
     }
     
-    public List<ChiTietPhieuBaoHanhDTO> getCTBaoHanhByMaPhieuBH(String maPhieuBH) {
+    public List<ChiTietPhieuBaoHanhDTO> getCTBaoHanhByMaPhieuBH(int maPhieuBH) {
         return chitietphieubaohanhdao.getPhieuBaoHanhByMaPhieuBH(maPhieuBH);
     }
-    public List<ChiTietPhieuBaoHanhDTO> getCTBaoHanhByMaPhieuBHVaIMEI(String maPhieuBH , String maImei) {
+    public List<ChiTietPhieuBaoHanhDTO> getCTBaoHanhByMaPhieuBHVaIMEI(int maPhieuBH , String maImei) {
         return chitietphieubaohanhdao.getCTBaoHanhByMaPhieuBHVaIMEI(maPhieuBH,maImei);
     }
     public List<ChiTietPhieuBaoHanhDTO> getAll() {

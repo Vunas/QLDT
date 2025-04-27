@@ -12,7 +12,7 @@ import java.time.LocalDate;
  */
 public class PhieuSuaChuaDTO {
     private int maPhieuSC;
-    private String maPhieuBH;
+    private int maPhieuBH;
     private int maSanPham;
     private String maIMEI;
     private LocalDate ngayNhan;
@@ -21,7 +21,7 @@ public class PhieuSuaChuaDTO {
     private String trangThai;
     private String ghiChu;
 
-    public PhieuSuaChuaDTO(int maPhieuSC, String maPhieuBH, int maSanPham, String maIMEI, LocalDate ngayNhan, String tinhTrang, String xuLy, String trangThai, String ghiChu) {
+    public PhieuSuaChuaDTO(int maPhieuSC, int maPhieuBH, int maSanPham, String maIMEI, LocalDate ngayNhan, String tinhTrang, String xuLy, String trangThai, String ghiChu) {
         this.maPhieuSC = maPhieuSC;
         this.maPhieuBH = maPhieuBH;
         this.maSanPham = maSanPham;
@@ -41,11 +41,11 @@ public class PhieuSuaChuaDTO {
         this.maPhieuSC = maPhieuSC;
     }
 
-    public String getMaPhieuBH() {
+    public int getMaPhieuBH() {
         return maPhieuBH;
     }
 
-    public void setMaPhieuBH(String maPhieuBH) {
+    public void setMaPhieuBH(int maPhieuBH) {
         this.maPhieuBH = maPhieuBH;
     }
 

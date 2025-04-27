@@ -31,7 +31,7 @@ public class ChiTietPhieuSuaChuaDialog extends JDialog {
         content.add(new JLabel(String.valueOf(sc.getMaPhieuSC())));
 
         content.add(new JLabel("Mã phiếu BH:"));
-        content.add(new JLabel(sc.getMaPhieuBH()));
+        content.add(new JLabel(sc.getMaPhieuBH()+""));
 
         content.add(new JLabel("Mã SP:"));
         content.add(new JLabel(String.valueOf(sc.getMaSanPham())));

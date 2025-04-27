@@ -25,7 +25,7 @@ public class PhieuSuaChuaDao {
     public boolean add(PhieuSuaChuaDTO dto) {
         String sql = "INSERT INTO phieusuachua(maPhieuBH, maSanPham, maIMEI, ngayNhan, tinhTrang, xuLy, trangThai, ghiChu) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection conn = JdbcUtil.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, dto.getMaPhieuBH());
+            stmt.setInt(1, dto.getMaPhieuBH());
             stmt.setInt(2, dto.getMaSanPham());
             stmt.setString(3, dto.getMaIMEI());
             stmt.setDate(4, java.sql.Date.valueOf(dto.getNgayNhan()));
@@ -59,7 +59,7 @@ public class PhieuSuaChuaDao {
             ResultSet rs = stmt.executeQuery()){
             while (rs.next()) {
                 int maPhieuSC = rs.getInt("maPhieuSC");
-                String maPhieuBH = rs.getString("maPhieuBH");
+                int maPhieuBH = rs.getInt("maPhieuBH");
                 int maSP = rs.getInt("maSanPham");
                 String maIMEI = rs.getString("maIMEI");
                 LocalDate ngayNhan = rs.getDate("ngayNhan").toLocalDate();
@@ -83,7 +83,7 @@ public class PhieuSuaChuaDao {
             stmt.setInt(1, maPhieuSC);
             try(ResultSet rs = stmt.executeQuery()){
                 if(rs.next()){
-                    String maPhieuBH = rs.getString("maPhieuBH");
+                    int maPhieuBH = rs.getInt("maPhieuBH");
                     int maSP = rs.getInt("maSanPham");
                     String maIMEI = rs.getString("maIMEI");
                     LocalDate ngayNhan = rs.getDate("ngayNhan").toLocalDate();
@@ -99,7 +99,7 @@ public class PhieuSuaChuaDao {
         }
         return null;
     }
-    public List<PhieuSuaChuaDTO> getByMaPhieuBH(String maPhieuBH){
+    public List<PhieuSuaChuaDTO> getByMaPhieuBH(int maPhieuBH){
         List<PhieuSuaChuaDTO> list = new ArrayList<>();
         String query = "SELECT * FROM phieusuachua WHERE maPhieuBH LIKE ?";
         try(Connection conn = JdbcUtil.getConnection(); 
@@ -131,7 +131,7 @@ public class PhieuSuaChuaDao {
             try(ResultSet rs = stmt.executeQuery()){
                 if(rs.next()){
                     int maPhieuSC = rs.getInt("maPhieuSC");
-                    String maPhieuBH = rs.getString("maPhieuBH");
+                    int maPhieuBH = rs.getInt("maPhieuBH");
                     int maSP = rs.getInt("maSanPham");
                     LocalDate ngayNhan = rs.getDate("ngayNhan").toLocalDate();
                     String tinhTrang = rs.getString("tinhTrang");
@@ -147,7 +147,7 @@ public class PhieuSuaChuaDao {
         return null;
     }
     
-    public List<PhieuSuaChuaDTO> getByMaPhieuBHAndIMEI(String maPBH , String maIMEI){
+    public List<PhieuSuaChuaDTO> getByMaPhieuBHAndIMEI(int maPBH , String maIMEI){
         List<PhieuSuaChuaDTO> PSC = new ArrayList<>();
         String query = "SELECT * FROM phieusuachua WHERE maPhieuBH LIKE ? AND maIMEI LIKE ?";
         try(Connection conn = JdbcUtil.getConnection();

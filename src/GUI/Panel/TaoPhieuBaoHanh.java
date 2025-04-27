@@ -41,7 +41,7 @@ public class TaoPhieuBaoHanh extends JPanel {
 
         maphieu = new InputText("Mã phiếu BH");
         maphieu.setEditable(false);
-        maphieu.setText(new PhieuBaoHanhBLL().generateNewId());
+        maphieu.setText(new PhieuBaoHanhBLL().generateNewId()+"");
 
         nhanvien = new InputText("Nhân viên lập");
         nhanvien.setEditable(false);
@@ -53,7 +53,7 @@ public class TaoPhieuBaoHanh extends JPanel {
         for (HoaDonDTO hd : new HoaDonBLL().getAllHoaDon()) {
             List<ChiTietHoaDonDTO> ctList = new ChiTietHoaDonBLL().getChiTietTheoMaHoaDon(hd.getMaHoaDon());
             boolean ChuaCoBaoHanh = ctList.stream().anyMatch(ct ->
-                    ct.getMaBaoHanh() == null
+                    ct.getMaBaoHanh() == 0
             );
             if (ChuaCoBaoHanh) {
                 cbxHoaDon.addItem(hd.getMaHoaDon());
@@ -113,7 +113,7 @@ public class TaoPhieuBaoHanh extends JPanel {
         List<ChiTietHoaDonDTO> listCT = new ChiTietHoaDonBLL().getChiTietTheoMaHoaDon(maHD);
 
         for (ChiTietHoaDonDTO ct : listCT) {
-            if(ct.getMaBaoHanh() == null){
+            if(ct.getMaBaoHanh() == 0){
                 int maSP = ct.getMaSanPham();
                 SanPhamDTO sp = new SanPhamBLL().getSanPhamById(maSP);
                 float thoiGianBH = sp.getThoiGianBaoHanh();
@@ -148,7 +148,7 @@ public class TaoPhieuBaoHanh extends JPanel {
         }
 
         int maKH = hoaDon.getMaKH();
-        String maPBH = maphieu.getText();
+        int maPBH = Integer.parseInt(maphieu.getText());
         LocalDate ngayLap = LocalDate.now();
         int maNV = 1;
 
