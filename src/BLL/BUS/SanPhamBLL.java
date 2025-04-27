@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import DAO.SanPhamDao;
+import DTO.PhieuBaoHanhDTO;
 
 public class SanPhamBLL { // Đổi tên lớp từ "SanPhamDAO" thành "SanPhamBLL"
     private final SanPhamDao sanPhamDao; // Đổi tên đối tượng từ "SanPhamBLL" thành "SanPhamDAO"
@@ -67,6 +68,11 @@ public class SanPhamBLL { // Đổi tên lớp từ "SanPhamDAO" thành "SanPham
     }
 
     public int generateNewId() {
-        return sanPhamDao.getAllSanPham().getLast().getMaSP() + 1; // Đổi "SanPhamDao" thành "sanPhamDao"
+        List<SanPhamDTO> list = sanPhamDao.getAllSanPham();
+        if (list.isEmpty()) {
+            return 1;
+        } else {
+            return list.getLast().getMaSP()+ 1;
+        }
     }
 }

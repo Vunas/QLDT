@@ -33,7 +33,7 @@ public class ChiTietSanPhamBLL {
      public List<String> getImeisBySanPham(int masanpham){
          return chiTietSanPhamDao.getImeisBySanPham(masanpham);
      } 
-    public boolean capNhatMaBaoHanh(String maIMEI , String maPBH){
+    public boolean capNhatMaBaoHanh(String maIMEI , int maPBH){
          return chiTietSanPhamDao.capNhatMaBaoHanh(maIMEI,maPBH);
      }
     public int getSoLuongImeisBySanPham(int masp){

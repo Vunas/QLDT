@@ -32,11 +32,11 @@ public class PhieuBaoHanhBLL {
         return phieubaohanhdao.update(baohanh); 
     }
    
-    public boolean delete(String maPhieuBH) {
+    public boolean delete(int maPhieuBH) {
         return phieubaohanhdao.delete(maPhieuBH);
     }
 
-    public PhieuBaoHanhDTO getBaoHanhById(String maPhieuBH) {
+    public PhieuBaoHanhDTO getBaoHanhById(int maPhieuBH) {
         return phieubaohanhdao.getPhieuBaoHanhById(maPhieuBH);
     }
 
@@ -74,13 +74,13 @@ public class PhieuBaoHanhBLL {
                     ChiTietPhieuBaoHanhDao chiTietPhieuBHdao = new ChiTietPhieuBaoHanhDao();
                     List<ChiTietPhieuBaoHanhDTO> ctList = chiTietPhieuBHdao.getAll();
                     for(ChiTietPhieuBaoHanhDTO ctphieu : ctList){
-                        if (ctphieu.getMaPhieuBH().equals(bh.getMaPhieuBH()) && ctphieu.getMaIMEI().toLowerCase().contains(keyword.toLowerCase())) {
+                        if ((ctphieu.getMaPhieuBH()==bh.getMaPhieuBH()) && ctphieu.getMaIMEI().toLowerCase().contains(keyword.toLowerCase())) {
                             filteredList.add(bh);
                         }
                     }
                 } 
                 case "theo id phiếu BH" -> {
-                    if (bh.getMaPhieuBH().toLowerCase().contains(keyword.toLowerCase())) {
+                    if (bh.getMaPhieuBH()==Integer.parseInt(keyword.toLowerCase())) {
                         filteredList.add(bh);
                     }
                 }
@@ -89,19 +89,13 @@ public class PhieuBaoHanhBLL {
         return filteredList;
     }
 
-    public String generateNewId() {
+    public int generateNewId() {
         List<PhieuBaoHanhDTO> list = phieubaohanhdao.getAllAbsolute();
         if (list.isEmpty()) {
-            return "PBH01";
+            return 1;
+        } else {
+            return list.getLast().getMaPhieuBH() + 1;
         }
-
-        // Lấy phần tử cuối cùng
-        String lastId = list.get(list.size() - 1).getMaPhieuBH(); // VD: PBH03
-        int number = Integer.parseInt(lastId.replaceAll("[^0-9]", "")); // Lấy số: 3
-        number++; // Tăng: 4
-
-        // Format lại chuỗi ID
-        return String.format("PBH%02d", number); // PBH04
     }
 
 }

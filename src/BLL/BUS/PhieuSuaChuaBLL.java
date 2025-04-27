@@ -23,13 +23,13 @@ public class PhieuSuaChuaBLL {
     public boolean updateTrangThai(int maSC , String trangThai){
         return phieuSuaChuaDao.updateTrangThai(maSC,trangThai);
     }       
-    public List<PhieuSuaChuaDTO> getByMaPhieuBH(String maPhieuBH){
+    public List<PhieuSuaChuaDTO> getByMaPhieuBH(int maPhieuBH){
         return phieuSuaChuaDao.getByMaPhieuBH(maPhieuBH);
     }
     public PhieuSuaChuaDTO getById(int maPSC){
         return phieuSuaChuaDao.getById(maPSC);
     }
-    public List<PhieuSuaChuaDTO> getByMaPhieuBHAndIMEI(String maPBH , String imei){
+    public List<PhieuSuaChuaDTO> getByMaPhieuBHAndIMEI(int maPBH , String imei){
         return phieuSuaChuaDao.getByMaPhieuBHAndIMEI(maPBH , imei);
     }
 }

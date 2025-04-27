@@ -27,7 +27,7 @@ public class PhieuBaoHanhDAO {
         try (Connection conn = JdbcUtil.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
-            stmt.setString(1, BaoHanh.getMaPhieuBH());
+            stmt.setInt(1, BaoHanh.getMaPhieuBH());
             stmt.setDate(2, java.sql.Date.valueOf(BaoHanh.getNgayLap()));
             stmt.setInt(3, BaoHanh.getMaKH());
             stmt.setInt(4, BaoHanh.getMaNhanVien());
@@ -51,7 +51,7 @@ public class PhieuBaoHanhDAO {
             stmt.setInt(2, BaoHanh.getMaKH());
             stmt.setInt(3, BaoHanh.getMaNhanVien());
             stmt.setString(4, BaoHanh.getGhiChu());
-            stmt.setString(5, BaoHanh.getMaPhieuBH());
+            stmt.setInt(5, BaoHanh.getMaPhieuBH());
             stmt.setInt(6, BaoHanh.getTrangThai());
 
             return stmt.executeUpdate() > 0;
@@ -62,12 +62,12 @@ public class PhieuBaoHanhDAO {
     }
 
     
-    public boolean delete(String maPhieuBH) {
+    public boolean delete(int maPhieuBH) {
         String query = "UPDATE phieubaohanh SET trangThai = 0 WHERE maPhieuBH = ?";
         try (Connection conn = JdbcUtil.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
-            stmt.setString(1, maPhieuBH);
+            stmt.setInt(1, maPhieuBH);
             return stmt.executeUpdate() > 0; // Trả về true nếu xóa mềm thành công
         } catch (SQLException e) {
             e.printStackTrace();
@@ -76,12 +76,12 @@ public class PhieuBaoHanhDAO {
     }
 
     //
-    public PhieuBaoHanhDTO getPhieuBaoHanhById(String maPhieuBH) {
+    public PhieuBaoHanhDTO getPhieuBaoHanhById(int maPhieuBH) {
         String query = "SELECT * FROM phieubaohanh WHERE maPhieuBH = ? AND trangThai = 1";
         try (Connection conn = JdbcUtil.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
-            stmt.setString(1, maPhieuBH);
+            stmt.setInt(1, maPhieuBH);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
                     LocalDate ngayLap = rs.getDate("ngayLap").toLocalDate();
@@ -106,7 +106,7 @@ public class PhieuBaoHanhDAO {
              ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
-                String maPhieuBH = rs.getString("maPhieuBH");
+                int maPhieuBH = rs.getInt("maPhieuBH");
                 LocalDate ngayLap = rs.getDate("ngayLap").toLocalDate();
                 int maKH = rs.getInt("maKhachHang");
                 int MaNhanVien = rs.getInt("maNhanVien");
@@ -128,7 +128,7 @@ public class PhieuBaoHanhDAO {
              ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
-                String maPhieuBH = rs.getString("maPhieuBH");
+                int maPhieuBH = rs.getInt("maPhieuBH");
                 LocalDate ngayLap = rs.getDate("ngayLap").toLocalDate();
                 int maKH = rs.getInt("maKhachHang");
                 int MaNhanVien = rs.getInt("maNhanVien");

@@ -13,7 +13,7 @@ import java.util.Objects;
  * @author thaoh
  */
 public class PhieuBaoHanhDTO {
-    private String maPhieuBH;
+    private int maPhieuBH;
     private LocalDate ngayLap;
     private int maKH;
     private String ghiChu;
@@ -23,7 +23,7 @@ public class PhieuBaoHanhDTO {
     public PhieuBaoHanhDTO() {
        
     }
-    public PhieuBaoHanhDTO(String maPhieuBH, LocalDate ngayLap, int maKH, int MaNhanVien , String ghiChu, int trangThai) {
+    public PhieuBaoHanhDTO(int maPhieuBH, LocalDate ngayLap, int maKH, int MaNhanVien , String ghiChu, int trangThai) {
         this.maPhieuBH = maPhieuBH;
         this.ngayLap = ngayLap;
         this.maKH = maKH;
@@ -40,11 +40,11 @@ public class PhieuBaoHanhDTO {
         this.MaNhanVien = MaNhanVien;
     }
 
-    public String getMaPhieuBH() {
+    public int getMaPhieuBH() {
         return maPhieuBH;
     }
 
-    public void setMaPhieuBH(String maPhieuBH) {
+    public void setMaPhieuBH(int maPhieuBH) {
         this.maPhieuBH = maPhieuBH;
     }
 

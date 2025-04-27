@@ -17,28 +17,28 @@ public class PhieuSuaChuaDialog extends JDialog {
     private JTextArea txtTinhTrang, txtXuLy, txtGhiChu;
     private JButton btnLuu, btnDong;
 
-    public PhieuSuaChuaDialog(JFrame owner, String maPhieuBH, int maSP, String imei) {
+    public PhieuSuaChuaDialog(JFrame owner, int maPhieuBH, int maSP, String imei) {
         super(owner, "Phiếu sửa chữa / xử lý bảo hành", true);
         initComponent(maPhieuBH, maSP, imei);
         this.setSize(550, 500);
         this.setLocationRelativeTo(owner);
         this.setVisible(true);
     }
-    public PhieuSuaChuaDialog(JFrame owner, String maPhieuBH, int maSP, String imei, boolean isUpdate) {
+    public PhieuSuaChuaDialog(JFrame owner, int maPhieuBH, int maSP, String imei, boolean isUpdate) {
         super(owner, "Phiếu sửa chữa / xử lý bảo hành", true);
         initComponent2(maPhieuBH, maSP, imei);
         this.setSize(550, 500);
         this.setLocationRelativeTo(owner);
         this.setVisible(true);
     }
-    private void initComponent(String maPhieuBH, int maSP, String imei) {
+    private void initComponent(int maPhieuBH, int maSP, String imei) {
         this.setLayout(new BorderLayout(10, 10));
 
         // ==== Panel form ====
         JPanel formPanel = new JPanel(new GridLayout(6, 2, 10, 10));
         formPanel.setBorder(BorderFactory.createEmptyBorder(10, 15, 0, 15));
 
-        txtMaPhieuBH = new JTextField(maPhieuBH);
+        txtMaPhieuBH = new JTextField(String.valueOf(maPhieuBH));
         txtMaPhieuBH.setEditable(false);
         txtMaSP = new JTextField(String.valueOf(maSP));
         txtMaSP.setEditable(false);
@@ -91,14 +91,14 @@ public class PhieuSuaChuaDialog extends JDialog {
         this.add(buttonPanel, BorderLayout.SOUTH);
     }
     
-    private void initComponent2(String maPhieuBH, int maSP, String imei) {
+    private void initComponent2(int maPhieuBH, int maSP, String imei) {
         this.setLayout(new BorderLayout(10, 10));
 
         // ==== Panel form ====
         JPanel formPanel = new JPanel(new GridLayout(6, 2, 10, 10));
         formPanel.setBorder(BorderFactory.createEmptyBorder(10, 15, 0, 15));
 
-        txtMaPhieuBH = new JTextField(maPhieuBH);
+        txtMaPhieuBH = new JTextField(String.valueOf(maPhieuBH));
         txtMaPhieuBH.setEditable(false);
         txtMaSP = new JTextField(String.valueOf(maSP));
         txtMaSP.setEditable(false);
@@ -168,7 +168,7 @@ public class PhieuSuaChuaDialog extends JDialog {
 
     private void luuPhieu() {
         try {
-            String maPhieuBH = txtMaPhieuBH.getText();
+            int maPhieuBH = Integer.parseInt(txtMaPhieuBH.getText());
             int maSP = Integer.parseInt(txtMaSP.getText());
             String imei = txtIMEI.getText();
             Date date = dateChooser.getDate();
@@ -200,7 +200,7 @@ public class PhieuSuaChuaDialog extends JDialog {
     
     private void luuPhieuCapNhat() {
         try {  
-             String maPhieuBH = txtMaPhieuBH.getText();
+            int maPhieuBH = Integer.parseInt(txtMaPhieuBH.getText());
             String imei = txtIMEI.getText();
             String trangThai = (String) cbTrangThai.getSelectedItem();     
             boolean success = new PhieuSuaChuaBLL().updateTrangThai(new PhieuSuaChuaBLL().getByMaPhieuBHAndIMEI(maPhieuBH, imei).get(0).getMaPhieuSC() , trangThai);

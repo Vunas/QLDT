@@ -175,7 +175,7 @@ public class PhieuBaoHanhGUI extends JPanel {
         tblPhieuBH.getSelectionModel().addListSelectionListener(e -> {
             int row = tblPhieuBH.getSelectedRow();
             if (row != -1) {
-                String ma = modelPhieuBH.getValueAt(row, 0).toString();
+                int ma = Integer.parseInt(modelPhieuBH.getValueAt(row, 0).toString());
                 loadPhieuSuaChua(ma);
             }
         });
@@ -212,7 +212,7 @@ public class PhieuBaoHanhGUI extends JPanel {
         btn[3].addActionListener(e -> {
             int row = tblPhieuBH.getSelectedRow();
             if (row != -1) {
-                String ma = modelPhieuBH.getValueAt(row, 0).toString();
+                int ma = Integer.parseInt(modelPhieuBH.getValueAt(row, 0).toString());
                 new PhieuBaoHanhDialog(main, ma).setVisible(true);
             } else {
                 JOptionPane.showMessageDialog(this, "Vui lòng chọn dòng để xem chi tiết.");
@@ -224,7 +224,7 @@ public class PhieuBaoHanhGUI extends JPanel {
             if (row != -1) {
                 int confirm = JOptionPane.showConfirmDialog(this, "Xác nhận xóa phiếu?", "Xác nhận", JOptionPane.YES_NO_OPTION);
                 if (confirm == JOptionPane.YES_OPTION) {
-                    String ma = modelPhieuBH.getValueAt(row, 0).toString();
+                    int ma = Integer.parseInt(modelPhieuBH.getValueAt(row, 0).toString());
                     new ChiTietPhieuBaoHanhBLL().deleteChiTietBH(ma);
                     new PhieuBaoHanhBLL().delete(ma);
                     loaddata();
@@ -272,7 +272,7 @@ public class PhieuBaoHanhGUI extends JPanel {
         }
     }
 
-    private void loadPhieuSuaChua(String maPhieuBH) {
+    private void loadPhieuSuaChua(int maPhieuBH) {
         modelPhieuSC.setRowCount(0);
         List<PhieuSuaChuaDTO> list = new PhieuSuaChuaBLL().getByMaPhieuBH(maPhieuBH);
         for (PhieuSuaChuaDTO sc : list) {
@@ -333,11 +333,11 @@ public class PhieuBaoHanhGUI extends JPanel {
         for (PhieuBaoHanhDTO p : new PhieuBaoHanhBLL().getAll()) {
             KhachHangDTO kh = new KhachHangBLL().getKhachHangById(p.getMaKH());
             boolean match = switch (type) {
-                case "Mã Phiếu BH" -> p.getMaPhieuBH().toLowerCase().contains(keyword);
+                case "Mã Phiếu BH" -> p.getMaPhieuBH()==Integer.parseInt(keyword) && (!keyword.isEmpty());
                 case "Tên/SDT Khách Hàng" -> kh.getHoTen().toLowerCase().contains(keyword) || kh.getSdt().contains(keyword);
                 case "IMEI" -> new ChiTietPhieuBaoHanhBLL().getCTBaoHanhByMaPhieuBH(p.getMaPhieuBH()).stream()
                         .anyMatch(ct -> ct.getMaIMEI().toLowerCase().contains(keyword));
-                default -> p.getMaPhieuBH().toLowerCase().contains(keyword)
+                default -> p.getMaPhieuBH()==Integer.parseInt(keyword)
                         || kh.getHoTen().toLowerCase().contains(keyword)
                         || kh.getSdt().contains(keyword);
             };

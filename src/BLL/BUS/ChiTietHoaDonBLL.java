@@ -19,7 +19,7 @@ public class ChiTietHoaDonBLL {
         return chiTietHoaDonDao.xoaMemChiTietHoaDon(maHoaDon);
     }
     
-    public boolean capNhatMaBaoHanh(int maHD,String maPBH){
+    public boolean capNhatMaBaoHanh(int maHD,int maPBH){
         return chiTietHoaDonDao.capNhatMaBaoHanh(maHD,maPBH);
     }
 }

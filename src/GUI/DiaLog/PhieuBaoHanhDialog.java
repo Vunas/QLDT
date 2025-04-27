@@ -18,11 +18,11 @@ public class PhieuBaoHanhDialog extends JDialog {
     private JTable tblChiTiet, tblLichSu;
     private DefaultTableModel modelChiTiet, modelLichSu;
     private InputText maphieu, khachhang;
-    private String maPBH;
+    private int maPBH;
     private JTextField txtSearchIMEI;
     private JButton btnLap;
 
-    public PhieuBaoHanhDialog(JFrame main, String maPBH) {
+    public PhieuBaoHanhDialog(JFrame main, int maPBH) {
         super(main, "Chi tiết phiếu bảo hành", true);
         this.maPBH = maPBH;
         initComponent();
@@ -141,7 +141,7 @@ public class PhieuBaoHanhDialog extends JDialog {
         KhachHangDTO kh = new KhachHangBLL().getKhachHangById(pbh.getMaKH());
         if (kh == null) return;
 
-        maphieu.setText(pbh.getMaPhieuBH());
+        maphieu.setText(pbh.getMaPhieuBH()+"");
         khachhang.setText(kh.getHoTen());
 
         List<ChiTietPhieuBaoHanhDTO> list = new ChiTietPhieuBaoHanhBLL().getCTBaoHanhByMaPhieuBH(maPBH);

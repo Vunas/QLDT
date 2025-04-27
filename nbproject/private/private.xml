@@ -25,12 +25,14 @@
         <group name="Group 20250409-05:03:42">
             <file>file:/C:/Users/thaoh/OneDrive/Desktop/QLDT/src/GUI/Panel/TaoPhieuBaoHanh.java</file>
             <file>file:/C:/Users/thaoh/OneDrive/Desktop/QLDT/src/GUI/pages/PhieuBaoHanhGUI.java</file>
+            <file>file:/C:/Users/thaoh/OneDrive/Desktop/QLDT/src/GUI/DiaLog/PhieuBaoHanhDialog.java</file>
+            <file>file:/C:/Users/thaoh/OneDrive/Desktop/QLDT/src/GUI/DiaLog/PhieuSuaChuaDialog.java</file>
             <file>file:/C:/Users/thaoh/OneDrive/Desktop/QLDT/src/BLL/BUS/PhieuSuaChuaBLL.java</file>
             <file>file:/C:/Users/thaoh/OneDrive/Desktop/QLDT/src/DAO/PhieuSuaChuaDao.java</file>
-            <file>file:/C:/Users/thaoh/OneDrive/Desktop/QLDT/src/GUI/DiaLog/PhieuBaoHanhDialog.java</file>
-            <file>file:/C:/Users/thaoh/OneDrive/Desktop/QLDT/src/BLL/BUS/ChiTietPhieuBaoHanhBLL.java</file>
-            <file>file:/C:/Users/thaoh/OneDrive/Desktop/QLDT/src/DAO/ChiTietPhieuBaoHanhDao.java</file>
-            <file>file:/C:/Users/thaoh/OneDrive/Desktop/QLDT/src/GUI/DiaLog/ChiTietSanPhamDialog.java</file>
+            <file>file:/C:/Users/thaoh/OneDrive/Desktop/QLDT/src/BLL/BUS/ChiTietSanPhamBLL.java</file>
+            <file>file:/C:/Users/thaoh/OneDrive/Desktop/QLDT/src/BLL/BUS/ChiTietHoaDonBLL.java</file>
+            <file>file:/C:/Users/thaoh/OneDrive/Desktop/QLDT/src/GUI/Panel/TaoHoaDon.java</file>
+            <file>file:/C:/Users/thaoh/OneDrive/Desktop/QLDT/src/DAO/ChiTietSanPhamDao.java</file>
         </group>
     </open-files>
 </project-private>
