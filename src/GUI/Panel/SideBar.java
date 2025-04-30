@@ -219,7 +219,7 @@ public class SideBar extends JPanel {
             }
         });
 
-        itemBars[11].addMouseListener(new MouseAdapter() {
+        itemBars[12].addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent evt) {
                 changePage(11);
