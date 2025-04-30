@@ -11,6 +11,7 @@ public class QuyenDTO {
 
     // Constructor có tham số
     public QuyenDTO(String tenQuyen, String danhSachChucNang, int trangThai){
+        this.tenQuyen = tenQuyen;
         this.danhSachChucNang = danhSachChucNang;
         this.trangThai = trangThai;
     }

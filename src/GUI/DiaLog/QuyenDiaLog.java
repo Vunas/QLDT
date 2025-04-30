@@ -44,14 +44,14 @@ public class QuyenDiaLog extends JDialog {
         String[] chucNang = { "Tên Chức Năng", "Đọc", "Thêm", "Sửa", "Xóa" };
         Object[][] data = {
                 { "Sản Phẩm", false, false, false, false },
-                // { "Kho Hàng", false, false, false, false },
+                { "Thuộc tính", false, false, false, false },
                 { "Phiếu Nhập", false, false, false, false },
-                { "Phiếu Xuất", false, false, false, false },
+                { "Hóa đơn", false, false, false, false },
                 { "Khách Hàng", false, false, false, false },
                 { "Nhà Cung Cấp", false, false, false, false },
                 { "Nhân Viên", false, false, false, false },
                 { "Tài Khoản", false, false, false, false },
-                { "Thống kê", false, false, false, false },
+                { "Bảo Hành", false, false, false, false },
                 { "Phân Quyền", false, false, false, false },
                 { "Thống kê", false,false, false, false}
         };
@@ -120,6 +120,7 @@ public class QuyenDiaLog extends JDialog {
     public void setChucNang() {
         StringBuilder stringBuilder = new StringBuilder("");
         for (int row = 0; row < tbl.getRowCount(); row++) {
+            stringBuilder.append(tbl.getValueAt(row, 0)).append(":");
             if (Boolean.TRUE.equals(tbl.getValueAt(row, 1))) {
                 stringBuilder.append("r");
             }
@@ -152,18 +153,19 @@ public class QuyenDiaLog extends JDialog {
     }
 
     public QuyenDTO getDataQuyenDTO() {
-        return new QuyenDTO(tf.getText(), danhSachChucNang,1);
+        QuyenDTO updatedQuyen = new QuyenDTO(tf.getText(), danhSachChucNang,1);
+        return updatedQuyen;
     }
 
     private void updateTableWithPermissions(String danhSachCN) {
-        String[] chucNangList = danhSachCN.split("/"); // Tách chuỗi quyền theo dấu "/"
+        String[] chucNangList = danhSachCN.split("/");
         for (int row = 0; row < tbl.getRowCount(); row++) {
             if (row < chucNangList.length) {
                 String permissions = chucNangList[row];
-                tbl.setValueAt(permissions.contains("r"), row, 1); // Quyền "Đọc"
-                tbl.setValueAt(permissions.contains("c"), row, 2); // Quyền "Thêm"
-                tbl.setValueAt(permissions.contains("f"), row, 3); // Quyền "Sửa"
-                tbl.setValueAt(permissions.contains("d"), row, 4); // Quyền "Xóa"
+                tbl.setValueAt(permissions.contains("r"), row, 1);
+                tbl.setValueAt(permissions.contains("c"), row, 2);
+                tbl.setValueAt(permissions.contains("f"), row, 3);
+                tbl.setValueAt(permissions.contains("d"), row, 4);
             }
         }
     }

@@ -155,7 +155,8 @@ public class QuyenGUI extends JPanel {
                 if (dialog.isSaved()) {
                     try {
                         QuyenDTO updatedQuyen = dialog.getDataQuyenDTO();
-                        updatedQuyen.setMaQuyen(maQuyen); // Giữ nguyên mã quyền
+                        updatedQuyen.setMaQuyen(maQuyen);
+                        System.out.println((updatedQuyen.getDanhSachChucNang()+ updatedQuyen.getTenQuyen()));
                         if (quyenBLL.updateQuyen(updatedQuyen)) {
                             JOptionPane.showMessageDialog(null, "Chỉnh sửa thành công!");
                             loadData(quyenBLL.getAllQuyen()); // Tải lại dữ liệu

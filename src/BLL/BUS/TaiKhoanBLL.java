@@ -76,7 +76,7 @@ public class TaiKhoanBLL {
     }
 
     public void chinhSuaQuyen(SideBar sideBar, QuyenDTO quyenDTO){
-        String[] chucNangList = quyenDTO.getDanhSachChucNang().split("/"); // Tách chuỗi quyền theo dấu "/"
+        String[] chucNangList = quyenDTO.getDanhSachChucNang().split("/");
         ItemBar[] itemBars = sideBar.getItemBars();
         for (int i = 0; i < chucNangList.length; i++) {
             if (!chucNangList[i].contains("r")){

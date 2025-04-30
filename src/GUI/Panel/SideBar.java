@@ -41,9 +41,9 @@ public class SideBar extends JPanel {
 
     String[] menuBars = { "Trang chủ", "Sản phẩm", "Thuộc tính",
             "Phiếu nhập", "Hóa đơn", "Khách hàng", "Nhà cung cấp",
-            "Nhân viên", "Tài khoản", "Phân quyền", "Thống kê", "Bảo hành" };
+            "Nhân viên", "Tài khoản", "Bảo hành", "Phân quyền", "Thống kê" };
 
-    String[] icons = { "home", "phone", "attributes","import", "export", "user", "supplier", "employee", "account", "protect", "stats","baohanh"};
+    String[] icons = { "home", "phone", "attributes","import", "export", "user", "supplier", "employee", "account","baohanh", "protect", "stats"};
     int thisPage = 0;
 
     Color mainColor = new Color(100, 149, 237);
@@ -203,7 +203,7 @@ public class SideBar extends JPanel {
             @Override
             public void mousePressed(MouseEvent evt) {
                 changePage(9);
-                main.setPanel(new QuyenGUI(topNav));
+                main.setPanel(new PhieuBaoHanhGUI(main));
             }
         });
 
@@ -211,15 +211,15 @@ public class SideBar extends JPanel {
             @Override
             public void mousePressed(MouseEvent evt) {
                 changePage(10);
-                main.setPanel(new KhachHangGUI(topNav));
+                main.setPanel(new QuyenGUI(topNav));
             }
         });
-        
+
         itemBars[11].addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent evt) {
                 changePage(11);
-                main.setPanel(new PhieuBaoHanhGUI(main));
+                main.setPanel(new KhachHangGUI(topNav));
             }
         });
         
