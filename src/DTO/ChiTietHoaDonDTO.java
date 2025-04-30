@@ -15,7 +15,6 @@ public class ChiTietHoaDonDTO {
     private int maSanPham;
     private int soLuong;
     private int donGia;
-    private int mabaohanh;
     private int trangThai;
 
 

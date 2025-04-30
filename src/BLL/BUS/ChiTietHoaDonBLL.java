@@ -18,4 +18,8 @@ public class ChiTietHoaDonBLL {
     public boolean deleteChiTietHoaDon(int maHoaDon) {
         return chiTietHoaDonDao.xoaMemChiTietHoaDon(maHoaDon);
     }
+    
+    public boolean capNhatMaBaoHanh(int maHD,int maPBH){
+        return chiTietHoaDonDao.capNhatMaBaoHanh(maHD,maPBH);
+    }
 }

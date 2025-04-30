@@ -24,6 +24,7 @@ import GUI.pages.KhachHangGUI;
 import GUI.pages.KhuyenMaiGUI;
 import GUI.pages.NhaCungCapGUI;
 import GUI.pages.NhanVienGUI;
+import GUI.pages.PhieuBaoHanhGUI;
 import GUI.pages.PhieuNhapGUI;
 import GUI.pages.QuyenGUI;
 import GUI.pages.SanPhamGUI;
@@ -42,9 +43,11 @@ public class SideBar extends JPanel {
 
     String[] menuBars = { "Trang chủ", "Sản phẩm", "Thuộc tính",
             "Phiếu nhập", "Hóa đơn", "Khách hàng", "Nhà cung cấp",
-            "Nhân viên", "Tài khoản", "Phân quyền", "Thống kê", "Khuyến Mãi" };
 
-    String[] icons = { "home", "phone", "attributes", "import", "export", "user", "supplier", "employee", "account", "protect", "stats", "promotion" };
+            "Nhân viên", "Tài khoản", "Phân quyền", "Thống kê", "Bảo hành", "Khuyến Mãi" };
+
+    String[] icons = { "home", "phone", "attributes","import", "export", "user", "supplier", "employee", "account", "protect", "stats","baohanh", "promotion" };
+  
     int thisPage = 0;
 
     Color mainColor = new Color(100, 149, 237);
@@ -143,14 +146,15 @@ public class SideBar extends JPanel {
             }
         });
 
-        // itemBars[3].addMouseListener(new MouseAdapter() {
-        // @Override
-        // public void mousePressed(MouseEvent evt) {
-        // changePage(3);
-        // main.setPanel(new KhoHangGui(topNav));
-        // }
-        // });
-
+//         itemBars[3].addMouseListener(new MouseAdapter() {
+//         @Override
+//         public void mousePressed(MouseEvent evt) {
+//         changePage(3);
+//         main.setPanel(new KhoHangGui(topNav));
+//         }
+//         });
+      
+        
         itemBars[3].addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent evt) {
@@ -222,7 +226,15 @@ public class SideBar extends JPanel {
                 main.setPanel(new KhuyenMaiGUI(topNav));
             }
         });
-
+        
+        itemBars[11].addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent evt) {
+                changePage(11);
+                main.setPanel(new PhieuBaoHanhGUI(main));
+            }
+        });
+        
         new TaiKhoanBLL().chinhSuaQuyen(this, quyenDTO);
 
     }

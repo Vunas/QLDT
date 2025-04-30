@@ -74,7 +74,21 @@ public class ChiTietHoaDonDao {
           e.printStackTrace();
       }
         return false;
-  }
+    }
+    
+    public boolean capNhatMaBaoHanh(int maHD , int maPBH){
+        String sql = "UPDATE chitiethoadon SET mabaohanh = ? WHERE mahoadon = ?";
+        try(Connection conn = JdbcUtil.getConnection()) {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1,maPBH);
+            stmt.setInt(2,maHD);
+            int check = stmt.executeUpdate();
+            return check>0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+          return false;
+    }
     
     
 }

@@ -22,7 +22,7 @@ public class ChiTietSanPhamBLL {
      public boolean xacNhanDaBan(ChiTietSanPhamDTO ctsp){
          return chiTietSanPhamDao.xacNhanDaBan(ctsp);
      }
-     
+
      public List<String> getImeisByPhieuNhapAndSanPham(int maphieunhap, int masanpham){
          return chiTietSanPhamDao.getImeisByPhieuNhapAndSanPham(maphieunhap, masanpham);
      }
@@ -30,9 +30,13 @@ public class ChiTietSanPhamBLL {
      public List<String> getImeisByHoaDonAndSanPham(int mahoadon, int masanpham){
          return chiTietSanPhamDao.getImeisByHoaDonAndSanPham(mahoadon, masanpham);
      }
-     
-      public List<String> getImeisBySanPham(int masanpham){
-          return chiTietSanPhamDao.getImeisBySanPham(masanpham);
-      }
-      
+     public List<String> getImeisBySanPham(int masanpham){
+         return chiTietSanPhamDao.getImeisBySanPham(masanpham);
+     } 
+    public boolean capNhatMaBaoHanh(String maIMEI , int maPBH){
+         return chiTietSanPhamDao.capNhatMaBaoHanh(maIMEI,maPBH);
+     }
+    public int getSoLuongImeisBySanPham(int masp){
+        return chiTietSanPhamDao.getSoLuongImeisBySanPham(masp);
+    }
 }
