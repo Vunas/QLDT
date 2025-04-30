@@ -21,12 +21,14 @@ import GUI.Frame.Login;
 import GUI.Frame.Main;
 import GUI.pages.HoaDonGUI;
 import GUI.pages.KhachHangGUI;
+import GUI.pages.KhuyenMaiGUI;
 import GUI.pages.NhaCungCapGUI;
 import GUI.pages.NhanVienGUI;
 import GUI.pages.PhieuNhapGUI;
 import GUI.pages.QuyenGUI;
 import GUI.pages.SanPhamGUI;
 import GUI.pages.TaiKhoanGUI;
+import GUI.pages.ThongKeGUI;
 import GUI.pages.ThuocTinhGUI;
 import GUI.pages.TrangChuGUI;
 
@@ -40,9 +42,9 @@ public class SideBar extends JPanel {
 
     String[] menuBars = { "Trang chủ", "Sản phẩm", "Thuộc tính",
             "Phiếu nhập", "Hóa đơn", "Khách hàng", "Nhà cung cấp",
-            "Nhân viên", "Tài khoản", "Phân quyền", "Thống kê" };
+            "Nhân viên", "Tài khoản", "Phân quyền", "Thống kê", "Khuyến Mãi" };
 
-    String[] icons = { "home", "phone", "attributes", "import", "export", "user", "supplier", "employee", "account", "protect", "stats" };
+    String[] icons = { "home", "phone", "attributes", "import", "export", "user", "supplier", "employee", "account", "protect", "stats", "promotion" };
     int thisPage = 0;
 
     Color mainColor = new Color(100, 149, 237);
@@ -209,7 +211,15 @@ public class SideBar extends JPanel {
             @Override
             public void mousePressed(MouseEvent evt) {
                 changePage(10);
-                main.setPanel(new KhachHangGUI(topNav));
+                main.setPanel(new ThongKeGUI(topNav));
+            }
+        });
+
+        itemBars[11].addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent evt) {
+                changePage(11);
+                main.setPanel(new KhuyenMaiGUI(topNav));
             }
         });
 
