@@ -33,7 +33,6 @@ public class KhuyenMaiDao {
                 int giaTri = rs.getInt("giatri");
                 int hinhThuc = rs.getInt("hinhthuc");
                 String mota = rs.getString("mota");
-                // Byte trangThai = rs.getInt("trangthai");
                 KhuyenMaiDTO khuyenMaiDTO = new KhuyenMaiDTO(maKM, tenKM, soLuong, start, end, apDung, giaTri, hinhThuc, mota);
                 list.add(khuyenMaiDTO);
             }
@@ -83,11 +82,6 @@ public class KhuyenMaiDao {
             statement.setInt(5, khuyenMaiDTO.getApDungChoHoaDonTu());
             statement.setInt(6, khuyenMaiDTO.getGiaTri());
             statement.setInt(7, khuyenMaiDTO.getHinhThuc());
-
-            // if (khuyenMaiDTO.getNgayBD().toLocalDate().isAfter(dayNow)
-            //         || khuyenMaiDTO.getNgayKT().toLocalDate().isBefore(dayNow)) {
-            //     statement.setInt(8, 0);
-            // }
 
             return statement.executeUpdate() > 0;
         } catch (Exception e) {
@@ -165,6 +159,7 @@ public class KhuyenMaiDao {
 
         } catch (Exception e) {
             // TODO: handle exception
+            e.printStackTrace();
         }
         return khuyenMaiDTO;
     }
@@ -242,6 +237,7 @@ public class KhuyenMaiDao {
             return statement.executeUpdate() > 0;
         } catch (Exception e) {
             // TODO: handle exception
+            e.printStackTrace();
         }
         return false;
     }
