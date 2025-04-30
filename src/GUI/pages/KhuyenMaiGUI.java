@@ -40,7 +40,6 @@ public class KhuyenMaiGUI extends JPanel {
         khuyenMaiBLL.autoUpdateTrangThai(khuyenMaiBLL.getAllKhuyenMai());
         initComponent(topNav);
         filter();
-        // addSearchFunctionality();
         refresh();
         loadData(khuyenMaiBLL.getAllKhuyenMai());
         chucnang(); // Add functionality to the buttons
