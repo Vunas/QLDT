@@ -53,15 +53,13 @@ public class ThemKhuyenMaiDiaLog extends JDialog {
         JLabel lbContent = new JLabel(title);
         lbContent.setFont(new Font(getName(), Font.BOLD, 20));
         lbContent.setBorder(new EmptyBorder(10, 0, 10, 0));
-        // lbContent.setForeground(new java.awt.Color(0, 102, 204)); // Màu xanh nổi bật
         JPanel pnlContent = new JPanel();
         pnlContent.add(lbContent, CENTER_ALIGNMENT);
 
         JPanel pnlMain = new JPanel();
         pnlMain.setLayout(new BoxLayout(pnlMain, BoxLayout.Y_AXIS));
         pnlMain.setBorder(new EmptyBorder(10, 10, 10, 10));
-        // pnlMain.setPreferredSize(new Dimension(400, 500));
-
+        
         ButtonGroup btnGroup = new ButtonGroup();
         JRadioButton[] radioButton = new JRadioButton[khuyenMaiBLL.getAllKhuyenMai().size()];
 
@@ -70,10 +68,8 @@ public class ThemKhuyenMaiDiaLog extends JDialog {
             JPanel pnlKM = new JPanel();
             pnlKM.setLayout(new BoxLayout(pnlKM, BoxLayout.Y_AXIS));
             pnlKM.setBorder(new EmptyBorder(10, 10, 10, 10));
-            // pnlKM.setBackground(new java.awt.Color(240, 248, 255)); // Màu nền nhạt
             radioButton[index] = new JRadioButton(dto.getTenKM());
             radioButton[index].setFont(new Font(getName(), Font.BOLD, 20));
-            // radioButton[index].setBackground(new java.awt.Color(240, 248, 255));
             JLabel lbMoTa = new JLabel(dto.getMota());
             lbMoTa.setFont(new Font(getName(), Font.PLAIN, 14));
             btnGroup.add(radioButton[index]);
