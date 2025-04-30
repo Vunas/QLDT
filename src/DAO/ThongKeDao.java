@@ -14,34 +14,6 @@ import DTO.ThongKeDTO;
 import util.JdbcUtil;
 
 public class ThongKeDao {
-    // public List<ThongKeDTO> ThongKeMatHangCapNhatNhieuNhat() {
-    // List<ThongKeDTO> ThongKeDTOList = new ArrayList<>();
-    // String sql = """
-    // SELECT ctpn.maSanPham, sp.tenSP, SUM(ctpn.soLuong) AS tong_so_luong_nhap
-    // FROM chitietphieunhap AS ctpn
-    // JOIN sanpham AS sp ON ctpn.maSanPham = sp.maSP
-    // JOIN phieunhap AS pn ON ctpn.maPhieuNhap = pn.maPhieuNhap
-    // GROUP BY ctpn.maSanPham, sp.maSP
-    // ORDER BY tong_so_luong_nhap DESC
-    // """;
-    // try (Connection conn = JdbcUtil.getConnection();
-    // PreparedStatement ps = conn.prepareStatement(sql);
-    // ResultSet rs = ps.executeQuery()) {
-    // while (rs.next()) {
-    // int maSanpham = rs.getInt("maSanpham");
-    // String tenSP = rs.getString("tenSP");
-    // int tong_so_luong_nhap = rs.getInt("tong_so_luong_nhap");
-    // ThongKeDTO thongKeDTO = new ThongKeDTO(maSanpham, tenSP, tong_so_luong_nhap);
-    // ThongKeDTOList.add(thongKeDTO);
-
-    // }
-    // } catch (SQLException e) {
-    // // TODO Auto-generated catch block
-    // e.printStackTrace();
-    // }
-    // return ThongKeDTOList;
-    // }
-
     public List<ThongKeDTO> ThongKeDoanhThu() {
         List<ThongKeDTO> thongKeDTOList = new ArrayList<>();
         String sql = """
