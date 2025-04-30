@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 09, 2025 at 05:00 AM
+-- Generation Time: Apr 30, 2025 at 06:23 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -42,7 +42,47 @@ CREATE TABLE `chitiethoadon` (
 --
 
 INSERT INTO `chitiethoadon` (`machitiethoadon`, `mahoadon`, `mabaohanh`, `masanpham`, `soluong`, `dongia`, `trangthai`) VALUES
-(8, 8, 0, 1, 5, 28000000, 1);
+(8, 8, 0, 1, 5, 28000000, 1),
+(9, 9, 0, 3, 4, 20000000, 1),
+(10, 10, 0, 6, 2, 14000000, 1),
+(11, 11, 0, 2, 6, 26000000, 1),
+(12, 12, 0, 8, 3, 22000000, 1),
+(13, 13, 0, 8, 1, 22000000, 1),
+(14, 13, 0, 9, 1, 25000000, 1),
+(15, 14, 0, 10, 1, 10000000, 1),
+(16, 15, 0, 10, 1, 9800000, 1),
+(17, 16, 0, 10, 1, 10000000, 0),
+(18, 17, 0, 10, 1, 10000000, 0),
+(19, 18, 0, 10, 1, 55860000, 1),
+(20, 18, 0, 9, 1, 55860000, 1),
+(21, 18, 0, 8, 1, 55860000, 1),
+(22, 19, 0, 9, 1, 24500000, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `chitietphieubaohanh`
+--
+
+CREATE TABLE `chitietphieubaohanh` (
+  `MaChiTiet` int(11) NOT NULL,
+  `MaPhieuBH` int(11) DEFAULT NULL,
+  `MaSanPham` int(11) DEFAULT NULL,
+  `maIMEI` varchar(20) DEFAULT NULL,
+  `NgayBatDauBH` date DEFAULT NULL,
+  `NgayKetThucBH` date DEFAULT NULL,
+  `TrangThai` tinyint(4) DEFAULT NULL,
+  `GhiChu` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `chitietphieubaohanh`
+--
+
+INSERT INTO `chitietphieubaohanh` (`MaChiTiet`, `MaPhieuBH`, `MaSanPham`, `maIMEI`, `NgayBatDauBH`, `NgayKetThucBH`, `TrangThai`, `GhiChu`) VALUES
+(1, 1, 6, '123123123123100', '2025-04-27', '2026-04-27', 1, ''),
+(2, 2, 2, '999111222333101', '2025-04-27', '2026-04-27', 0, ''),
+(3, 3, 9, '111222333444502', '2025-04-27', '2027-04-27', 1, '');
 
 -- --------------------------------------------------------
 
@@ -92,16 +132,16 @@ CREATE TABLE `ctsanpham` (
 --
 
 INSERT INTO `ctsanpham` (`maimei`, `masanpham`, `maphieunhap`, `mahoadon`, `tinhtrang`, `trangthai`) VALUES
-('111222111333000', 10, 1, NULL, 0, 1),
-('111222111333001', 10, 1, NULL, 0, 1),
+('111222111333000', 10, 1, 18, 1, 1),
+('111222111333001', 10, 1, 16, 1, 1),
 ('111222333444500', 9, 1, NULL, 0, 1),
-('111222333444501', 9, 1, NULL, 0, 1),
+('111222333444501', 9, 1, 13, 1, 1),
 ('111222333444502', 9, 1, NULL, 0, 1),
-('111222333444503', 9, 1, NULL, 0, 1),
+('111222333444503', 9, 1, 18, 1, 1),
 ('111222333444504', 9, 1, NULL, 0, 1),
 ('111222333444505', 9, 1, NULL, 0, 1),
 ('111222333444506', 9, 1, NULL, 0, 1),
-('111222333444507', 9, 1, NULL, 0, 1),
+('111222333444507', 9, 1, 19, 1, 1),
 ('111222333444508', 9, 1, NULL, 0, 1),
 ('111222333444509', 9, 1, NULL, 0, 1),
 ('111222333444510', 9, 1, NULL, 0, 1),
@@ -125,12 +165,12 @@ INSERT INTO `ctsanpham` (`maimei`, `masanpham`, `maphieunhap`, `mahoadon`, `tinh
 ('123123123123105', 6, 2, NULL, 0, 1),
 ('123123123123311', 8, 3, NULL, 0, 1),
 ('123123123123312', 8, 3, NULL, 0, 1),
-('123123123123313', 8, 3, NULL, 0, 1),
+('123123123123313', 8, 3, 13, 1, 1),
 ('123123123123314', 8, 3, NULL, 0, 1),
 ('123123123123315', 8, 3, NULL, 0, 1),
 ('123123123123316', 8, 3, NULL, 0, 1),
 ('123123123123317', 8, 3, NULL, 0, 1),
-('123123123123318', 8, 3, NULL, 0, 1),
+('123123123123318', 8, 3, 18, 1, 1),
 ('123123123123319', 8, 3, NULL, 0, 1),
 ('123123123123320', 8, 3, NULL, 0, 1),
 ('123123123123321', 8, 3, NULL, 0, 1),
@@ -331,7 +371,18 @@ CREATE TABLE `hoadon` (
 --
 
 INSERT INTO `hoadon` (`mahoadon`, `ngayxuat`, `makhachhang`, `manhanvien`, `makhuyenmai`, `trangthai`) VALUES
-(8, '2025-04-09', 1, 1, 0, 1);
+(8, '2025-04-09', 1, 1, 0, 1),
+(9, '2025-04-17', 3, 2, 1, 1),
+(10, '2025-04-08', 5, 3, 1, 1),
+(11, '2025-04-24', 4, 1, 0, 1),
+(12, '2025-04-15', 6, 2, 1, 1),
+(13, '2025-04-29', 1, 1, 0, 1),
+(14, '2025-04-30', 1, 1, 0, 1),
+(15, '2025-04-30', 1, 1, 0, 1),
+(16, '2025-04-30', 1, 1, 0, 0),
+(17, '2025-04-30', 1, 1, 0, 0),
+(18, '2025-04-30', 1, 1, 0, 1),
+(19, '2025-04-30', 1, 1, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -363,6 +414,43 @@ INSERT INTO `khach_hang` (`maKH`, `ten`, `diaChi`, `sdt`, `email`, `trangthai`) 
 (8, 'Tran Thi H', '258 Đường VWX, Vũng Tàu', '0978901234', 'tranthih@example.com', 1),
 (9, 'Le Van I', '369 Đường YZ, Nha Trang', '0989012345', 'levani@example.com', 1),
 (10, 'Pham Thi J', '741 Đường ABCD, Buôn Ma Thuột', '0990123456', 'phamthij@example.com', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `khuyenmai`
+--
+
+CREATE TABLE `khuyenmai` (
+  `makhuyenmai` int(11) NOT NULL,
+  `tenkhuyenmai` varchar(100) NOT NULL,
+  `soluong` int(11) DEFAULT NULL,
+  `ngaybatdau` date DEFAULT NULL,
+  `ngayketthuc` date DEFAULT NULL,
+  `apdungchohoadontu` int(11) DEFAULT NULL,
+  `giatri` int(11) DEFAULT NULL,
+  `hinhthuc` int(11) DEFAULT NULL,
+  `trangthai` tinyint(4) NOT NULL DEFAULT 1,
+  `mota` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `khuyenmai`
+--
+
+INSERT INTO `khuyenmai` (`makhuyenmai`, `tenkhuyenmai`, `soluong`, `ngaybatdau`, `ngayketthuc`, `apdungchohoadontu`, `giatri`, `hinhthuc`, `trangthai`, `mota`) VALUES
+(1, 'Khuyến Mãi Đầu Tháng 5', 100, '2025-05-01', '2025-05-15', 500000, 10, 1, 0, 'Giảm 10% cho hóa đơn từ 500000'),
+(2, 'Khuyến Mãi Đầu Tháng 6', 50, '2025-06-01', '2025-06-15', 300000, 50000, 2, 0, 'Giảm 50000 Cho Hóa Đơn Từ 300000'),
+(3, 'Khuyến Mãi Đại Lễ 30/4 - 1/5', 195, '2025-04-25', '2025-05-05', 100000, 2, 1, 1, 'Giảm 2% Cho Hóa Đơn Từ 100000'),
+(4, 'Khuyến Mãi Tháng 6', 30, '2025-06-01', '2025-06-30', 1000000, 150000, 2, 0, 'Giảm 150000 Cho Hóa Đơn Từ 1000000'),
+(5, 'Khuyến Mãi Tháng 4', 100, '2025-04-01', '2025-04-30', 1000000, 100000, 2, 0, 'Giảm 100000 Cho Hóa Đơn Từ 1000000'),
+(6, 'Khuyến Mãi Đại Lễ 30/4 - 1/5', 100, '2025-04-27', '2025-05-03', 500000, 10, 1, 0, 'Giảm 10% Cho Hóa Đơn từ 500000'),
+(7, 'Khuyến Mãi Tết Nguyên Đán', 200, '2025-02-20', '2025-03-31', 10000000, 200000, 2, 0, 'Giảm 200000 Cho Hóa Đơn Từ 10000000'),
+(26, '', NULL, NULL, NULL, NULL, NULL, NULL, 0, ''),
+(27, 'Khuyến Mãi Cuối Tháng 6', 50, '2025-06-15', '2025-06-30', 2000000, 10, 1, 0, 'Giảm 10% Cho Hóa Đơn Từ 2000000'),
+(28, 'Khuyến Mãi Đầu Tháng 5', 99, '2025-04-01', '2025-05-15', 500000, 2, 1, 1, 'Giảm 2% Cho Hóa Đơn Từ 500000'),
+(29, 'Khuyến Mãi Tháng 2', 100, '2025-02-01', '2025-02-28', 1000000, 5, 1, 0, 'Giảm 5% Cho Hóa Đơn Từ 1000000'),
+(30, 'Khuyến Mãi Cuối Tháng 2', 200, '2025-02-15', '2025-02-28', 10000000, 150000, 2, 0, 'Giảm 150000 Cho Hóa Đơn Từ 10000000');
 
 -- --------------------------------------------------------
 
@@ -437,6 +525,30 @@ INSERT INTO `nha_cung_cap` (`maNCC`, `ten`, `diaChi`, `sdt`, `trangthai`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `phieubaohanh`
+--
+
+CREATE TABLE `phieubaohanh` (
+  `maPhieuBH` int(11) NOT NULL,
+  `ngayLap` date DEFAULT NULL,
+  `maKhachHang` int(11) DEFAULT NULL,
+  `MaNhanVien` int(11) NOT NULL,
+  `ghiChu` text DEFAULT NULL,
+  `trangThai` tinyint(4) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `phieubaohanh`
+--
+
+INSERT INTO `phieubaohanh` (`maPhieuBH`, `ngayLap`, `maKhachHang`, `MaNhanVien`, `ghiChu`, `trangThai`) VALUES
+(1, '2025-04-27', 1, 1, '', 1),
+(2, '2025-04-27', 1, 1, '', 0),
+(3, '2025-04-27', 1, 1, '', 1);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `phieunhap`
 --
 
@@ -462,6 +574,31 @@ INSERT INTO `phieunhap` (`maPhieuNhap`, `ngayNhap`, `maNhaCungCap`, `maNhanVien`
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `phieusuachua`
+--
+
+CREATE TABLE `phieusuachua` (
+  `maPhieuSC` int(11) NOT NULL,
+  `maPhieuBH` int(11) DEFAULT NULL,
+  `maSanPham` int(11) DEFAULT NULL,
+  `maIMEI` varchar(50) DEFAULT NULL,
+  `ngayNhan` date DEFAULT NULL,
+  `tinhTrang` text DEFAULT NULL,
+  `xuLy` text DEFAULT NULL,
+  `trangThai` varchar(50) DEFAULT NULL,
+  `ghiChu` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `phieusuachua`
+--
+
+INSERT INTO `phieusuachua` (`maPhieuSC`, `maPhieuBH`, `maSanPham`, `maIMEI`, `ngayNhan`, `tinhTrang`, `xuLy`, `trangThai`, `ghiChu`) VALUES
+(9, 1, 6, '123123123123100', '2025-04-27', 'hư pin ', 'thay pin', 'Đã sửa xong', '');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `quyen`
 --
 
@@ -477,9 +614,9 @@ CREATE TABLE `quyen` (
 --
 
 INSERT INTO `quyen` (`maQuyen`, `tenQuyen`, `danhSachChucNang`, `trangthai`) VALUES
-(1, 'admin', 'rcfd /rcfd /rcfd /rcfd /rcfd /rcfd /rcfd /rcfd /rcfd /rcfd /', 1),
-(2, 'quản lý', 'rcfd / / /rcfd /rcfd /rcfd / / / / /', 1),
-(3, 'nhân viên', 'rcfd / / /rcfd / / / / / / /', 1);
+(1, 'admin', 'rcfd /rcfd /rcfd /rcfd /rcfd /rcfd /rcfd /rcfd /rcfd /rcfd /rcfd /', 1),
+(2, 'quản lý', 'rcfd / / /rcfd /rcfd /rcfd / / / / / /', 1),
+(3, 'nhân viên', 'rcfd / / /rcfd / / / / / / / /', 1);
 
 -- --------------------------------------------------------
 
@@ -515,9 +652,9 @@ INSERT INTO `sanpham` (`maSP`, `tenSP`, `img`, `soLuong`, `giaNhap`, `giaBan`, `
 (5, 'Vivo X90 Pro', 'src/resources/img/phone9.jpeg', 7, 17000000, 19500000, 'Đỏ', 'Vivo', 12, 512, 'Dimensity 9200', 12, 1),
 (6, 'Realme GT 3', 'src/resources/img/phone2.jpeg', 20, 12000000, 14000000, 'Tím', 'Realme', 8, 256, 'Snapdragon 8+ Gen 1', 12, 1),
 (7, 'Google Pixel 7 Pro', 'src/resources/img/phone9.jpeg', 6, 21000000, 24000000, 'Xám', 'Google', 12, 256, 'Google Tensor G2', 12, 1),
-(8, 'iPhone 13', 'src/resources/img/phone1.jpeg', 78, 19000000, 22000000, 'Xanh', 'Apple', 4, 128, 'A15 Bionic', 12, 1),
-(9, 'Samsung Galaxy Z Flip4', 'src/resources/img/phone3.jpeg', 10, 22000000, 25000000, 'Hồng', 'Samsung', 8, 256, 'Snapdragon 8+ Gen 1', 12, 1),
-(10, 'Xiaomi Redmi Note 12 Pro', 'src/resources/img/phone4.jpg', 25, 8000000, 10000000, 'Xanh dương', 'Xiaomi', 8, 128, 'Dimensity 1080', 12, 1);
+(8, 'iPhone 13', 'src/resources/img/phone1.jpeg', 76, 19000000, 22000000, 'Xanh', 'Apple', 4, 128, 'A15 Bionic', 12, 1),
+(9, 'Samsung Galaxy Z Flip4', 'src/resources/img/phone3.jpeg', 7, 22000000, 25000000, 'Hồng', 'Samsung', 8, 256, 'Snapdragon 8+ Gen 1', 12, 1),
+(10, 'Xiaomi Redmi Note 12 Pro', 'src/resources/img/phone4.jpg', 20, 8000000, 10000000, 'Xanh dương', 'Xiaomi', 8, 128, 'Dimensity 1080', 12, 1);
 
 -- --------------------------------------------------------
 
@@ -576,6 +713,14 @@ ALTER TABLE `chitiethoadon`
   ADD KEY `FK_chitiethoadon_sanpham` (`masanpham`);
 
 --
+-- Indexes for table `chitietphieubaohanh`
+--
+ALTER TABLE `chitietphieubaohanh`
+  ADD PRIMARY KEY (`MaChiTiet`),
+  ADD KEY `MaSanPham` (`MaSanPham`),
+  ADD KEY `chitietphieubaohanh_ibfk_1` (`MaPhieuBH`);
+
+--
 -- Indexes for table `chitietphieunhap`
 --
 ALTER TABLE `chitietphieunhap`
@@ -616,6 +761,12 @@ ALTER TABLE `hoadon`
 --
 ALTER TABLE `khach_hang`
   ADD PRIMARY KEY (`maKH`);
+
+--
+-- Indexes for table `khuyenmai`
+--
+ALTER TABLE `khuyenmai`
+  ADD PRIMARY KEY (`makhuyenmai`);
 
 --
 -- Indexes for table `mausac`
@@ -676,7 +827,7 @@ ALTER TABLE `thuonghieu`
 -- AUTO_INCREMENT for table `chitiethoadon`
 --
 ALTER TABLE `chitiethoadon`
-  MODIFY `machitiethoadon` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `machitiethoadon` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `chitietphieunhap`
@@ -700,13 +851,19 @@ ALTER TABLE `dungluongrom`
 -- AUTO_INCREMENT for table `hoadon`
 --
 ALTER TABLE `hoadon`
-  MODIFY `mahoadon` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `mahoadon` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `khach_hang`
 --
 ALTER TABLE `khach_hang`
   MODIFY `maKH` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `khuyenmai`
+--
+ALTER TABLE `khuyenmai`
+  MODIFY `makhuyenmai` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `mausac`
