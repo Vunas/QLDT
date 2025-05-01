@@ -95,6 +95,7 @@ public class PhieuNhapGUI extends JPanel {
     JButton reFresh = topNav.getBtnRefresh();
     JTextField textSearch = topNav.getTextSearch();
     btn[1].setVisible(false);
+    btn[4].setVisible(false);
     btn[0].addActionListener(new ActionListener(){
         @Override
         public void actionPerformed(ActionEvent e) {

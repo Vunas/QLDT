@@ -14,6 +14,8 @@ import DTO.TaiKhoanDTO;
 import GUI.DiaLog.TaiKhoanDialog;
 import GUI.Panel.TopNav;
 import util.ExportExcelUtility;
+import util.ImportExcelUtility;
+import util.HashUtil;
 
 public class TaiKhoanGUI extends JPanel {
     TopNav topNav;
@@ -214,6 +216,18 @@ public class TaiKhoanGUI extends JPanel {
                 TaiKhoanDialog dialog = new TaiKhoanDialog(parentFrame,
                         new TaiKhoanDTO(maNV, tenDangNhap, matKhau, maQuyen, 1), "Xem chi tiết");
                 dialog.setVisible(true);
+            }
+        });
+
+        btn[4].addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ImportExcelUtility.openAndImportExcel((TaiKhoanDTO dto) -> taiKhoanBLL.addTaiKhoan(dto),
+                        (Object[] rowData) -> new TaiKhoanDTO((int) rowData[0],
+                                rowData[1].toString(), HashUtil.hashPassword(rowData[2].toString()), (int) rowData[3],
+                                1));
+
+                loadData(taiKhoanBLL.getAllTaiKhoan());
             }
         });
 

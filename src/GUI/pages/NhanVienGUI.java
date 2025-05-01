@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.sql.Date;
 import java.time.LocalDate;
 
 import BLL.BUS.NhanVienBLL;
@@ -15,6 +16,7 @@ import DTO.NhanVienDTO;
 import GUI.DiaLog.NhanVienDialog;
 import GUI.Panel.TopNav;
 import util.ExportExcelUtility;
+import util.ImportExcelUtility;
 
 import java.awt.*;
 import java.util.List;
@@ -179,6 +181,17 @@ public class NhanVienGUI extends JPanel {
                 dialog.setVisible(true);
             }
         });
+
+        btn[4].addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ImportExcelUtility.openAndImportExcel((NhanVienDTO dto) -> nhanVienBLL.addNhanVien(dto),
+                        (Object[] rowData) -> new NhanVienDTO(nhanVienBLL.generateNewId(), rowData[0].toString(),
+                                (Date) rowData[1], (int) rowData[2], rowData[3].toString(), 1));
+
+                loadData(nhanVienBLL.getAllNhanVien());
+            }
+        });
         btn[5].addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -210,7 +223,7 @@ public class NhanVienGUI extends JPanel {
             }
         });
     }
-    
+
     private void loadData(List<NhanVienDTO> nhanVienList) {
         // Lấy danh sách tất cả nhân viên từ BLL
         String[] columnNames = { "Mã NV", "Họ Tên", "Ngày Sinh", "Giới Tính", "SĐT" };

@@ -42,7 +42,7 @@ import util.ExportExcelUtility;
  *
  * @author nguyen
  */
-public class HoaDonGUI extends JPanel{
+public class HoaDonGUI extends JPanel {
     private TopNav topNav;
     private JPanel pnlBot;
     private JTable tbl;
@@ -58,15 +58,15 @@ public class HoaDonGUI extends JPanel{
 
     private void initComponent(Main main) {
         this.main = main;
-        String[] itemFindFor = {"Tất Cả", "Mã Hóa Đơn", "Khách Hàng", "Nhân Viên Nhập"};
-        
+        String[] itemFindFor = { "Tất Cả", "Mã Hóa Đơn", "Khách Hàng", "Nhân Viên Nhập" };
+
         topNav = new TopNav();
         topNav.setItemComboBox(itemFindFor);
-        
+
         pnlBot = new JPanel(new BorderLayout());
         pnlBot.setPreferredSize(new Dimension(0, 500));
         pnlBot.setBorder(new EmptyBorder(10, 15, 10, 15));
-        
+
         tbl = new JTable();
         tbl.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
         tbl.setRowHeight(35);
@@ -78,8 +78,8 @@ public class HoaDonGUI extends JPanel{
                 return false;
             }
         };
-        
-        String[] headtable = {"Mã Hóa Đơn", "Khách Hàng", "Nhân Viên Nhập", "Thời Gian", "Tổng Tiền"};
+
+        String[] headtable = { "Mã Hóa Đơn", "Khách Hàng", "Nhân Viên Nhập", "Thời Gian", "Tổng Tiền" };
         tbmtb1.setColumnIdentifiers(headtable);
         tbl.setModel(tbmtb1);
 
@@ -104,155 +104,157 @@ public class HoaDonGUI extends JPanel{
         add(topNav, BorderLayout.NORTH);
         add(pnlBot, BorderLayout.CENTER);
     }
-    
-     private void chucNang(){
-    JButton[] btn = topNav.getBtn();
-    JButton reFresh = topNav.getBtnRefresh();
-    JTextField textSearch = topNav.getTextSearch();
-    btn[1].setVisible(false);
-    btn[0].addActionListener(new ActionListener(){
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            main.setPanel(new TaoHoaDon(main));
-        }
-    });
-     btn[3].addActionListener(new ActionListener(){
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            int selectedRow = tbl.getSelectedRow();
-            if(selectedRow==-1){
-                 JOptionPane.showMessageDialog(null, "Chọn 1 dòng để xem chi tiết");
-            }
-           else{
-               int maPN = Integer.parseInt(tbl.getValueAt(selectedRow, 0).toString());
 
-            // Nếu dialog chưa tạo hoặc đã đóng thì tạo mới
-               
-                    HoaDonDiaLog  hddialog = new HoaDonDiaLog(main, maPN);
-                    hddialog.setVisible(true);
+    private void chucNang() {
+        JButton[] btn = topNav.getBtn();
+        JButton reFresh = topNav.getBtnRefresh();
+        JTextField textSearch = topNav.getTextSearch();
+        btn[1].setVisible(false);
+        btn[0].addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                main.setPanel(new TaoHoaDon(main));
             }
-            
-        }
-    });
-     btn[2].addActionListener(new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            int selectedRow = tbl.getSelectedRow();
-            if(selectedRow != -1){
-                int confirm = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn muốn xóa chứ","Xác ", JOptionPane.YES_NO_OPTION);
-                if(confirm == JOptionPane.YES_OPTION){
-                    int maHD = Integer.parseInt(tbmtb1.getValueAt(selectedRow, 0).toString());
-                    new ChiTietHoaDonBLL().deleteChiTietHoaDon(maHD);
-                    new HoaDonBLL().deleteHoaDon(maHD);
-                    loaddata();
-                    JOptionPane.showMessageDialog(null, "Xóa thành công");
+        });
+        btn[3].addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int selectedRow = tbl.getSelectedRow();
+                if (selectedRow == -1) {
+                    JOptionPane.showMessageDialog(null, "Chọn 1 dòng để xem chi tiết");
+                } else {
+                    int maPN = Integer.parseInt(tbl.getValueAt(selectedRow, 0).toString());
+
+                    // Nếu dialog chưa tạo hoặc đã đóng thì tạo mới
+
+                    HoaDonDiaLog hddialog = new HoaDonDiaLog(main, maPN);
+                    hddialog.setVisible(true);
+                }
+
+            }
+        });
+        btn[2].addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int selectedRow = tbl.getSelectedRow();
+                if (selectedRow != -1) {
+                    int confirm = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn muốn xóa chứ", "Xác ",
+                            JOptionPane.YES_NO_OPTION);
+                    if (confirm == JOptionPane.YES_OPTION) {
+                        int maHD = Integer.parseInt(tbmtb1.getValueAt(selectedRow, 0).toString());
+                        new ChiTietHoaDonBLL().deleteChiTietHoaDon(maHD);
+                        new HoaDonBLL().deleteHoaDon(maHD);
+                        loaddata();
+                        JOptionPane.showMessageDialog(null, "Xóa thành công");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Chọn 1 dòng để xóa");
                 }
             }
-            else{
-                JOptionPane.showMessageDialog(null, "Chọn 1 dòng để xóa");
+        });
+
+        btn[4].setVisible(false);
+
+        btn[5].addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ExportExcelUtility.saveTableToExcel(tbl, "Hóa Đơn");
             }
+        });
+
+        reFresh.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                topNav.getFindFor().setSelectedIndex(0);
+                topNav.getTextSearch().setText("");
+                loaddata();
+            }
+        });
+
+        textSearch.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                String type = topNav.getFindFor().getSelectedItem().toString().toLowerCase();
+                String keyword = textSearch.getText().trim();
+
+                List<HoaDonDTO> list = new HoaDonBLL().getAllHoaDon();
+
+                // Tạo danh sách kết quả để lưu khách hàng phù hợp
+                List<HoaDonDTO> filteredList = new ArrayList<>();
+
+                // Lọc dữ liệu theo tiêu chí tìm kiếm
+                for (HoaDonDTO hd : list) {
+                    KhachHangDTO tenKH = new KhachHangBLL().getKhachHangById(hd.getMaKH());
+                    TaiKhoanDTO taiKhoan = TaiKhoanDTO.getTaiKhoanHienTai(); // Giả sử phương thức này trả về tài khoản
+                                                                             // hiện tại
+
+                    boolean isMatch = false;
+                    switch (type.toLowerCase()) {
+                        case "tất cả":
+                            // Lọc tất cả các tiêu chí
+                            if (String.valueOf(hd.getMaHoaDon()).toLowerCase().contains(keyword.toLowerCase()) ||
+                                    tenKH.getHoTen().toLowerCase().contains(keyword.toLowerCase()) ||
+                                    taiKhoan.getTenDangNhap().toLowerCase().contains(keyword.toLowerCase())) {
+                                isMatch = true;
+                            }
+                            break;
+                        case "mã hóa đơn":
+                            if (String.valueOf(hd.getMaHoaDon()).toLowerCase().contains(keyword.toLowerCase())) {
+                                isMatch = true;
+                            }
+                            break;
+                        case "khách hàng":
+                            if (tenKH.getHoTen().toLowerCase().contains(keyword.toLowerCase())) {
+                                isMatch = true;
+                            }
+                            break;
+                        case "nhân viên nhập":
+                            if (taiKhoan.getTenDangNhap().toLowerCase().contains(keyword.toLowerCase())) {
+                                isMatch = true;
+                            }
+                            break;
+                    }
+
+                    // Nếu có kết quả phù hợp, thêm vào danh sách lọc
+                    if (isMatch) {
+                        filteredList.add(hd);
+                    }
+                }
+
+                // Cập nhật lại bảng với dữ liệu đã lọc
+                tbmtb1.setRowCount(0); // Xóa dữ liệu cũ trên bảng
+                for (HoaDonDTO hd : filteredList) {
+                    KhachHangDTO kh = new KhachHangBLL().getKhachHangById(hd.getMaKH());
+                    TaiKhoanDTO taiKhoan = TaiKhoanDTO.getTaiKhoanHienTai();
+
+                    int tongtien = 0;
+                    List<ChiTietHoaDonDTO> cthd = new ChiTietHoaDonBLL().getChiTietTheoMaHoaDon(hd.getMaHoaDon());
+                    for (ChiTietHoaDonDTO ct : cthd) {
+                        tongtien += ct.getDonGia() * ct.getSoLuong();
+                    }
+                    tbmtb1.addRow(new Object[] { hd.getMaHoaDon(), kh.getHoTen(), taiKhoan.getTenDangNhap(),
+                            hd.getNgayXuat(), tongtien });
+                }
+            }
+        });
+
     }
-     });
-     
-     btn[5].addActionListener(new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            ExportExcelUtility.saveTableToExcel(tbl, "Hóa Đơn");
-       }
-     });
-     
-     reFresh.addActionListener(new ActionListener(){
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            topNav.getFindFor().setSelectedIndex(0);
-            topNav.getTextSearch().setText("");
-            loaddata();
-        }
-     });
-     
-   textSearch.addKeyListener(new KeyAdapter() {
-    @Override
-    public void keyReleased(KeyEvent e) {
-        String type = topNav.getFindFor().getSelectedItem().toString().toLowerCase();
-        String keyword = textSearch.getText().trim();
-        
-        List<HoaDonDTO> list = new HoaDonBLL().getAllHoaDon();
 
-        // Tạo danh sách kết quả để lưu khách hàng phù hợp
-        List<HoaDonDTO> filteredList = new ArrayList<>();
-        
-        // Lọc dữ liệu theo tiêu chí tìm kiếm
-        for (HoaDonDTO hd : list) {
-            KhachHangDTO tenKH = new KhachHangBLL().getKhachHangById(hd.getMaKH());
-            TaiKhoanDTO taiKhoan = TaiKhoanDTO.getTaiKhoanHienTai(); // Giả sử phương thức này trả về tài khoản hiện tại
-            
-            boolean isMatch = false;
-            switch (type.toLowerCase()) {
-                case "tất cả":
-                    // Lọc tất cả các tiêu chí
-                    if (String.valueOf(hd.getMaHoaDon()).toLowerCase().contains(keyword.toLowerCase()) ||
-                        tenKH.getHoTen().toLowerCase().contains(keyword.toLowerCase()) ||
-                        taiKhoan.getTenDangNhap().toLowerCase().contains(keyword.toLowerCase())) {
-                        isMatch = true;
-                    }
-                    break;
-                case "mã hóa đơn":
-                    if (String.valueOf(hd.getMaHoaDon()).toLowerCase().contains(keyword.toLowerCase())) {
-                        isMatch = true;
-                    }
-                    break;
-                case "khách hàng":
-                    if (tenKH.getHoTen().toLowerCase().contains(keyword.toLowerCase())) {
-                        isMatch = true;
-                    }
-                    break;
-                case "nhân viên nhập":
-                    if (taiKhoan.getTenDangNhap().toLowerCase().contains(keyword.toLowerCase())) {
-                        isMatch = true;
-                    }
-                    break;
-            }
-
-            // Nếu có kết quả phù hợp, thêm vào danh sách lọc
-            if (isMatch) {
-                filteredList.add(hd);
-            }
-        }
-
-        // Cập nhật lại bảng với dữ liệu đã lọc
-        tbmtb1.setRowCount(0); // Xóa dữ liệu cũ trên bảng
-        for (HoaDonDTO hd : filteredList) {
-            KhachHangDTO kh = new KhachHangBLL().getKhachHangById(hd.getMaKH());
-            TaiKhoanDTO taiKhoan = TaiKhoanDTO.getTaiKhoanHienTai();
-            
-            int tongtien = 0;
-            List<ChiTietHoaDonDTO> cthd = new ChiTietHoaDonBLL().getChiTietTheoMaHoaDon(hd.getMaHoaDon());
-            for (ChiTietHoaDonDTO ct : cthd) {
-                tongtien += ct.getDonGia() * ct.getSoLuong();
-            }
-            tbmtb1.addRow(new Object[]{hd.getMaHoaDon(), kh.getHoTen(), taiKhoan.getTenDangNhap(), hd.getNgayXuat(), tongtien});
-        }
-    }
-});
-
-
-     
-}
-      
-      private void loaddata() {
+    private void loaddata() {
         List<HoaDonDTO> list = new HoaDonBLL().getAllHoaDon();
         tbmtb1.setRowCount(0);
         for (HoaDonDTO pn : list) {
             KhachHangDTO kh = new KhachHangBLL().getKhachHangById(pn.getMaKH());
             TaiKhoanDTO taiKhoan = TaiKhoanDTO.getTaiKhoanHienTai();
-            
+
             int tongtien = 0;
             List<ChiTietHoaDonDTO> ctpn = new ChiTietHoaDonBLL().getChiTietTheoMaHoaDon(pn.getMaHoaDon());
             for (ChiTietHoaDonDTO ct : ctpn) {
-                tongtien += ct.getDonGia()* ct.getSoLuong();
+                tongtien += ct.getDonGia() * ct.getSoLuong();
             }
-            tbmtb1.addRow(new Object[]{pn.getMaHoaDon(), kh.getHoTen(), taiKhoan.getTenDangNhap(), pn.getNgayXuat(), tongtien});
+            tbmtb1.addRow(new Object[] { pn.getMaHoaDon(), kh.getHoTen(), taiKhoan.getTenDangNhap(), pn.getNgayXuat(),
+                    tongtien });
         }
     }
-    
+
 }

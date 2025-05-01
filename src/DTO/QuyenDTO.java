@@ -1,16 +1,15 @@
 package DTO;
 
 public class QuyenDTO {
-    private int maQuyen; // Mã quyền
-    private String tenQuyen; // Tên quyền
-    private String danhSachChucNang; // Danh sách chức năng
-    private int trangThai; 
+    private int maQuyen;
+    private String tenQuyen;
+    private String danhSachChucNang;
+    private int trangThai;
 
-    // Constructor không tham số
-    public QuyenDTO() {}
+    public QuyenDTO() {
+    }
 
-    // Constructor có tham số
-    public QuyenDTO(String tenQuyen, String danhSachChucNang, int trangThai){
+    public QuyenDTO(String tenQuyen, String danhSachChucNang, int trangThai) {
         this.tenQuyen = tenQuyen;
         this.danhSachChucNang = danhSachChucNang;
         this.trangThai = trangThai;

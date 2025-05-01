@@ -11,10 +11,12 @@ import java.awt.event.KeyEvent;
 import java.util.List;
 
 import BLL.BUS.NhaCungCapBLL;
+import DTO.KhachHangDTO;
 import DTO.NhaCungCapDTO;
 import GUI.DiaLog.NhaCungCapDiaLog;
 import GUI.Panel.TopNav;
 import util.ExportExcelUtility;
+import util.ImportExcelUtility;
 
 import java.awt.*;
 
@@ -116,7 +118,7 @@ public class NhaCungCapGUI extends JPanel {
 
                 // Show NhaCungCapDiaLog dialog
                 JFrame owner = (JFrame) SwingUtilities.getWindowAncestor(NhaCungCapGUI.this);
-                NhaCungCapDiaLog dialog = new NhaCungCapDiaLog(owner, new NhaCungCapDTO(maNCC, ten, diaChi, sDT,1),
+                NhaCungCapDiaLog dialog = new NhaCungCapDiaLog(owner, new NhaCungCapDTO(maNCC, ten, diaChi, sDT, 1),
                         "Chỉnh Sửa Nhà Cung Cấp");
                 dialog.setVisible(true);
 
@@ -174,9 +176,20 @@ public class NhaCungCapGUI extends JPanel {
                 String sDT = (String) tbl.getValueAt(selectedRow, 3);
 
                 JFrame owner = (JFrame) SwingUtilities.getWindowAncestor(NhaCungCapGUI.this);
-                NhaCungCapDiaLog dialog = new NhaCungCapDiaLog(owner, new NhaCungCapDTO(maNCC, ten, diaChi, sDT,1),
+                NhaCungCapDiaLog dialog = new NhaCungCapDiaLog(owner, new NhaCungCapDTO(maNCC, ten, diaChi, sDT, 1),
                         "Xem chi tiết");
                 dialog.setVisible(true);
+            }
+        });
+
+        btn[4].addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ImportExcelUtility.openAndImportExcel((NhaCungCapDTO dto) -> nhaCungCapBLL.addNhaCungCap(dto),
+                        (Object[] rowData) -> new NhaCungCapDTO(nhaCungCapBLL.generateNewId(), rowData[0].toString(),
+                                rowData[1].toString(), rowData[2].toString(), 1));
+
+                loadData(nhaCungCapBLL.getAllNhaCungCap());
             }
         });
 

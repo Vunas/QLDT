@@ -16,6 +16,7 @@ import DTO.QuyenDTO;
 import GUI.DiaLog.QuyenDiaLog;
 import GUI.Panel.TopNav;
 import util.ExportExcelUtility;
+import util.ImportExcelUtility;
 
 public class QuyenGUI extends JPanel {
     TopNav topNav;
@@ -32,7 +33,7 @@ public class QuyenGUI extends JPanel {
     }
 
     private void initComponent(TopNav topNav) {
-        this.topNav= topNav;
+        this.topNav = topNav;
         String[] itemFindFor = { "Tất Cả" };
         topNav.setItemComboBox(itemFindFor);
 
@@ -156,7 +157,7 @@ public class QuyenGUI extends JPanel {
                     try {
                         QuyenDTO updatedQuyen = dialog.getDataQuyenDTO();
                         updatedQuyen.setMaQuyen(maQuyen);
-                        System.out.println((updatedQuyen.getDanhSachChucNang()+ updatedQuyen.getTenQuyen()));
+                        System.out.println((updatedQuyen.getDanhSachChucNang() + updatedQuyen.getTenQuyen()));
                         if (quyenBLL.updateQuyen(updatedQuyen)) {
                             JOptionPane.showMessageDialog(null, "Chỉnh sửa thành công!");
                             loadData(quyenBLL.getAllQuyen()); // Tải lại dữ liệu
@@ -212,6 +213,18 @@ public class QuyenGUI extends JPanel {
                 JFrame owner = (JFrame) SwingUtilities.getWindowAncestor(QuyenGUI.this);
                 QuyenDiaLog dialog = new QuyenDiaLog(owner, quyen, "Xem chi tiết quyền");
                 dialog.setVisible(true);
+            }
+        });
+
+        btn[4].addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ImportExcelUtility.openAndImportExcel((QuyenDTO dto) -> quyenBLL.addQuyen(dto),
+                        (Object[] rowData) -> new QuyenDTO(rowData[0].toString(),
+                                rowData[1].toString(),
+                                1));
+
+                loadData(quyenBLL.getAllQuyen());
             }
         });
 
