@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 30, 2025 at 06:23 PM
+-- Generation Time: May 01, 2025 at 04:57 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -441,7 +441,7 @@ CREATE TABLE `khuyenmai` (
 INSERT INTO `khuyenmai` (`makhuyenmai`, `tenkhuyenmai`, `soluong`, `ngaybatdau`, `ngayketthuc`, `apdungchohoadontu`, `giatri`, `hinhthuc`, `trangthai`, `mota`) VALUES
 (1, 'Khuyến Mãi Đầu Tháng 5', 100, '2025-05-01', '2025-05-15', 500000, 10, 1, 0, 'Giảm 10% cho hóa đơn từ 500000'),
 (2, 'Khuyến Mãi Đầu Tháng 6', 50, '2025-06-01', '2025-06-15', 300000, 50000, 2, 0, 'Giảm 50000 Cho Hóa Đơn Từ 300000'),
-(3, 'Khuyến Mãi Đại Lễ 30/4 - 1/5', 195, '2025-04-25', '2025-05-05', 100000, 2, 1, 1, 'Giảm 2% Cho Hóa Đơn Từ 100000'),
+(3, 'Khuyến Mãi Đại Lễ 30/4 - 1/5', 195, '2025-04-25', '2025-05-05', 100000, 2, 0, 1, 'Giảm 2% Cho Hóa Đơn Từ 100000'),
 (4, 'Khuyến Mãi Tháng 6', 30, '2025-06-01', '2025-06-30', 1000000, 150000, 2, 0, 'Giảm 150000 Cho Hóa Đơn Từ 1000000'),
 (5, 'Khuyến Mãi Tháng 4', 100, '2025-04-01', '2025-04-30', 1000000, 100000, 2, 0, 'Giảm 100000 Cho Hóa Đơn Từ 1000000'),
 (6, 'Khuyến Mãi Đại Lễ 30/4 - 1/5', 100, '2025-04-27', '2025-05-03', 500000, 10, 1, 0, 'Giảm 10% Cho Hóa Đơn từ 500000'),
@@ -605,7 +605,7 @@ INSERT INTO `phieusuachua` (`maPhieuSC`, `maPhieuBH`, `maSanPham`, `maIMEI`, `ng
 CREATE TABLE `quyen` (
   `maQuyen` int(11) NOT NULL,
   `tenQuyen` varchar(100) NOT NULL,
-  `danhSachChucNang` varchar(100) DEFAULT NULL,
+  `danhSachChucNang` text DEFAULT NULL,
   `trangthai` tinyint(4) DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -614,9 +614,9 @@ CREATE TABLE `quyen` (
 --
 
 INSERT INTO `quyen` (`maQuyen`, `tenQuyen`, `danhSachChucNang`, `trangthai`) VALUES
-(1, 'admin', 'rcfd /rcfd /rcfd /rcfd /rcfd /rcfd /rcfd /rcfd /rcfd /rcfd /rcfd /', 1),
-(2, 'quản lý', 'rcfd / / /rcfd /rcfd /rcfd / / / / / /', 1),
-(3, 'nhân viên', 'rcfd / / /rcfd / / / / / / / /', 1);
+(1, 'admin', 'Sản Phẩm:rcfd /Thuộc tính:rcfd /Phiếu Nhập:rcfd /Hóa đơn:rcfd /Khách Hàng:rcfd /Nhà Cung Cấp:rcfd /Nhân Viên:rcfd /Tài Khoản:rcfd /Bảo Hành:rcfd /Khuyến Mãi:rcfd /Phân Quyền:rcfd /Thống kê:rcfd /', 1),
+(2, 'quản lý', 'Sản Phẩm:rcfd /Thuộc tính: /Phiếu Nhập: /Hóa đơn:rcfd /Khách Hàng:rcfd /Nhà Cung Cấp:rcfd /Nhân Viên: /Tài Khoản: /Bảo Hành: /Khuyến Mãi: /Phân Quyền: /Thống kê: /', 1),
+(3, 'nhân viên', 'Sản Phẩm:rcfd /Thuộc tính: /Phiếu Nhập: /Hóa đơn:rcfd /Khách Hàng: /Nhà Cung Cấp: /Nhân Viên: /Tài Khoản: /Bảo Hành: /Khuyến Mãi: /Phân Quyền: /Thống kê: /', 1);
 
 -- --------------------------------------------------------
 
