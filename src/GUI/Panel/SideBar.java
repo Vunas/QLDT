@@ -21,6 +21,7 @@ import GUI.Frame.Login;
 import GUI.Frame.Main;
 import GUI.pages.HoaDonGUI;
 import GUI.pages.KhachHangGUI;
+import GUI.pages.KhuyenMaiGUI;
 import GUI.pages.NhaCungCapGUI;
 import GUI.pages.NhanVienGUI;
 import GUI.pages.PhieuBaoHanhGUI;
@@ -28,6 +29,7 @@ import GUI.pages.PhieuNhapGUI;
 import GUI.pages.QuyenGUI;
 import GUI.pages.SanPhamGUI;
 import GUI.pages.TaiKhoanGUI;
+import GUI.pages.ThongKeGUI;
 import GUI.pages.ThuocTinhGUI;
 import GUI.pages.TrangChuGUI;
 
@@ -41,9 +43,10 @@ public class SideBar extends JPanel {
 
     String[] menuBars = { "Trang chủ", "Sản phẩm", "Thuộc tính",
             "Phiếu nhập", "Hóa đơn", "Khách hàng", "Nhà cung cấp",
-            "Nhân viên", "Tài khoản", "Bảo hành", "Phân quyền", "Thống kê" };
+            "Nhân viên", "Tài khoản", "Bảo hành", "Khuyến Mãi", "Phân quyền", "Thống kê" };
 
-    String[] icons = { "home", "phone", "attributes","import", "export", "user", "supplier", "employee", "account","baohanh", "protect", "stats"};
+    String[] icons = { "home", "phone", "attributes", "import", "export", "user", "supplier", "employee", "account",
+            "baohanh", "promotion", "protect", "stats" };
     int thisPage = 0;
 
     Color mainColor = new Color(100, 149, 237);
@@ -64,22 +67,21 @@ public class SideBar extends JPanel {
 
         // Top panel
         pnlTop = new JPanel(new BorderLayout());
-        pnlTop.setPreferredSize(new Dimension(230, 60)); // Chiều cao cố định cho top panel
+        pnlTop.setPreferredSize(new Dimension(230, 60));
         pnlTop.setBackground(Color.WHITE); // Nền trắng cho top panel
-
         // Avatar
         FlatSVGIcon svgIcon = new FlatSVGIcon("./resources/icon/logo.svg");
         JLabel lblAvatar = new JLabel(svgIcon);
-        lblAvatar.setPreferredSize(new Dimension(70, 30)); // Kích thước cố định
+        lblAvatar.setPreferredSize(new Dimension(70, 30));
 
         // Tên cửa hàng
         JLabel lblName = new JLabel("Phone Store");
-        lblName.setFont(new Font("Arial", Font.BOLD, 16)); // Font lớn và đậm
-        lblName.setForeground(Color.BLACK); // Đổi màu chữ sang đen để dễ nhìn
+        lblName.setFont(new Font("Arial", Font.BOLD, 16));
+        lblName.setForeground(Color.BLACK);
 
         // Căn chỉnh tên bên phải, avatar bên trái
-        pnlTop.add(lblAvatar, BorderLayout.WEST); // Đặt avatar ở bên trái
-        pnlTop.add(lblName, BorderLayout.CENTER); // Đặt tên ở giữa
+        pnlTop.add(lblAvatar, BorderLayout.WEST);
+        pnlTop.add(lblName, BorderLayout.CENTER);
 
         // Middle panel
         pnlMid = new JPanel();
@@ -142,15 +144,14 @@ public class SideBar extends JPanel {
             }
         });
 
-//         itemBars[3].addMouseListener(new MouseAdapter() {
-//         @Override
-//         public void mousePressed(MouseEvent evt) {
-//         changePage(3);
-//         main.setPanel(new KhoHangGui(topNav));
-//         }
-//         });
-      
-        
+        // itemBars[3].addMouseListener(new MouseAdapter() {
+        // @Override
+        // public void mousePressed(MouseEvent evt) {
+        // changePage(3);
+        // main.setPanel(new KhoHangGui(topNav));
+        // }
+        // });
+
         itemBars[3].addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent evt) {
@@ -211,7 +212,7 @@ public class SideBar extends JPanel {
             @Override
             public void mousePressed(MouseEvent evt) {
                 changePage(10);
-                main.setPanel(new QuyenGUI(topNav));
+                main.setPanel(new KhuyenMaiGUI(topNav));
             }
         });
 
@@ -219,10 +220,18 @@ public class SideBar extends JPanel {
             @Override
             public void mousePressed(MouseEvent evt) {
                 changePage(11);
-                main.setPanel(new KhachHangGUI(topNav));
+                main.setPanel(new QuyenGUI(topNav));
             }
         });
-        
+
+        itemBars[12].addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent evt) {
+                changePage(12);
+                main.setPanel(new ThongKeGUI(topNav));
+            }
+        });
+
         new TaiKhoanBLL().chinhSuaQuyen(this, quyenDTO);
 
     }

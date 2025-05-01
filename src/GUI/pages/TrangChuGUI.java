@@ -2,6 +2,9 @@ package GUI.pages;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+
+import com.formdev.flatlaf.extras.FlatSVGIcon;
+
 import java.awt.*;
 
 public class TrangChuGUI extends JPanel {
@@ -11,52 +14,47 @@ public class TrangChuGUI extends JPanel {
         initComponents();
     }
 
-    // Phương thức tạo panel với ảnh bên trái và chữ bên phải
-    private JPanel createPanel(String title, String imagePath, Color backgroundColor, String description, Dimension imageSize) {
+    // Phương thức tạo panel với ảnh ở giữa và chữ bên dưới
+    private JPanel createPanel(String title, String imagePath, Color backgroundColor, String description,
+            float size, int heightContent, int widthContent) {
         JPanel panel = new JPanel(new BorderLayout());
         panel.setBackground(backgroundColor);
-    
+
         // Tiêu đề (đặt ở phía trên của panel)
         JLabel lblTitle = new JLabel(title);
         lblTitle.setFont(new Font("Arial", Font.BOLD, 20));
         lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
-        lblTitle.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0)); // Khoảng cách
+        lblTitle.setBorder(BorderFactory.createEmptyBorder(2, 0, 2, 0));
         panel.add(lblTitle, BorderLayout.NORTH);
-    
-        // Nội dung chính
-        JPanel contentPanel = new JPanel(new GridBagLayout());
+
+        // Nội dung chính (ảnh ở giữa, chữ ở dưới)
+        JPanel contentPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 2, 2));
         contentPanel.setBackground(backgroundColor);
-    
-        // Hình ảnh bên trái
-        ImageIcon originalIcon = new ImageIcon(imagePath);
-        Image scaledImage = originalIcon.getImage().getScaledInstance(imageSize.width, imageSize.height, Image.SCALE_SMOOTH);
-        JLabel lblImage = new JLabel(new ImageIcon(scaledImage));
-        lblImage.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Khoảng cách
-    
-        // Mô tả bên phải
+
+        // Hình ảnh
+        FlatSVGIcon svgIcon = new FlatSVGIcon(imagePath, size);
+        JLabel lblImage = new JLabel(svgIcon);
+        lblImage.setPreferredSize(new Dimension(svgIcon.getIconWidth(), svgIcon.getIconHeight()));
+                                                                                                
+        contentPanel.add(lblImage);
+
+        // Mô tả
         JTextArea txtDescription = new JTextArea(description);
         txtDescription.setWrapStyleWord(true);
         txtDescription.setLineWrap(true);
         txtDescription.setEditable(false);
-        txtDescription.setFont(new Font("Arial", Font.PLAIN, 17));
+        txtDescription.setFont(new Font("Fira Code", Font.BOLD, 17)); // Phông chữ hiện đại, in đậm.
         txtDescription.setBackground(backgroundColor);
-        txtDescription.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Khoảng cách
-    
-        // Cấu hình layout cho contentPanel
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.anchor = GridBagConstraints.WEST;
-        contentPanel.add(lblImage, gbc); // Thêm ảnh vào bên trái
-    
-        gbc.gridx = 1;
-        gbc.weightx = 1.0;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        contentPanel.add(txtDescription, gbc); // Thêm mô tả vào bên phải
-    
+        txtDescription.setBorder(BorderFactory.createEmptyBorder(2,2,2,2));
+
+        // Không cần đặt preferredSize chiều cao cố định, để nó tự điều chỉnh
+        txtDescription
+                .setPreferredSize(new Dimension(widthContent,heightContent));
+        contentPanel.add(txtDescription);
+
         // Thêm nội dung chính vào panel
         panel.add(contentPanel, BorderLayout.CENTER);
-    
+
         return panel;
     }
 
@@ -80,35 +78,32 @@ public class TrangChuGUI extends JPanel {
         pnlLeft = new JPanel(new BorderLayout());
         pnlLeft.setBackground(Color.WHITE);
         pnlStore = createPanel(
-            "Cửa Hàng",
-            "src/resources/img/store.jpg",
-            Color.WHITE,
-            "Cửa hàng Phone Store cung cấp các sản phẩm công nghệ cao với giá cả hợp lý và dịch vụ chuyên nghiệp.",
-            new Dimension(400, 400) // Kích thước lớn hơn cho ảnh
-        );
+                "Cửa Hàng",
+                "./resources/img/store.svg",
+                Color.WHITE,
+                "Cửa hàng Phone Store cung cấp các sản phẩm công nghệ cao với giá cả hợp lý và dịch vụ chuyên nghiệp.",
+                1f,80,550);
         pnlLeft.add(pnlStore, BorderLayout.CENTER);
 
         // Panel bên phải (Khách hàng & Bảo mật)
         pnlRight = new JPanel(new GridLayout(2, 1, 10, 10)); // Khoảng cách giữa các mục
         pnlRight.setBackground(Color.WHITE);
         pnlCustomer = createPanel(
-            "Khách Hàng",
-            "src/resources/img/customers.png",
-            Color.WHITE,
-            "Chúng tôi luôn tận tâm hỗ trợ khách hàng với các chương trình ưu đãi tuyệt vời.",
-            new Dimension(300, 200)
-        );
+                "Khách Hàng",
+                "./resources/img/customer.svg",
+                Color.WHITE,
+                "Chúng tôi luôn tận tâm hỗ trợ khách hàng với các chương trình ưu đãi tuyệt vời.",
+                0.4f,
+                180,120);
         pnlSecurity = createPanel(
-            "Bảo Mật",
-            "src/resources/img/security.png",
-            Color.WHITE,
-            "Thông tin khách hàng được bảo vệ an toàn với công nghệ bảo mật hàng đầu.",
-            new Dimension(300, 200)
-        );
+                "Bảo Mật",
+                "./resources/img/security.svg",
+                Color.WHITE,
+                "Thông tin khách hàng được bảo vệ an toàn với công nghệ bảo mật hàng đầu.",
+                0.4f,160,180);
         pnlRight.add(pnlCustomer);
         pnlRight.add(pnlSecurity);
 
-        // Thêm các panel vào khu vực nội dung
         pnlContent.add(pnlLeft);
         pnlContent.add(pnlRight);
 
@@ -120,7 +115,6 @@ public class TrangChuGUI extends JPanel {
         lblFooter.setFont(new Font("Roboto", Font.ITALIC, 14)); // Font lớn hơn cho footer
         pnlFooter.add(lblFooter);
 
-        // Thêm các khu vực vào layout chính
         add(pnlHeader, BorderLayout.NORTH);
         add(pnlContent, BorderLayout.CENTER);
         add(pnlFooter, BorderLayout.SOUTH);

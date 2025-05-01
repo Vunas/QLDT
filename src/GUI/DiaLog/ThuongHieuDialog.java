@@ -2,7 +2,6 @@ package GUI.DiaLog;
 
 // import BLL.BUS.QuyenBLL;
 import BLL.BUS.BrandBLL;
-import DAO.BrandDao;
 import DTO.ThuocTinhSanPham.BrandDTO;
 import GUI.Panel.Component.ButtonCustom;
 import GUI.Panel.Component.HeaderTitle;
@@ -49,21 +48,21 @@ public final class ThuongHieuDialog extends JDialog implements MouseListener {
     public ThuongHieuDialog(JFrame owner, ThuocTinhGUI qlttsp, String title, boolean modal) {
         super(owner, title, modal);
         initComponent(qlttsp);
-//        loadQuyen(nhomquyen);
+        // loadQuyen(nhomquyen);
         loadDataTable(list);
     }
 
-//    public void loadQuyen(int nhomquyen) {
-//        if (!nhomquyenBus.checkPermisson(nhomquyen, "thuoctinh", "create")) {
-//            add.setVisible(false);
-//        }
-//        if (!nhomquyenBus.checkPermisson(nhomquyen, "thuoctinh", "delete")) {
-//            del.setVisible(false);
-//        }
-//        if (!nhomquyenBus.checkPermisson(nhomquyen, "thuoctinh", "update")) {
-//            update.setVisible(false);
-//        }
-//    }
+    // public void loadQuyen(int nhomquyen) {
+    // if (!nhomquyenBus.checkPermisson(nhomquyen, "thuoctinh", "create")) {
+    // add.setVisible(false);
+    // }
+    // if (!nhomquyenBus.checkPermisson(nhomquyen, "thuoctinh", "delete")) {
+    // del.setVisible(false);
+    // }
+    // if (!nhomquyenBus.checkPermisson(nhomquyen, "thuoctinh", "update")) {
+    // update.setVisible(false);
+    // }
+    // }
 
     public void initComponent(ThuocTinhGUI qltt) {
         this.qltt = qltt;
@@ -89,7 +88,7 @@ public final class ThuongHieuDialog extends JDialog implements MouseListener {
         table.setBackground(Color.WHITE);
         table.addMouseListener(this);
         tblModel = new DefaultTableModel();
-        String[] header = new String[]{"Mã thương hiệu", "Tên thương hiệu"};
+        String[] header = new String[] { "Mã thương hiệu", "Tên thương hiệu" };
         tblModel.setColumnIdentifiers(header);
         table.setModel(tblModel);
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
@@ -124,11 +123,11 @@ public final class ThuongHieuDialog extends JDialog implements MouseListener {
     }
 
     public void loadDataTable(ArrayList<BrandDTO> result) {
-//        result.sort(Comparator.comparing(BrandDTO::getTenthuonghieu));
+        // result.sort(Comparator.comparing(BrandDTO::getTenthuonghieu));
         tblModel.setRowCount(0);
         for (BrandDTO th : result) {
-            tblModel.addRow(new Object[]{
-                th.getMathuonghieu(), th.getTenthuonghieu()
+            tblModel.addRow(new Object[] {
+                    th.getMathuonghieu(), th.getTenthuonghieu()
             });
         }
     }
@@ -141,7 +140,6 @@ public final class ThuongHieuDialog extends JDialog implements MouseListener {
             } else {
                 String tenthuonghieu = ms.getText();
                 if (thBUS.checkDup(tenthuonghieu)) {
-                    int id = BrandDao.getInstance().getAutoIncrement();
                     thBUS.add(tenthuonghieu);
                     loadDataTable(list);
                     ms.setText("");
@@ -188,21 +186,29 @@ public final class ThuongHieuDialog extends JDialog implements MouseListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
-        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        // throw new UnsupportedOperationException("Not supported yet."); // Generated
+        // from
+        // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        // throw new UnsupportedOperationException("Not supported yet."); // Generated
+        // from
+        // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        // throw new UnsupportedOperationException("Not supported yet."); // Generated
+        // from
+        // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        // throw new UnsupportedOperationException("Not supported yet."); // Generated
+        // from
+        // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

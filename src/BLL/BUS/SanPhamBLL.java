@@ -5,27 +5,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 import DAO.SanPhamDao;
-import DTO.PhieuBaoHanhDTO;
 
-public class SanPhamBLL { // Đổi tên lớp từ "SanPhamDAO" thành "SanPhamBLL"
-    private final SanPhamDao sanPhamDao; // Đổi tên đối tượng từ "SanPhamBLL" thành "SanPhamDAO"
+public class SanPhamBLL {
+    private final SanPhamDao sanPhamDao;
 
     public SanPhamBLL() {
-        sanPhamDao = new SanPhamDao(); // Đổi tên tham chiếu đối tượng
+        sanPhamDao = new SanPhamDao();
     }
 
     public boolean addSanPham(SanPhamDTO sanPham) {
-        return sanPhamDao.addSanPham(sanPham); // Đổi "SanPham" thành "sanPham"
+        return sanPhamDao.addSanPham(sanPham);
     }
 
     public boolean updateSanPham(SanPhamDTO sanPham) {
-        return sanPhamDao.updateSanPham(sanPham); // Đổi "SanPham" thành "sanPham"
+        return sanPhamDao.updateSanPham(sanPham);
     }
-    
+
     public boolean updateSoluong(int maSP, int soluongMoi) {
         return sanPhamDao.updateSoluong(maSP, soluongMoi);
     }
-   
+
     public boolean deleteSanPham(int maSP) {
         return sanPhamDao.deleteSanPham(maSP);
     }
@@ -33,24 +32,25 @@ public class SanPhamBLL { // Đổi tên lớp từ "SanPhamDAO" thành "SanPham
     public SanPhamDTO getSanPhamById(int maSP) {
         return sanPhamDao.getSanPhamById(maSP);
     }
-    
+
     public SanPhamDTO getSanPhamByIdNoStatus(int maSP) {
         return sanPhamDao.getSanPhamByIdNoStatus(maSP);
     }
-    
+
     public SanPhamDTO getSanPhamByName(String nameSP) {
         return sanPhamDao.getSanPhamByName(nameSP);
     }
+
     public List<SanPhamDTO> getAllSanPham() {
         return sanPhamDao.getAllSanPham();
     }
 
     public List<SanPhamDTO> getSanPhamByNameSearch(String keyword, String type) {
-        List<SanPhamDTO> sanPhamList = sanPhamDao.getAllSanPham(); // Đổi "SanPhamList" thành "sanPhamList"
+        List<SanPhamDTO> sanPhamList = sanPhamDao.getAllSanPham();
 
         List<SanPhamDTO> filteredList = new ArrayList<>();
 
-        for (SanPhamDTO sp : sanPhamList) { // Đổi "SanPhamList" thành "sanPhamList"
+        for (SanPhamDTO sp : sanPhamList) {
             switch (type.toLowerCase()) {
                 case "tất cả" -> {
                     if (sp.getTenSP().toLowerCase().contains(keyword.toLowerCase())) {
@@ -72,7 +72,7 @@ public class SanPhamBLL { // Đổi tên lớp từ "SanPhamDAO" thành "SanPham
         if (list.isEmpty()) {
             return 1;
         } else {
-            return list.getLast().getMaSP()+ 1;
+            return list.getLast().getMaSP() + 1;
         }
     }
 }

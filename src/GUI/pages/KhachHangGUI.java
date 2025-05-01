@@ -36,7 +36,7 @@ public class KhachHangGUI extends JPanel {
 
     private void initComponent(TopNav topNav) {
         this.topNav = topNav;
-        String[] itemFindFor = { "Tất Cả","Theo tên", "Theo SDT" };
+        String[] itemFindFor = { "Tất Cả", "Theo tên", "Theo SDT" };
         topNav.setItemComboBox(itemFindFor);
 
         // Panel dưới
@@ -115,7 +115,7 @@ public class KhachHangGUI extends JPanel {
                 String sdt = (String) tbl.getValueAt(selectedRow, 3);
 
                 // Tạo đối tượng DTO từ dữ liệu bảng
-                KhachHangDTO kh = new KhachHangDTO(maKH, hoTen, diaChi, sdt,1);
+                KhachHangDTO kh = new KhachHangDTO(maKH, hoTen, diaChi, sdt, 1);
 
                 // Hiển thị JDialog KhachHangDiaLog
                 JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(KhachHangGUI.this);
@@ -174,7 +174,7 @@ public class KhachHangGUI extends JPanel {
                 String sdt = (String) tbl.getValueAt(selectedRow, 3);
 
                 // Create a KhachHangDTO object
-                KhachHangDTO khachHang = new KhachHangDTO(maKH, hoTen, diaChi, sdt,1);
+                KhachHangDTO khachHang = new KhachHangDTO(maKH, hoTen, diaChi, sdt, 1);
 
                 // Open KhachHangDiaLog in "Xem chi tiết" mode
                 JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(KhachHangGUI.this);
@@ -187,22 +187,20 @@ public class KhachHangGUI extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 ImportExcelUtility.openAndImportExcel(
-                    (KhachHangDTO dto) -> khachHangBLL.addKhachHang(dto), // Hàm lưu dữ liệu
-                    (Object[] rowData) -> new KhachHangDTO(              // Ánh xạ từ Object[] sang KhachHangDTO
-                        khachHangBLL.generateNewId(),
-                        rowData[0].toString(),
-                        rowData[1].toString(),
-                        rowData[2].toString(),
-                        1
-                    )
-                );
+                        (KhachHangDTO dto) -> khachHangBLL.addKhachHang(dto),
+                        (Object[] rowData) -> new KhachHangDTO(
+                                khachHangBLL.generateNewId(),
+                                rowData[0].toString(),
+                                rowData[1].toString(),
+                                rowData[2].toString(),
+                                1));
                 loadData(khachHangBLL.getAllKhachHang());
             }
         });
 
         btn[5].addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e){
+            public void actionPerformed(ActionEvent e) {
                 ExportExcelUtility.saveTableToExcel(tbl, "Khách Hàng");
             }
         });

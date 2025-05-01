@@ -15,6 +15,7 @@ import java.awt.event.MouseEvent;
 
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.FlatLightLaf;
+import com.formdev.flatlaf.extras.FlatSVGIcon;
 
 import BLL.BUS.TaiKhoanBLL;
 import DTO.TaiKhoanDTO;
@@ -45,11 +46,11 @@ public class Login extends JFrame {
 
         JLabel imglbl = new JLabel();
 
-        ImageIcon originalIcon = new ImageIcon("src/resources/img/login.jpg");
-        Image originalImage = originalIcon.getImage();
-        Image resizedImage = originalImage.getScaledInstance(600, 430, Image.SCALE_SMOOTH); // Set kích thước mong muốn
-        ImageIcon resizedIcon = new ImageIcon(resizedImage);
-        imglbl.setIcon(resizedIcon);
+        // ImageIcon originalIcon = new ImageIcon("src/resources/img/login.jpg");
+        // Image originalImage = originalIcon.getImage();
+        // Image resizedImage = originalImage.getScaledInstance(600, 430, Image.SCALE_SMOOTH); // Set kích thước mong muốn
+        // ImageIcon resizedIcon = new ImageIcon(resizedImage);
+        imglbl.setIcon(new FlatSVGIcon("./resources/img/login.svg",0.125f));
         pnlImg = new JPanel();
         pnlImg.setBackground(Color.white);
         pnlImg.setBorder(new EmptyBorder(20, 0, 0, 0));
@@ -113,7 +114,7 @@ public class Login extends JFrame {
 
         btnLogin = new JButton("Đăng nhập");
         btnLogin.setFont(new Font("Roboto", Font.BOLD, 16));
-        btnLogin.setBackground(new Color(100, 149, 237));
+        btnLogin.setBackground(new Color(125, 151, 250));
         btnLogin.setForeground(Color.WHITE); 
         btnLogin.setPreferredSize(new Dimension(380, 55));
         btnLogin.putClientProperty(FlatClientProperties.STYLE, "arc: 20");

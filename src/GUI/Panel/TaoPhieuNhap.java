@@ -64,6 +64,10 @@ public class TaoPhieuNhap extends JPanel{
      PhieuNhapDao phieunhapDAO;
      Main main;
 
+    public JLabel getTongTien() {
+        return tongTien;
+    }
+
     public TaoPhieuNhap(Main main) {
         initComponent(main);
         loaddatasanpham();

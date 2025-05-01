@@ -26,11 +26,11 @@ public class TaiKhoanGUI extends JPanel {
         initComponent(topNav);
         addSearchFunctionality();
         loadData(taiKhoanBLL.getAllTaiKhoan());
-        chucNang(); // Add functionality to the buttons
+        chucNang();
     }
 
     private void initComponent(TopNav topNav) {
-        this.topNav= topNav;
+        this.topNav = topNav;
         String[] itemFindFor = { "Tất Cả" };
         topNav.setItemComboBox(itemFindFor);
 
@@ -71,9 +71,9 @@ public class TaiKhoanGUI extends JPanel {
 
         textSearch.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e){
+            public void actionPerformed(ActionEvent e) {
                 String keyword = textSearch.getText().trim();
-            loadData(taiKhoanBLL.getTaiKhoanByNameSearch(keyword));
+                loadData(taiKhoanBLL.getTaiKhoanByNameSearch(keyword));
             }
         });
         btnRefresh.addActionListener(new ActionListener() {
@@ -154,7 +154,7 @@ public class TaiKhoanGUI extends JPanel {
 
                 JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(TaiKhoanGUI.this);
                 TaiKhoanDialog dialog = new TaiKhoanDialog(parentFrame,
-                        new TaiKhoanDTO(maNV, tenDangNhap, matKhau, maQuyen,1), "Chỉnh Sửa Tài Khoản");
+                        new TaiKhoanDTO(maNV, tenDangNhap, matKhau, maQuyen, 1), "Chỉnh Sửa Tài Khoản");
                 dialog.setVisible(true);
 
                 if (dialog.isSaved()) {
@@ -205,14 +205,14 @@ public class TaiKhoanGUI extends JPanel {
 
                 DefaultTableModel model = (DefaultTableModel) tbl.getModel();
 
-                int maNV = (int) model.getValueAt(selectedRow, 0); // Lấy Mã Nhân Viên
-                String tenDangNhap = (String) model.getValueAt(selectedRow, 1); // Lấy Tên Đăng Nhập
-                String matKhau = (String) model.getValueAt(selectedRow, 2); // Lấy Mật Khẩu (dù đã ẩn cột)
-                int maQuyen = (int) model.getValueAt(selectedRow, 3); // Lấy Mã Quyền
+                int maNV = (int) model.getValueAt(selectedRow, 0);
+                String tenDangNhap = (String) model.getValueAt(selectedRow, 1);
+                String matKhau = (String) model.getValueAt(selectedRow, 2);
+                int maQuyen = (int) model.getValueAt(selectedRow, 3);
 
                 JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(TaiKhoanGUI.this);
                 TaiKhoanDialog dialog = new TaiKhoanDialog(parentFrame,
-                        new TaiKhoanDTO(maNV, tenDangNhap, matKhau, maQuyen,1), "Xem chi tiết");
+                        new TaiKhoanDTO(maNV, tenDangNhap, matKhau, maQuyen, 1), "Xem chi tiết");
                 dialog.setVisible(true);
             }
         });

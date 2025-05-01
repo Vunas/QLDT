@@ -1,8 +1,6 @@
 package GUI.DiaLog;
 
-import BLL.BUS.BrandBLL;
 import BLL.BUS.ColorBLL;
-import BLL.BUS.QuyenBLL;
 import DAO.ColorDao;
 import DTO.ThuocTinhSanPham.ColorDTO;
 import GUI.Panel.Component.ButtonCustom;
@@ -18,8 +16,6 @@ import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;

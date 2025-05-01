@@ -8,11 +8,9 @@ import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.table.*;
 import java.awt.*;
-import java.awt.event.*;
 import java.sql.Date;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import GUI.DiaLog.ChiTietSanPhamDialog;
 
 public class PhieuBaoHanhDialog extends JDialog {
     private JTable tblChiTiet, tblLichSu;

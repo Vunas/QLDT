@@ -4,19 +4,15 @@
  */
 package DAO;
 
-import DTO.PhieuBaoHanhDTO;
 import DTO.PhieuSuaChuaDTO;
-import java.util.Date;
 import util.JdbcUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 /**
  *
  * @author thaoh
@@ -39,24 +35,25 @@ public class PhieuSuaChuaDao {
         }
         return false;
     }
-    
-    public boolean updateTrangThai(int maSC , String trangThai) {
+
+    public boolean updateTrangThai(int maSC, String trangThai) {
         String sql = "UPDATE phieusuachua SET trangThai = ? WHERE maPhieuSC = ?";
         try (Connection conn = JdbcUtil.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1,trangThai);
+            stmt.setString(1, trangThai);
             stmt.setInt(2, maSC);
             return stmt.executeUpdate() > 0;
         } catch (Exception e) {
             e.printStackTrace();
         }
         return false;
-    }        
-    public List<PhieuSuaChuaDTO> getAll(){
+    }
+
+    public List<PhieuSuaChuaDTO> getAll() {
         List<PhieuSuaChuaDTO> list = new ArrayList<>();
         String sql = "SELECT * FROM phieusuachua";
-        try(Connection conn = JdbcUtil.getConnection(); 
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            ResultSet rs = stmt.executeQuery()){
+        try (Connection conn = JdbcUtil.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql);
+                ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
                 int maPhieuSC = rs.getInt("maPhieuSC");
                 int maPhieuBH = rs.getInt("maPhieuBH");
@@ -68,21 +65,23 @@ public class PhieuSuaChuaDao {
                 String trangThai = rs.getString("trangThai");
                 String ghiChu = rs.getString("ghiChu");
 
-                list.add(new PhieuSuaChuaDTO(maPhieuSC, maPhieuBH, maSP, maIMEI, ngayNhan, tinhTrang, xuLy, trangThai, ghiChu));
+                list.add(new PhieuSuaChuaDTO(maPhieuSC, maPhieuBH, maSP, maIMEI, ngayNhan, tinhTrang, xuLy, trangThai,
+                        ghiChu));
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return list;
     }
+
     // , getById(), update(), delete() có thể thêm sau
-    public PhieuSuaChuaDTO getById(int maPhieuSC){
+    public PhieuSuaChuaDTO getById(int maPhieuSC) {
         String query = "SELECT * FROM phieusuachua WHERE maPhieuSC = ?";
-        try(Connection conn = JdbcUtil.getConnection(); 
-            PreparedStatement stmt = conn.prepareStatement(query)){
+        try (Connection conn = JdbcUtil.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setInt(1, maPhieuSC);
-            try(ResultSet rs = stmt.executeQuery()){
-                if(rs.next()){
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
                     int maPhieuBH = rs.getInt("maPhieuBH");
                     int maSP = rs.getInt("maSanPham");
                     String maIMEI = rs.getString("maIMEI");
@@ -91,22 +90,24 @@ public class PhieuSuaChuaDao {
                     String xuLy = rs.getString("xuLy");
                     String trangThai = rs.getString("trangThai");
                     String ghiChu = rs.getString("ghiChu");
-                    return new PhieuSuaChuaDTO(maPhieuSC, maPhieuBH, maSP, maIMEI, ngayNhan, tinhTrang, xuLy, trangThai, ghiChu);
+                    return new PhieuSuaChuaDTO(maPhieuSC, maPhieuBH, maSP, maIMEI, ngayNhan, tinhTrang, xuLy, trangThai,
+                            ghiChu);
                 }
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
-    public List<PhieuSuaChuaDTO> getByMaPhieuBH(int maPhieuBH){
+
+    public List<PhieuSuaChuaDTO> getByMaPhieuBH(int maPhieuBH) {
         List<PhieuSuaChuaDTO> list = new ArrayList<>();
         String query = "SELECT * FROM phieusuachua WHERE maPhieuBH LIKE ?";
-        try(Connection conn = JdbcUtil.getConnection(); 
-            PreparedStatement stmt = conn.prepareStatement(query)){
-            stmt.setString(1, "%"+maPhieuBH+"%");
-            try(ResultSet rs = stmt.executeQuery()){
-                while(rs.next()){
+        try (Connection conn = JdbcUtil.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, "%" + maPhieuBH + "%");
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
                     int maPhieuSC = rs.getInt("maPhieuSC");
                     int maSP = rs.getInt("maSanPham");
                     String maIMEI = rs.getString("maIMEI");
@@ -115,21 +116,23 @@ public class PhieuSuaChuaDao {
                     String xuLy = rs.getString("xuLy");
                     String trangThai = rs.getString("trangThai");
                     String ghiChu = rs.getString("ghiChu");
-                    list.add(new PhieuSuaChuaDTO(maPhieuSC, maPhieuBH, maSP, maIMEI, ngayNhan, tinhTrang, xuLy, trangThai, ghiChu));
+                    list.add(new PhieuSuaChuaDTO(maPhieuSC, maPhieuBH, maSP, maIMEI, ngayNhan, tinhTrang, xuLy,
+                            trangThai, ghiChu));
                 }
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return list;
     }
-    public PhieuSuaChuaDTO getBymaIMEI(String maIMEI){
+
+    public PhieuSuaChuaDTO getBymaIMEI(String maIMEI) {
         String query = "SELECT * FROM phieusuachua WHERE maIMEI LIKE ?";
-        try(Connection conn = JdbcUtil.getConnection(); 
-            PreparedStatement stmt = conn.prepareStatement(query)){
-            stmt.setString(1,"%" + maIMEI + "%");
-            try(ResultSet rs = stmt.executeQuery()){
-                if(rs.next()){
+        try (Connection conn = JdbcUtil.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, "%" + maIMEI + "%");
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
                     int maPhieuSC = rs.getInt("maPhieuSC");
                     int maPhieuBH = rs.getInt("maPhieuBH");
                     int maSP = rs.getInt("maSanPham");
@@ -138,24 +141,25 @@ public class PhieuSuaChuaDao {
                     String xuLy = rs.getString("xuLy");
                     String trangThai = rs.getString("trangThai");
                     String ghiChu = rs.getString("ghiChu");
-                    return new PhieuSuaChuaDTO(maPhieuSC, maPhieuBH, maSP, maIMEI, ngayNhan, tinhTrang, xuLy, trangThai, ghiChu);
+                    return new PhieuSuaChuaDTO(maPhieuSC, maPhieuBH, maSP, maIMEI, ngayNhan, tinhTrang, xuLy, trangThai,
+                            ghiChu);
                 }
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
-    
-    public List<PhieuSuaChuaDTO> getByMaPhieuBHAndIMEI(int maPBH , String maIMEI){
+
+    public List<PhieuSuaChuaDTO> getByMaPhieuBHAndIMEI(int maPBH, String maIMEI) {
         List<PhieuSuaChuaDTO> PSC = new ArrayList<>();
         String query = "SELECT * FROM phieusuachua WHERE maPhieuBH LIKE ? AND maIMEI LIKE ?";
-        try(Connection conn = JdbcUtil.getConnection();
-            PreparedStatement stmt = conn.prepareCall(query)){
-            stmt.setString(1,"%"+maPBH+"%");
-            stmt.setString(2,"%"+maIMEI+"%");
-            try(ResultSet rs = stmt.executeQuery()){
-                while(rs.next()){
+        try (Connection conn = JdbcUtil.getConnection();
+                PreparedStatement stmt = conn.prepareCall(query)) {
+            stmt.setString(1, "%" + maPBH + "%");
+            stmt.setString(2, "%" + maIMEI + "%");
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
                     int maPhieuSC = rs.getInt("maPhieuSC");
                     int maSP = rs.getInt("maSanPham");
                     LocalDate ngayNhan = rs.getDate("ngayNhan").toLocalDate();
@@ -163,10 +167,11 @@ public class PhieuSuaChuaDao {
                     String xuLy = rs.getString("xuLy");
                     String trangThai = rs.getString("trangThai");
                     String ghiChu = rs.getString("ghiChu");
-                    PSC.add( new PhieuSuaChuaDTO(maPhieuSC, maPBH, maSP, maIMEI, ngayNhan, tinhTrang, xuLy, trangThai, ghiChu));
+                    PSC.add(new PhieuSuaChuaDTO(maPhieuSC, maPBH, maSP, maIMEI, ngayNhan, tinhTrang, xuLy, trangThai,
+                            ghiChu));
                 }
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return PSC;

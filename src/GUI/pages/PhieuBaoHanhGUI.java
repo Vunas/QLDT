@@ -3,9 +3,6 @@ package GUI.pages;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 
 import BLL.BUS.*;
 import DTO.*;
@@ -28,7 +25,6 @@ import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
 import javax.swing.event.DocumentListener;
 
 public class PhieuBaoHanhGUI extends JPanel {
@@ -55,10 +51,10 @@ public class PhieuBaoHanhGUI extends JPanel {
         this.main = main;
 
         // Top Nav setup
-        String[] itemFindFor = {"Tất Cả", "Mã Phiếu BH", "Tên/SDT Khách Hàng", "IMEI"};
+        String[] itemFindFor = { "Tất Cả", "Mã Phiếu BH", "Tên/SDT Khách Hàng", "IMEI" };
         dateStart = new InputDate("Từ ngày");
         dateEnd = new InputDate("Đến ngày");
-               
+
         searchBtn = new JButton("Tìm", new FlatSVGIcon("./resources/icon/search.svg", 0.4f));
         searchBtn.setPreferredSize(new Dimension(90, 60));
         searchBtn.putClientProperty(FlatClientProperties.STYLE, "arc: 12");
@@ -81,11 +77,9 @@ public class PhieuBaoHanhGUI extends JPanel {
         topNav.setItemComboBox(itemFindFor);
         topNav.add(datePanel);
 
-//        JButton btnLapPhieuSC = new JButton("🛠️ Lập phiếu sửa chữa");
-//        btnLapPhieuSC.addActionListener(e -> openPhieuSuaChuaDialog());
-//        topNav.add(btnLapPhieuSC);
-
-        
+        // JButton btnLapPhieuSC = new JButton("🛠️ Lập phiếu sửa chữa");
+        // btnLapPhieuSC.addActionListener(e -> openPhieuSuaChuaDialog());
+        // topNav.add(btnLapPhieuSC);
 
         // Bottom panel
         pnlBot = new JPanel(new BorderLayout());
@@ -93,22 +87,23 @@ public class PhieuBaoHanhGUI extends JPanel {
         pnlBot.setBorder(new EmptyBorder(10, 15, 10, 15));
 
         // Table phiếu bảo hành
-        modelPhieuBH = new DefaultTableModel(new String[]{"Mã Phiếu BH", "Khách Hàng", "SĐT", "Nhân Viên", "Ngày Lập"}, 0);
+        modelPhieuBH = new DefaultTableModel(
+                new String[] { "Mã Phiếu BH", "Khách Hàng", "SĐT", "Nhân Viên", "Ngày Lập" }, 0);
         tblPhieuBH = new JTable(modelPhieuBH);
         tblPhieuBH.setRowHeight(35);
         scrPhieuBH = new JScrollPane(tblPhieuBH);
 
         // Table phiếu sửa chữa
-        modelPhieuSC = new DefaultTableModel(new String[]{"Mã SC", "IMEI", "Ngày Nhận", "Trạng Thái"}, 0);
+        modelPhieuSC = new DefaultTableModel(new String[] { "Mã SC", "IMEI", "Ngày Nhận", "Trạng Thái" }, 0);
         tblPhieuSC = new JTable(modelPhieuSC);
         tblPhieuSC.setRowHeight(35);
         scrPhieuSC = new JScrollPane(tblPhieuSC);
-                // Row sorter và filter cho bảng sửa chữa
+        // Row sorter và filter cho bảng sửa chữa
         TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(modelPhieuSC);
         tblPhieuSC.setRowSorter(sorter);
 
         // Bộ lọc theo trạng thái
-        cbLocTrangThai = new JComboBox<>(new String[]{"Tất cả", "Đang xử lý", "Đã sửa xong", "Từ chối bảo hành"});
+        cbLocTrangThai = new JComboBox<>(new String[] { "Tất cả", "Đang xử lý", "Đã sửa xong", "Từ chối bảo hành" });
         cbLocTrangThai.addActionListener(e -> {
             String selected = cbLocTrangThai.getSelectedItem().toString();
             if (selected.equals("Tất cả")) {
@@ -122,9 +117,17 @@ public class PhieuBaoHanhGUI extends JPanel {
         txtSearchSC = new JTextField();
         txtSearchSC.setPreferredSize(new Dimension(150, 25));
         txtSearchSC.getDocument().addDocumentListener(new DocumentListener() {
-            public void insertUpdate(javax.swing.event.DocumentEvent e) { filter(); }
-            public void removeUpdate(javax.swing.event.DocumentEvent e) { filter(); }
-            public void changedUpdate(javax.swing.event.DocumentEvent e) { filter(); }
+            public void insertUpdate(javax.swing.event.DocumentEvent e) {
+                filter();
+            }
+
+            public void removeUpdate(javax.swing.event.DocumentEvent e) {
+                filter();
+            }
+
+            public void changedUpdate(javax.swing.event.DocumentEvent e) {
+                filter();
+            }
 
             private void filter() {
                 String text = txtSearchSC.getText().trim();
@@ -144,7 +147,7 @@ public class PhieuBaoHanhGUI extends JPanel {
         filterPanel.add(txtSearchSC);
         filterPanel.add(new JLabel("  Trạng thái:"));
         filterPanel.add(cbLocTrangThai);
-        filterPanel.add(btnChiTietSC); 
+        filterPanel.add(btnChiTietSC);
         filterPanel.add(btnCapNhatSC);
         JPanel rightPanel = new JPanel(new BorderLayout(5, 5));
         rightPanel.add(filterPanel, BorderLayout.NORTH);
@@ -222,7 +225,8 @@ public class PhieuBaoHanhGUI extends JPanel {
         btn[2].addActionListener(e -> {
             int row = tblPhieuBH.getSelectedRow();
             if (row != -1) {
-                int confirm = JOptionPane.showConfirmDialog(this, "Xác nhận xóa phiếu?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+                int confirm = JOptionPane.showConfirmDialog(this, "Xác nhận xóa phiếu?", "Xác nhận",
+                        JOptionPane.YES_NO_OPTION);
                 if (confirm == JOptionPane.YES_OPTION) {
                     int ma = Integer.parseInt(modelPhieuBH.getValueAt(row, 0).toString());
                     new ChiTietPhieuBaoHanhBLL().deleteChiTietBH(ma);
@@ -237,8 +241,8 @@ public class PhieuBaoHanhGUI extends JPanel {
             topNav.getTextSearch().setText("");
             loaddata();
             int row = tblPhieuSC.getSelectedRow();
-            if(row != -1){
-                int maSC = Integer.parseInt(modelPhieuSC.getValueAt(row, 0).toString()); 
+            if (row != -1) {
+                int maSC = Integer.parseInt(modelPhieuSC.getValueAt(row, 0).toString());
                 loadPhieuSuaChua(new PhieuSuaChuaBLL().getById(maSC).getMaPhieuBH());
             }
         });
@@ -255,10 +259,11 @@ public class PhieuBaoHanhGUI extends JPanel {
         if (row == -1) {
             JOptionPane.showMessageDialog(this, "Chọn phiếu bảo hành để lập sửa chữa.");
             return;
-        }  
+        }
         int maSC = Integer.parseInt(modelPhieuSC.getValueAt(row, 0).toString());
         String imei = modelPhieuSC.getValueAt(row, 1).toString();
-        new PhieuSuaChuaDialog(main, new PhieuSuaChuaBLL().getById(maSC).getMaPhieuBH(), new PhieuSuaChuaBLL().getById(maSC).getMaSanPham(), imei,true);
+        new PhieuSuaChuaDialog(main, new PhieuSuaChuaBLL().getById(maSC).getMaPhieuBH(),
+                new PhieuSuaChuaBLL().getById(maSC).getMaSanPham(), imei, true);
     }
 
     private void openChiTietSuaChua() {
@@ -276,7 +281,7 @@ public class PhieuBaoHanhGUI extends JPanel {
         modelPhieuSC.setRowCount(0);
         List<PhieuSuaChuaDTO> list = new PhieuSuaChuaBLL().getByMaPhieuBH(maPhieuBH);
         for (PhieuSuaChuaDTO sc : list) {
-            modelPhieuSC.addRow(new Object[]{
+            modelPhieuSC.addRow(new Object[] {
                     sc.getMaPhieuSC(), sc.getMaIMEI(), sc.getNgayNhan(), sc.getTrangThai()
             });
         }
@@ -291,12 +296,12 @@ public class PhieuBaoHanhGUI extends JPanel {
             KhachHangDTO kh = new KhachHangBLL().getKhachHangById(p.getMaKH());
             NhanVienDTO nv = new NhanVienBLL().getNhanVienById(p.getMaNhanVien());
 
-            modelPhieuBH.addRow(new Object[]{
+            modelPhieuBH.addRow(new Object[] {
                     p.getMaPhieuBH(),
                     kh.getHoTen(),
                     kh.getSdt(),
                     (nv != null) ? nv.getHoTen() : "N/A",
-                    p.getNgayLap().format(fmt)     
+                    p.getNgayLap().format(fmt)
             });
         }
         lblTongPhieu.setText("📄 Tổng phiếu BH: " + list.size());
@@ -333,15 +338,17 @@ public class PhieuBaoHanhGUI extends JPanel {
         for (PhieuBaoHanhDTO p : new PhieuBaoHanhBLL().getAll()) {
             KhachHangDTO kh = new KhachHangBLL().getKhachHangById(p.getMaKH());
             boolean match = switch (type) {
-                case "Mã Phiếu BH" -> p.getMaPhieuBH()==Integer.parseInt(keyword) && (!keyword.isEmpty());
-                case "Tên/SDT Khách Hàng" -> kh.getHoTen().toLowerCase().contains(keyword) || kh.getSdt().contains(keyword);
+                case "Mã Phiếu BH" -> p.getMaPhieuBH() == Integer.parseInt(keyword) && (!keyword.isEmpty());
+                case "Tên/SDT Khách Hàng" ->
+                    kh.getHoTen().toLowerCase().contains(keyword) || kh.getSdt().contains(keyword);
                 case "IMEI" -> new ChiTietPhieuBaoHanhBLL().getCTBaoHanhByMaPhieuBH(p.getMaPhieuBH()).stream()
                         .anyMatch(ct -> ct.getMaIMEI().toLowerCase().contains(keyword));
-                default -> p.getMaPhieuBH()==Integer.parseInt(keyword)
+                default -> p.getMaPhieuBH() == Integer.parseInt(keyword)
                         || kh.getHoTen().toLowerCase().contains(keyword)
                         || kh.getSdt().contains(keyword);
             };
-            if (match) result.add(p);
+            if (match)
+                result.add(p);
         }
         updatePhieuBHTable(result);
     }

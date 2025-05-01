@@ -4,7 +4,6 @@
  */
 package DAO;
 
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,19 +12,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import DTO.PhieuBaoHanhDTO;
-import java.sql.Date;
 import java.time.LocalDate;
 import util.JdbcUtil;
+
 /**
  *
  * @author thaoh
  */
 public class PhieuBaoHanhDAO {
-// 
+    //
     public boolean add(PhieuBaoHanhDTO BaoHanh) {
-        String query = "INSERT INTO phieubaohanh (maPhieuBH,ngayLap,maKhachHang,MaNhanVien,ghiChu,trangThai) VALUES (?, ?, ?, ?, ?, ?)"; 
+        String query = "INSERT INTO phieubaohanh (maPhieuBH,ngayLap,maKhachHang,MaNhanVien,ghiChu,trangThai) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection conn = JdbcUtil.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
+                PreparedStatement stmt = conn.prepareStatement(query)) {
 
             stmt.setInt(1, BaoHanh.getMaPhieuBH());
             stmt.setDate(2, java.sql.Date.valueOf(BaoHanh.getNgayLap()));
@@ -41,13 +40,12 @@ public class PhieuBaoHanhDAO {
         return false; // Thêm thất bại
     }
 
-    
     public boolean update(PhieuBaoHanhDTO BaoHanh) {
         String query = "UPDATE phieubaohanh SET ngayLap = ?, maKhachHang = ?, maNhanVien = ?,ghiChu = ? WHERE maPhieuBH = ? AND trangThai = 1";
         try (Connection conn = JdbcUtil.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
+                PreparedStatement stmt = conn.prepareStatement(query)) {
 
-            stmt.setDate(1,java.sql.Date.valueOf(BaoHanh.getNgayLap()));
+            stmt.setDate(1, java.sql.Date.valueOf(BaoHanh.getNgayLap()));
             stmt.setInt(2, BaoHanh.getMaKH());
             stmt.setInt(3, BaoHanh.getMaNhanVien());
             stmt.setString(4, BaoHanh.getGhiChu());
@@ -61,11 +59,10 @@ public class PhieuBaoHanhDAO {
         return false;
     }
 
-    
     public boolean delete(int maPhieuBH) {
         String query = "UPDATE phieubaohanh SET trangThai = 0 WHERE maPhieuBH = ?";
         try (Connection conn = JdbcUtil.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
+                PreparedStatement stmt = conn.prepareStatement(query)) {
 
             stmt.setInt(1, maPhieuBH);
             return stmt.executeUpdate() > 0; // Trả về true nếu xóa mềm thành công
@@ -79,7 +76,7 @@ public class PhieuBaoHanhDAO {
     public PhieuBaoHanhDTO getPhieuBaoHanhById(int maPhieuBH) {
         String query = "SELECT * FROM phieubaohanh WHERE maPhieuBH = ? AND trangThai = 1";
         try (Connection conn = JdbcUtil.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
+                PreparedStatement stmt = conn.prepareStatement(query)) {
 
             stmt.setInt(1, maPhieuBH);
             try (ResultSet rs = stmt.executeQuery()) {
@@ -88,7 +85,7 @@ public class PhieuBaoHanhDAO {
                     int maKH = rs.getInt("maKhachHang");
                     int MaNhanVien = rs.getInt("maNhanVien");
                     String ghiChu = rs.getString("ghiChu");
-                    return new PhieuBaoHanhDTO(maPhieuBH, ngayLap, maKH, MaNhanVien, ghiChu,1);
+                    return new PhieuBaoHanhDTO(maPhieuBH, ngayLap, maKH, MaNhanVien, ghiChu, 1);
                 }
             }
         } catch (SQLException e) {
@@ -102,8 +99,8 @@ public class PhieuBaoHanhDAO {
         List<PhieuBaoHanhDTO> BaoHanhList = new ArrayList<>();
         String query = "SELECT * FROM phieubaohanh WHERE trangThai = 1";
         try (Connection conn = JdbcUtil.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query);
-             ResultSet rs = stmt.executeQuery()) {
+                PreparedStatement stmt = conn.prepareStatement(query);
+                ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
                 int maPhieuBH = rs.getInt("maPhieuBH");
@@ -113,19 +110,20 @@ public class PhieuBaoHanhDAO {
                 String ghiChu = rs.getString("ghiChu");
                 int trangThai = rs.getInt("trangThai");
 
-                BaoHanhList.add(new PhieuBaoHanhDTO(maPhieuBH,ngayLap, maKH, MaNhanVien,ghiChu,trangThai));
+                BaoHanhList.add(new PhieuBaoHanhDTO(maPhieuBH, ngayLap, maKH, MaNhanVien, ghiChu, trangThai));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return BaoHanhList;
     }
+
     public List<PhieuBaoHanhDTO> getAllAbsolute() {
         List<PhieuBaoHanhDTO> BaoHanhList = new ArrayList<>();
         String query = "SELECT * FROM phieubaohanh";
         try (Connection conn = JdbcUtil.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query);
-             ResultSet rs = stmt.executeQuery()) {
+                PreparedStatement stmt = conn.prepareStatement(query);
+                ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
                 int maPhieuBH = rs.getInt("maPhieuBH");
@@ -135,12 +133,12 @@ public class PhieuBaoHanhDAO {
                 String ghiChu = rs.getString("ghiChu");
                 int trangThai = rs.getInt("trangThai");
 
-                BaoHanhList.add(new PhieuBaoHanhDTO(maPhieuBH,ngayLap, maKH, MaNhanVien,ghiChu,trangThai));
+                BaoHanhList.add(new PhieuBaoHanhDTO(maPhieuBH, ngayLap, maKH, MaNhanVien, ghiChu, trangThai));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return BaoHanhList;
     }
-   
+
 }

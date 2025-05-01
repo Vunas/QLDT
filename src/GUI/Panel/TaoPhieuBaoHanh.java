@@ -4,7 +4,6 @@ import BLL.BUS.*;
 import DTO.*;
 import GUI.Frame.Main;
 import GUI.Panel.InputType.*;
-import GUI.pages.HoaDonGUI;
 import GUI.pages.PhieuBaoHanhGUI;
 
 import javax.swing.*;
@@ -41,7 +40,7 @@ public class TaoPhieuBaoHanh extends JPanel {
 
         maphieu = new InputText("Mã phiếu BH");
         maphieu.setEditable(false);
-        maphieu.setText(new PhieuBaoHanhBLL().generateNewId()+"");
+        maphieu.setText(new PhieuBaoHanhBLL().generateNewId() + "");
 
         nhanvien = new InputText("Nhân viên lập");
         nhanvien.setEditable(false);
@@ -52,9 +51,7 @@ public class TaoPhieuBaoHanh extends JPanel {
         cbxHoaDon = new JComboBox<>();
         for (HoaDonDTO hd : new HoaDonBLL().getAllHoaDon()) {
             List<ChiTietHoaDonDTO> ctList = new ChiTietHoaDonBLL().getChiTietTheoMaHoaDon(hd.getMaHoaDon());
-            boolean ChuaCoBaoHanh = ctList.stream().anyMatch(ct ->
-                    ct.getMaBaoHanh() == 0
-            );
+            boolean ChuaCoBaoHanh = ctList.stream().anyMatch(ct -> ct.getMaBaoHanh() == 0);
             if (ChuaCoBaoHanh) {
                 cbxHoaDon.addItem(hd.getMaHoaDon());
             }
@@ -69,7 +66,7 @@ public class TaoPhieuBaoHanh extends JPanel {
         topPanel.add(row2);
 
         // Table setup
-        String[] header = {"Tên SP", "IMEI", "RAM", "ROM", "Chip", "TGBH (tháng)", "Ngày bắt đầu", "Ngày kết thúc"};
+        String[] header = { "Tên SP", "IMEI", "RAM", "ROM", "Chip", "TGBH (tháng)", "Ngày bắt đầu", "Ngày kết thúc" };
         model = new DefaultTableModel(header, 0);
         table = new JTable(model);
         table.setRowHeight(30);
@@ -86,10 +83,10 @@ public class TaoPhieuBaoHanh extends JPanel {
 
         // Bottom panel
         JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 10));
-        
+
         btnThemSanPham = new ButtonCustom("Chọn SP từ HĐ", "success", 14);
         btnThemSanPham.addActionListener(e -> chonSanPhamTheoHoaDon());
-//        btnThemSanPham.setEnabled(cbxHoaDon.getItemCount() > 0);
+        // btnThemSanPham.setEnabled(cbxHoaDon.getItemCount() > 0);
 
         btnTaoPhieu = new ButtonCustom("Tạo phiếu BH", "success", 14);
         btnTaoPhieu.addActionListener(e -> taoPhieuBaoHanh());
@@ -113,7 +110,7 @@ public class TaoPhieuBaoHanh extends JPanel {
         List<ChiTietHoaDonDTO> listCT = new ChiTietHoaDonBLL().getChiTietTheoMaHoaDon(maHD);
 
         for (ChiTietHoaDonDTO ct : listCT) {
-            if(ct.getMaBaoHanh() == 0){
+            if (ct.getMaBaoHanh() == 0) {
                 int maSP = ct.getMaSanPham();
                 SanPhamDTO sp = new SanPhamBLL().getSanPhamById(maSP);
                 float thoiGianBH = sp.getThoiGianBaoHanh();
@@ -123,16 +120,15 @@ public class TaoPhieuBaoHanh extends JPanel {
 
                     LocalDate batDau = LocalDate.now();
                     LocalDate ketThuc = batDau.plusMonths((long) thoiGianBH);
-                    model.addRow(new Object[]{
-                        sp.getTenSP(), imei,
-                        sp.getRam(), sp.getRom(), sp.getChip(), thoiGianBH,
-                        batDau, ketThuc
+                    model.addRow(new Object[] {
+                            sp.getTenSP(), imei,
+                            sp.getRam(), sp.getRom(), sp.getChip(), thoiGianBH,
+                            batDau, ketThuc
                     });
                 }
             }
         }
     }
-
 
     public void taoPhieuBaoHanh() {
         Integer maHD = (Integer) cbxHoaDon.getSelectedItem();
@@ -167,11 +163,10 @@ public class TaoPhieuBaoHanh extends JPanel {
                 Date d2 = Date.from(ketThuc.atStartOfDay(ZoneId.systemDefault()).toInstant());
 
                 ChiTietPhieuBaoHanhDTO ct = new ChiTietPhieuBaoHanhDTO(
-                    new ChiTietPhieuBaoHanhBLL().generateNewId(),
-                    maPBH, maSP, imei, d1, d2, 1, ""
-                );
+                        new ChiTietPhieuBaoHanhBLL().generateNewId(),
+                        maPBH, maSP, imei, d1, d2, 1, "");
                 new ChiTietPhieuBaoHanhBLL().add(ct);
-                new ChiTietSanPhamBLL().capNhatMaBaoHanh(imei,maPBH);
+                new ChiTietSanPhamBLL().capNhatMaBaoHanh(imei, maPBH);
             }
             new ChiTietHoaDonBLL().capNhatMaBaoHanh(maHD, maPBH);
             JOptionPane.showMessageDialog(this, "Tạo phiếu bảo hành thành công!");

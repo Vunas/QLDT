@@ -52,6 +52,7 @@ public class QuyenDiaLog extends JDialog {
                 { "Nhân Viên", false, false, false, false },
                 { "Tài Khoản", false, false, false, false },
                 { "Bảo Hành", false, false, false, false },
+                { "Khuyến Mãi", false, false, false, false },
                 { "Phân Quyền", false, false, false, false },
                 { "Thống kê", false,false, false, false}
         };
