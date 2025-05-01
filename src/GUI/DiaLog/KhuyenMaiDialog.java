@@ -37,7 +37,7 @@ public class KhuyenMaiDialog extends JDialog {
         JLabel lbContent = new JLabel(title);
         lbContent.setFont(new Font(getName(), Font.BOLD, 20));
         lbContent.setOpaque(true);
-        lbContent.setBackground(new Color(100, 149, 237)); // SteelBlue background
+        lbContent.setBackground(new Color(100, 149, 237));
         lbContent.setForeground(Color.WHITE);
         lbContent.setBorder(new EmptyBorder(10, 10, 10, 10));
         JPanel pnlContent = new JPanel();

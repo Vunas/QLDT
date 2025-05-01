@@ -41,7 +41,7 @@ import GUI.Panel.TopNav;
 
 public class ThongKeGUI extends JPanel {
     TopNav topNav;
-    ThongKeDTO thongKeDTO;
+    // ThongKeDTO thongKeDTO;
     List<JButton> itemButtons;
     public int tong_doanh_thu;
     public int tong_san_pham;
@@ -52,8 +52,13 @@ public class ThongKeGUI extends JPanel {
     public ThongKeGUI(TopNav topNav) {
         this.setLayout(new BorderLayout());
         itemButtons = new ArrayList<>();
+        initThongKe();
+    }
+
+    public void initThongKe() {
         DisplayDashboardCards();
     }
+    
 
     public void DisplayDashboardCards() {
         ThongKeDao thongKeDao = new ThongKeDao();
