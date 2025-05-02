@@ -8,10 +8,15 @@ import BLL.BUS.ChiTietHoaDonBLL;
 import BLL.BUS.ChiTietSanPhamBLL;
 import BLL.BUS.HoaDonBLL;
 import BLL.BUS.KhachHangBLL;
+import BLL.BUS.KhuyenMaiBLL;
+import BLL.BUS.NhanVienBLL;
+import BLL.BUS.PhieuNhapBLL;
 import BLL.BUS.SanPhamBLL;
 import DTO.ChiTietHoaDonDTO;
 import DTO.HoaDonDTO;
 import DTO.KhachHangDTO;
+import DTO.KhuyenMaiDTO;
+import DTO.NhanVienDTO;
 import DTO.SanPhamDTO;
 import DTO.TaiKhoanDTO;
 import GUI.Panel.InputType.InputText;
@@ -41,12 +46,12 @@ public class HoaDonDiaLog extends JDialog{
     JScrollPane scrollthongtinchitiet,scrollchitietimei;
     DefaultTableModel dftmthongtinchitiet,dftmchitietimei;
     JLabel title;
-    InputText mahoadon,nhanviennhap,khachhang;
+    InputText mahoadon,nhanviennhap,khachhang,khuyenmai;
     int maHD;
     
-    public HoaDonDiaLog(JFrame main, int maPN ) {
+    public HoaDonDiaLog(JFrame main, int maHD ) {
         super(main,"",true);
-        this.maHD = maPN;
+        this.maHD = maHD;
         initComponent();
         this.setLocationRelativeTo(main);
         loaddata();
@@ -64,7 +69,7 @@ public class HoaDonDiaLog extends JDialog{
         top.setBackground(new Color(22, 122, 198));
         top.setPreferredSize(new Dimension(400, 60));
 
-        title = new JLabel("CHI TIẾT PHIẾU NHẬP");
+        title = new JLabel("CHI TIẾT HÓA ĐƠN");
         title.setFont(new Font("Segoe UI", Font.BOLD, 20));
         title.setForeground(Color.WHITE);
         title.setHorizontalAlignment(JLabel.CENTER);
@@ -130,10 +135,13 @@ public class HoaDonDiaLog extends JDialog{
         nhanviennhap.setEditable(false);
         khachhang = new InputText("KHÁCH HÀNG");
         khachhang.setEditable(false);
+        khuyenmai = new InputText("KHUYẾN MÃI");
+        khuyenmai.setEditable(false);
         
         center_top.add(mahoadon);
         center_top.add(nhanviennhap);
         center_top.add(khachhang);
+        center_top.add(khuyenmai);
 
         center.add(center_top,BorderLayout.NORTH);
         center.add(center_mid,BorderLayout.CENTER);
@@ -147,11 +155,19 @@ public class HoaDonDiaLog extends JDialog{
     
      public void loaddata(){
         mahoadon.setText(String.valueOf(maHD));
-        TaiKhoanDTO taiKhoan = TaiKhoanDTO.getTaiKhoanHienTai();
-        nhanviennhap.setText(taiKhoan.getTenDangNhap());
+        HoaDonDTO hoadon = new HoaDonBLL().getHoaDonById(maHD);
+        NhanVienDTO nhanvien = new NhanVienBLL().getNhanVienById(hoadon.getMaNhanVien());
+        nhanviennhap.setText(nhanvien.getHoTen());
         HoaDonDTO hddto =  new HoaDonBLL().getHoaDonById(maHD);   
-         KhachHangDTO khdto = new KhachHangBLL().getKhachHangById(hddto.getMaKH());
+        KhachHangDTO khdto = new KhachHangBLL().getKhachHangById(hddto.getMaKH());
         khachhang.setText(khdto.getHoTen());
+        KhuyenMaiDTO km = new KhuyenMaiBLL().getKhuyenMaiByID(hoadon.getMakhuyenmai());
+        if (km != null) {
+            String tenKM = km.getTenKM();
+            khuyenmai.setText(tenKM);
+        } else {
+            khuyenmai.setText("Chưa Áp Dụng");
+        }
         List<ChiTietHoaDonDTO> list = new ChiTietHoaDonBLL().getChiTietTheoMaHoaDon(maHD); 
         for(ChiTietHoaDonDTO cthd : list){
             int masp = cthd.getMaSanPham();

@@ -7,10 +7,12 @@ package GUI.DiaLog;
 import BLL.BUS.ChiTietPhieuNhapBLL;
 import BLL.BUS.ChiTietSanPhamBLL;
 import BLL.BUS.NhaCungCapBLL;
+import BLL.BUS.NhanVienBLL;
 import BLL.BUS.PhieuNhapBLL;
 import BLL.BUS.SanPhamBLL;
 import DTO.ChiTietPhieuNhapDTO;
 import DTO.NhaCungCapDTO;
+import DTO.NhanVienDTO;
 import DTO.PhieuNhapDTO;
 import DTO.SanPhamDTO;
 import DTO.TaiKhoanDTO;
@@ -152,8 +154,9 @@ public class PhieuNhapDiaLog extends JDialog{
     
     public void loaddata(){
         maphieunhap.setText(String.valueOf(maPN));
-        TaiKhoanDTO taiKhoan = TaiKhoanDTO.getTaiKhoanHienTai();
-        nhanviennhap.setText(taiKhoan.getTenDangNhap());
+        PhieuNhapDTO phieunhap = new PhieuNhapBLL().getPhieuNhapById(maPN);
+        NhanVienDTO nhanvien = new NhanVienBLL().getNhanVienById(phieunhap.getMaNhanVien());
+        nhanviennhap.setText(nhanvien.getHoTen());
         PhieuNhapDTO pndto =  new PhieuNhapBLL().getPhieuNhapById(maPN);   
         NhaCungCapDTO nccdto = new NhaCungCapBLL().getNhaCungCapById(pndto.getMaNhaCungCap());
         nhacungcap.setText(nccdto.getTen());

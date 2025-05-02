@@ -7,12 +7,14 @@ package GUI.Panel;
 import BLL.BUS.ChiTietPhieuNhapBLL;
 import BLL.BUS.ChiTietSanPhamBLL;
 import BLL.BUS.NhaCungCapBLL;
+import BLL.BUS.NhanVienBLL;
 import BLL.BUS.PhieuNhapBLL;
 import BLL.BUS.SanPhamBLL;
 import DAO.PhieuNhapDao;
 import DTO.ChiTietPhieuNhapDTO;
 import DTO.ChiTietSanPhamDTO;
 import DTO.NhaCungCapDTO;
+import DTO.NhanVienDTO;
 import DTO.PhieuNhapDTO;
 import DTO.SanPhamDTO;
 import DTO.TaiKhoanDTO;
@@ -526,7 +528,8 @@ public class TaoPhieuNhap extends JPanel{
     
     public void setThongPhieuNhap(){
         TaiKhoanDTO taiKhoan = TaiKhoanDTO.getTaiKhoanHienTai();
-        nhanviennhaptxt.setText(taiKhoan.getTenDangNhap());
+        NhanVienDTO nhanvien = new NhanVienBLL().getNhanVienById(taiKhoan.getMaNV());
+        nhanviennhaptxt.setText(nhanvien.getHoTen());
         int maphieunhap = new PhieuNhapBLL().getMaPhieuNhap();
         maphieunhaptxt.setText(String.valueOf(maphieunhap));
     }

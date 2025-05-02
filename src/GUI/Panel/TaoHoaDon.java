@@ -355,9 +355,21 @@ public class TaoHoaDon extends JPanel {
         sua.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                selectedImei.clear();
+                int soluong = 0;
+
+                for (JCheckBox cb : checkBoxes) {
+                    if (cb.isSelected()) {
+                        selectedImei.add(cb.getText());
+                        soluong++;
+                    }
+                }
+
+                soluongtxt.setText(String.valueOf(soluong));
                 suasp();
             }
         });
+
 
         xoa = new ButtonCustom("Xóa", "danger", 14);
         xoa.setEnabled(false);
@@ -619,6 +631,7 @@ public class TaoHoaDon extends JPanel {
         TaiKhoanDTO taiKhoan = TaiKhoanDTO.getTaiKhoanHienTai();
         hoadon.setMaKH(khachhang.getMaKH());
         hoadon.setMaNhanVien(taiKhoan.getMaNV());
+        hoadon.setMakhuyenmai(Integer.parseInt(makhuyenmai.getText()));
         LocalDate today = LocalDate.now();
         hoadon.setNgayXuat(today);
         new HoaDonBLL().addHoaDon(hoadon);
