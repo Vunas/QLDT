@@ -60,7 +60,7 @@ public class HoaDonGUI extends JPanel {
 
     private void initComponent(Main main) {
         this.main = main;
-        String[] itemFindFor = { "Tất Cả", "Mã Hóa Đơn", "Khách Hàng", "Nhân Viên Nhập" };
+        String[] itemFindFor = { "Tất Cả", "Mã Hóa Đơn", "Khách Hàng", "Nhân Viên Lập" };
 
         topNav = new TopNav();
         topNav.setItemComboBox(itemFindFor);

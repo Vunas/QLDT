@@ -26,6 +26,7 @@ public class Main extends JFrame {
         this.setLayout(new BorderLayout());
         this.setTitle("Hệ thống quản lý ");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setResizable(false);
 
         sideBar= new SideBar(this,taiKhoanDTO);
         this.add(sideBar,BorderLayout.WEST);
