@@ -7,9 +7,11 @@ package GUI.pages;
 import BLL.BUS.ChiTietHoaDonBLL;
 import BLL.BUS.HoaDonBLL;
 import BLL.BUS.KhachHangBLL;
+import BLL.BUS.NhanVienBLL;
 import DTO.ChiTietHoaDonDTO;
 import DTO.HoaDonDTO;
 import DTO.KhachHangDTO;
+import DTO.NhanVienDTO;
 import DTO.TaiKhoanDTO;
 import GUI.DiaLog.HoaDonDiaLog;
 import GUI.Frame.Main;
@@ -185,8 +187,7 @@ public class HoaDonGUI extends JPanel {
                 // Lọc dữ liệu theo tiêu chí tìm kiếm
                 for (HoaDonDTO hd : list) {
                     KhachHangDTO tenKH = new KhachHangBLL().getKhachHangById(hd.getMaKH());
-                    TaiKhoanDTO taiKhoan = TaiKhoanDTO.getTaiKhoanHienTai(); // Giả sử phương thức này trả về tài khoản
-                                                                             // hiện tại
+                    NhanVienDTO nhanvien = new NhanVienBLL().getNhanVienById(hd.getMaNhanVien());
 
                     boolean isMatch = false;
                     switch (type.toLowerCase()) {
@@ -194,7 +195,7 @@ public class HoaDonGUI extends JPanel {
                             // Lọc tất cả các tiêu chí
                             if (String.valueOf(hd.getMaHoaDon()).toLowerCase().contains(keyword.toLowerCase()) ||
                                     tenKH.getHoTen().toLowerCase().contains(keyword.toLowerCase()) ||
-                                    taiKhoan.getTenDangNhap().toLowerCase().contains(keyword.toLowerCase())) {
+                                    nhanvien.getHoTen().toLowerCase().contains(keyword.toLowerCase())) {
                                 isMatch = true;
                             }
                             break;
@@ -209,7 +210,7 @@ public class HoaDonGUI extends JPanel {
                             }
                             break;
                         case "nhân viên nhập":
-                            if (taiKhoan.getTenDangNhap().toLowerCase().contains(keyword.toLowerCase())) {
+                            if (nhanvien.getHoTen().toLowerCase().contains(keyword.toLowerCase())) {
                                 isMatch = true;
                             }
                             break;
@@ -225,14 +226,14 @@ public class HoaDonGUI extends JPanel {
                 tbmtb1.setRowCount(0); // Xóa dữ liệu cũ trên bảng
                 for (HoaDonDTO hd : filteredList) {
                     KhachHangDTO kh = new KhachHangBLL().getKhachHangById(hd.getMaKH());
-                    TaiKhoanDTO taiKhoan = TaiKhoanDTO.getTaiKhoanHienTai();
+                    NhanVienDTO nhanvien = new NhanVienBLL().getNhanVienById(hd.getMaNhanVien());
 
                     int tongtien = 0;
                     List<ChiTietHoaDonDTO> cthd = new ChiTietHoaDonBLL().getChiTietTheoMaHoaDon(hd.getMaHoaDon());
                     for (ChiTietHoaDonDTO ct : cthd) {
                         tongtien += ct.getDonGia() * ct.getSoLuong();
                     }
-                    tbmtb1.addRow(new Object[] { hd.getMaHoaDon(), kh.getHoTen(), taiKhoan.getTenDangNhap(),
+                    tbmtb1.addRow(new Object[] { hd.getMaHoaDon(), kh.getHoTen(), nhanvien.getHoTen(),
                             hd.getNgayXuat(), tongtien });
                 }
             }
@@ -245,14 +246,14 @@ public class HoaDonGUI extends JPanel {
         tbmtb1.setRowCount(0);
         for (HoaDonDTO pn : list) {
             KhachHangDTO kh = new KhachHangBLL().getKhachHangById(pn.getMaKH());
-            TaiKhoanDTO taiKhoan = TaiKhoanDTO.getTaiKhoanHienTai();
+            NhanVienDTO nhanvien = new NhanVienBLL().getNhanVienById(pn.getMaNhanVien());
 
             int tongtien = 0;
             List<ChiTietHoaDonDTO> ctpn = new ChiTietHoaDonBLL().getChiTietTheoMaHoaDon(pn.getMaHoaDon());
             for (ChiTietHoaDonDTO ct : ctpn) {
                 tongtien += ct.getDonGia() * ct.getSoLuong();
             }
-            tbmtb1.addRow(new Object[] { pn.getMaHoaDon(), kh.getHoTen(), taiKhoan.getTenDangNhap(), pn.getNgayXuat(),
+            tbmtb1.addRow(new Object[] { pn.getMaHoaDon(), kh.getHoTen(), nhanvien.getHoTen(), pn.getNgayXuat(),
                     tongtien });
         }
     }

@@ -8,10 +8,13 @@ import BLL.BUS.ChiTietHoaDonBLL;
 import BLL.BUS.ChiTietSanPhamBLL;
 import BLL.BUS.HoaDonBLL;
 import BLL.BUS.KhachHangBLL;
+import BLL.BUS.NhanVienBLL;
+import BLL.BUS.PhieuNhapBLL;
 import BLL.BUS.SanPhamBLL;
 import DTO.ChiTietHoaDonDTO;
 import DTO.HoaDonDTO;
 import DTO.KhachHangDTO;
+import DTO.NhanVienDTO;
 import DTO.SanPhamDTO;
 import DTO.TaiKhoanDTO;
 import GUI.Panel.InputType.InputText;
@@ -44,9 +47,9 @@ public class HoaDonDiaLog extends JDialog{
     InputText mahoadon,nhanviennhap,khachhang;
     int maHD;
     
-    public HoaDonDiaLog(JFrame main, int maPN ) {
+    public HoaDonDiaLog(JFrame main, int maHD ) {
         super(main,"",true);
-        this.maHD = maPN;
+        this.maHD = maHD;
         initComponent();
         this.setLocationRelativeTo(main);
         loaddata();
@@ -147,8 +150,9 @@ public class HoaDonDiaLog extends JDialog{
     
      public void loaddata(){
         mahoadon.setText(String.valueOf(maHD));
-        TaiKhoanDTO taiKhoan = TaiKhoanDTO.getTaiKhoanHienTai();
-        nhanviennhap.setText(taiKhoan.getTenDangNhap());
+        HoaDonDTO hoadon = new HoaDonBLL().getHoaDonById(maHD);
+        NhanVienDTO nhanvien = new NhanVienBLL().getNhanVienById(hoadon.getMaNhanVien());
+        nhanviennhap.setText(nhanvien.getHoTen());
         HoaDonDTO hddto =  new HoaDonBLL().getHoaDonById(maHD);   
          KhachHangDTO khdto = new KhachHangBLL().getKhachHangById(hddto.getMaKH());
         khachhang.setText(khdto.getHoTen());

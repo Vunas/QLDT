@@ -2,9 +2,11 @@ package GUI.pages;
 
 import BLL.BUS.ChiTietPhieuNhapBLL;
 import BLL.BUS.NhaCungCapBLL;
+import BLL.BUS.NhanVienBLL;
 import BLL.BUS.PhieuNhapBLL;
 import DTO.ChiTietPhieuNhapDTO;
 import DTO.NhaCungCapDTO;
+import DTO.NhanVienDTO;
 import DTO.PhieuNhapDTO;
 import DTO.TaiKhoanDTO;
 import GUI.DiaLog.PhieuNhapDiaLog;
@@ -167,11 +169,11 @@ public class PhieuNhapGUI extends JPanel {
         // Tạo danh sách kết quả để lưu khách hàng phù hợp
         List<PhieuNhapDTO> filteredList = new ArrayList<>();
         NhaCungCapDTO tenNCC;
-        TaiKhoanDTO taikhoanhientai = TaiKhoanDTO.getTaiKhoanHienTai();
         
         // Lọc dữ liệu theo tiêu chí tìm kiếm
         for (PhieuNhapDTO pn : list) {
             tenNCC = new NhaCungCapBLL().getNhaCungCapById(pn.getMaNhaCungCap());
+            NhanVienDTO nhanvien = new NhanVienBLL().getNhanVienById(pn.getMaNhanVien());
             
             boolean isMatch = false;
             switch (type.toLowerCase()) {
@@ -179,7 +181,7 @@ public class PhieuNhapGUI extends JPanel {
                     // Lọc tất cả các tiêu chí
                     if (String.valueOf(pn.getMaPhieuNhap()).toLowerCase().contains(keyword.toLowerCase()) ||
                         tenNCC.getTen().toLowerCase().contains(keyword.toLowerCase()) ||
-                        taikhoanhientai.getTenDangNhap().toLowerCase().contains(keyword.toLowerCase())) {
+                        nhanvien.getHoTen().toLowerCase().contains(keyword.toLowerCase())) {
                         isMatch = true;
                     }
                     break;
@@ -194,7 +196,7 @@ public class PhieuNhapGUI extends JPanel {
                     }
                     break;
                 case "nhân viên nhập":
-                    if (taikhoanhientai.getTenDangNhap().toLowerCase().contains(keyword.toLowerCase())) {
+                    if (nhanvien.getHoTen().toLowerCase().contains(keyword.toLowerCase())) {
                         isMatch = true;
                     }
                     break;
@@ -210,14 +212,14 @@ public class PhieuNhapGUI extends JPanel {
         tbmtb1.setRowCount(0); // Xóa dữ liệu cũ trên bảng
         for (PhieuNhapDTO pn : filteredList) {
             NhaCungCapDTO ncc = new NhaCungCapBLL().getNhaCungCapById(pn.getMaNhaCungCap());
-            TaiKhoanDTO taiKhoan = TaiKhoanDTO.getTaiKhoanHienTai();
+            NhanVienDTO nhanvien = new NhanVienBLL().getNhanVienById(pn.getMaNhanVien());
             
             int tongtien = 0;
             List<ChiTietPhieuNhapDTO> ctpn = new ChiTietPhieuNhapBLL().getChiTietPhieuNhapByPhieuNhap(pn.getMaPhieuNhap());
             for (ChiTietPhieuNhapDTO ct : ctpn) {
                 tongtien += ct.getDonGia() * ct.getSoLuong();
             }
-            tbmtb1.addRow(new Object[]{pn.getMaPhieuNhap(), ncc.getTen(), taiKhoan.getTenDangNhap(), pn.getNgayNhap(), tongtien});
+            tbmtb1.addRow(new Object[]{pn.getMaPhieuNhap(), ncc.getTen(), nhanvien.getHoTen(), pn.getNgayNhap(), tongtien});
         }
     }
 });
@@ -230,14 +232,15 @@ public class PhieuNhapGUI extends JPanel {
         tbmtb1.setRowCount(0);
         for (PhieuNhapDTO pn : list) {
             NhaCungCapDTO ncc = new NhaCungCapBLL().getNhaCungCapById(pn.getMaNhaCungCap());
-            TaiKhoanDTO taiKhoan = TaiKhoanDTO.getTaiKhoanHienTai();
+            NhanVienDTO nhanvien = new NhanVienBLL().getNhanVienById(pn.getMaNhanVien());
+            
             
             int tongtien = 0;
             List<ChiTietPhieuNhapDTO> ctpn = new ChiTietPhieuNhapBLL().getChiTietPhieuNhapByPhieuNhap(pn.getMaPhieuNhap());
             for (ChiTietPhieuNhapDTO ct : ctpn) {
                 tongtien += ct.getDonGia() * ct.getSoLuong();
             }
-            tbmtb1.addRow(new Object[]{pn.getMaPhieuNhap(), ncc.getTen(), taiKhoan.getTenDangNhap(), pn.getNgayNhap(), tongtien});
+            tbmtb1.addRow(new Object[]{pn.getMaPhieuNhap(), ncc.getTen(), nhanvien.getHoTen(), pn.getNgayNhap(), tongtien});
         }
     }
     
