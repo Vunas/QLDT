@@ -38,7 +38,7 @@ public class KhuyenMaiBLL {
     }
 
     public int generateNewId() {
-        return khuyenmai.getALLKhuyenMai().getLast().getMaKM() + 1;
+        return khuyenmai.getALLKhuyenMaiToAdd().getLast().getMaKM() + 1;
     }
 
     public List<KhuyenMaiDTO> getKhuyenMaiByFilter(String type) {

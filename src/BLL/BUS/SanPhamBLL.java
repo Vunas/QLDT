@@ -68,7 +68,7 @@ public class SanPhamBLL {
     }
 
     public int generateNewId() {
-        List<SanPhamDTO> list = sanPhamDao.getAllSanPham();
+        List<SanPhamDTO> list = sanPhamDao.getAllSanPhamToAdd();
         if (list.isEmpty()) {
             return 1;
         } else {

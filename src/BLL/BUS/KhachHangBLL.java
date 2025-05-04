@@ -77,7 +77,7 @@ public class KhachHangBLL {
     }
 
     public int generateNewId() {
-        return khachHangDao.getAllKhachHang().getLast().getMaKH() + 1;
+        return khachHangDao.getAllKhachHangToAdd().getLast().getMaKH() + 1;
     }
     
     public String[] getNameKhachHang(){

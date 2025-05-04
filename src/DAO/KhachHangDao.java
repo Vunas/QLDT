@@ -112,6 +112,30 @@ public class KhachHangDao {
         return khachHangList;
     }
     
+      public List<KhachHangDTO> getAllKhachHangToAdd() {
+        List<KhachHangDTO> khachHangList = new ArrayList<>();
+        String sql = "SELECT * FROM khach_hang"; // Chỉ lấy khách hàng còn hiệu lực
+        try (Connection connection = JdbcUtil.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql);
+             ResultSet resultSet = statement.executeQuery()) {
+
+            while (resultSet.next()) {
+                KhachHangDTO khachHang = new KhachHangDTO(
+                        resultSet.getInt("maKH"),
+                        resultSet.getString("ten"),
+                        resultSet.getString("diaChi"),
+                        resultSet.getString("sdt"),
+                        resultSet.getInt("trangThai")
+
+                );
+                khachHangList.add(khachHang);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return khachHangList;
+    }
+    
     public String[] getNameKhachHang(){
        List<String> listKH = new ArrayList<>();
         String sql = "SELECT ten FROM khach_hang WHERE trangthai = 1";

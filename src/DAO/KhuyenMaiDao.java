@@ -41,6 +41,36 @@ public class KhuyenMaiDao {
         }
         return list;
     }
+    
+    public List<KhuyenMaiDTO> getALLKhuyenMaiToAdd() {
+        List<KhuyenMaiDTO> list = new ArrayList<>();
+        String sql = """
+                    SELECT *
+                    FROM `khuyenmai`
+                    WHERE trangthai = 1
+                """;
+        try (Connection conn = JdbcUtil.getConnection();
+                PreparedStatement statement = conn.prepareStatement(sql);
+                ResultSet rs = statement.executeQuery();) {
+            while (rs.next()) {
+                int maKM = rs.getInt("makhuyenmai");
+                String tenKM = rs.getString("tenkhuyenmai");
+                int soLuong = rs.getInt("soluong");
+                Date start = rs.getDate("ngaybatdau");
+                Date end = rs.getDate("ngayketthuc");
+                int apDung = rs.getInt("apdungchohoadontu");
+                int giaTri = rs.getInt("giatri");
+                int hinhThuc = rs.getInt("hinhthuc");
+                String mota = rs.getString("mota");
+                KhuyenMaiDTO khuyenMaiDTO = new KhuyenMaiDTO(maKM, tenKM, soLuong, start, end, apDung, giaTri, hinhThuc,
+                        mota);
+                list.add(khuyenMaiDTO);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
 
     public boolean autoUpdateTrangThai(List<KhuyenMaiDTO> khuyenMaiDTO) {
         String sql = """

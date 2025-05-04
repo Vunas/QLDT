@@ -200,6 +200,36 @@ public class SanPhamDao {
         }
         return SanPhamList;
     }
+    
+    public List<SanPhamDTO> getAllSanPhamToAdd() {
+        List<SanPhamDTO> SanPhamList = new ArrayList<>();
+        String query = "SELECT * FROM SanPham WHERE trangThai = 1";
+        try (Connection conn = JdbcUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                int maSP = rs.getInt("maSP");
+                String tenSP = rs.getString("tenSP");
+                String img = rs.getString("img");
+                int soLuong = rs.getInt("soLuong");
+                int giaNhap = rs.getInt("giaNhap");
+                int giaBan = rs.getInt("giaBan");
+                String mauSac = rs.getString("mauSac");
+                String thuongHieu = rs.getString("thuongHieu");
+                int Ram = rs.getInt("Ram");
+                int Rom = rs.getInt("Rom");
+                String Chip = rs.getString("Chip");
+                float thoiGianBaoHanh = rs.getFloat("thoiGianBaoHanh");
+                int trangThai = rs.getInt("trangThai");
+
+                SanPhamList.add(new SanPhamDTO(maSP, tenSP, img, soLuong, giaNhap, giaBan, mauSac, thuongHieu, Ram, Rom, Chip, thoiGianBaoHanh, trangThai));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return SanPhamList;
+    }
 
     // Cập nhật số lượng sản phẩm
     public boolean updateSoluong(int maSP, int soluongMoi) {
