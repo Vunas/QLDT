@@ -82,8 +82,8 @@ public class TaoHoaDon extends JPanel {
     KhuyenMaiBLL khuyenMaiBLL;
 
     // List<List<String>> imeitheohang;
-    public TaoHoaDon(Main main,TopNav topNav) {
-        initComponent(main);
+    public TaoHoaDon(Main main, TopNav topNav) {
+        initComponent(main, topNav);
         loaddatasanpham();
         setThongTinHoaDon();
         chonsanphamdethem();
@@ -96,8 +96,9 @@ public class TaoHoaDon extends JPanel {
         return tong;
     }
 
-    public void initComponent(Main main) {
+    public void initComponent(Main main, TopNav topNav) {
         this.main = main;
+        this.topNav = topNav;
         this.setSize(600, 600);
         this.setLayout(new BorderLayout(2, 2));
 
@@ -144,7 +145,7 @@ public class TaoHoaDon extends JPanel {
                 if (makhuyenmai.getText() != null && !makhuyenmai.getText().isEmpty()) {
                     updateSoLuongKM();
                 }
-                main.setPanel(new HoaDonGUI(main,topNav));
+                main.setPanel(new HoaDonGUI(main, topNav));
             }
 
         });
@@ -370,7 +371,6 @@ public class TaoHoaDon extends JPanel {
                 suasp();
             }
         });
-
 
         xoa = new ButtonCustom("Xóa", "danger", 14);
         xoa.setEnabled(false);
