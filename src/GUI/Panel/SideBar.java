@@ -241,7 +241,6 @@ public class SideBar extends JPanel {
     }
 
     private void changePage(int i) {
-        System.out.println("da do dayaaaaaaaaaaaaaaaa");
         itemBars[thisPage].setBackground(Color.WHITE);
         itemBars[thisPage].iselected = false;
         thisPage = i;
