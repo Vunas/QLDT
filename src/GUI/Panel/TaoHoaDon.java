@@ -73,6 +73,7 @@ public class TaoHoaDon extends JPanel {
     SanPhamBLL sanphamBLL;
     PhieuNhapDao phieunhapDAO;
     Main main;
+    TopNav topNav;
     JPanel checkbox_imei_button;
     List<JCheckBox> checkBoxes;
     List<String> selectedImei = new ArrayList<>();
@@ -81,7 +82,7 @@ public class TaoHoaDon extends JPanel {
     KhuyenMaiBLL khuyenMaiBLL;
 
     // List<List<String>> imeitheohang;
-    public TaoHoaDon(Main main) {
+    public TaoHoaDon(Main main,TopNav topNav) {
         initComponent(main);
         loaddatasanpham();
         setThongTinHoaDon();
@@ -143,7 +144,7 @@ public class TaoHoaDon extends JPanel {
                 if (makhuyenmai.getText() != null && !makhuyenmai.getText().isEmpty()) {
                     updateSoLuongKM();
                 }
-                main.setPanel(new HoaDonGUI(main));
+                main.setPanel(new HoaDonGUI(main,topNav));
             }
 
         });

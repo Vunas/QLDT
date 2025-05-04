@@ -37,17 +37,17 @@ public class PhieuNhapGUI extends JPanel {
     private Main main;
 
 
-    public PhieuNhapGUI(Main main) {
-        initComponent(main);
+    public PhieuNhapGUI(Main main,TopNav topNav) {
+        initComponent(main,topNav);
         loaddata();
         chucNang();
     }
 
-    private void initComponent(Main main) {
+    private void initComponent(Main main,TopNav topNav) {
         this.main = main;
+        this.topNav = topNav;
         String[] itemFindFor = {"Tất Cả", "Mã Phiếu Nhập", "Nhà Cung Cấp", "Nhân Viên Nhập"};
         
-        topNav = new TopNav();
         topNav.setItemComboBox(itemFindFor);
         
         pnlBot = new JPanel(new BorderLayout());
@@ -101,7 +101,7 @@ public class PhieuNhapGUI extends JPanel {
     btn[0].addActionListener(new ActionListener(){
         @Override
         public void actionPerformed(ActionEvent e) {
-            main.setPanel(new TaoPhieuNhap(main));
+            main.setPanel(new TaoPhieuNhap(main,topNav));
         }
     });
      btn[3].addActionListener(new ActionListener(){

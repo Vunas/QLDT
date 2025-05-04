@@ -156,7 +156,7 @@ public class SideBar extends JPanel {
             @Override
             public void mousePressed(MouseEvent evt) {
                 changePage(3);
-                main.setPanel(new PhieuNhapGUI(main));
+                main.setPanel(new PhieuNhapGUI(main,topNav));
             }
         });
 
@@ -164,7 +164,7 @@ public class SideBar extends JPanel {
             @Override
             public void mousePressed(MouseEvent evt) {
                 changePage(4);
-                main.setPanel(new HoaDonGUI(main));
+                main.setPanel(new HoaDonGUI(main,topNav));
             }
         });
 

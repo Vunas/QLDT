@@ -52,17 +52,17 @@ public class HoaDonGUI extends JPanel {
     private JScrollPane scrtb1;
     private Main main;
 
-    public HoaDonGUI(Main main) {
-        initComponent(main);
+    public HoaDonGUI(Main main,TopNav topNav) {
+        initComponent(main,topNav);
         loaddata();
         chucNang();
     }
 
-    private void initComponent(Main main) {
+    private void initComponent(Main main,TopNav topNav) {
         this.main = main;
+        this.topNav = topNav;
         String[] itemFindFor = { "Tất Cả", "Mã Hóa Đơn", "Khách Hàng", "Nhân Viên Lập" };
 
-        topNav = new TopNav();
         topNav.setItemComboBox(itemFindFor);
 
         pnlBot = new JPanel(new BorderLayout());
@@ -115,7 +115,7 @@ public class HoaDonGUI extends JPanel {
         btn[0].addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                main.setPanel(new TaoHoaDon(main));
+                main.setPanel(new TaoHoaDon(main,topNav));
             }
         });
         btn[3].addActionListener(new ActionListener() {

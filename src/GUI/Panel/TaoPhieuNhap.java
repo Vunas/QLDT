@@ -65,12 +65,13 @@ public class TaoPhieuNhap extends JPanel{
      SanPhamBLL sanphamBLL;
      PhieuNhapDao phieunhapDAO;
      Main main;
+     TopNav topNav;
 
     public JLabel getTongTien() {
         return tongTien;
     }
 
-    public TaoPhieuNhap(Main main) {
+    public TaoPhieuNhap(Main main,TopNav topNav) {
         initComponent(main);
         loaddatasanpham();
         chonsanphamdethem();
@@ -123,7 +124,7 @@ public class TaoPhieuNhap extends JPanel{
                 themphieunhap();
                 themchitietphieunhap();
                 themchitietsanpham();
-                main.setPanel(new PhieuNhapGUI(main));
+                main.setPanel(new PhieuNhapGUI(main,topNav));
             }
            
        });
