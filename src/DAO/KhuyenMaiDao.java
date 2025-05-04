@@ -41,7 +41,7 @@ public class KhuyenMaiDao {
         }
         return list;
     }
-    
+
     public List<KhuyenMaiDTO> getALLKhuyenMaiToAdd() {
         List<KhuyenMaiDTO> list = new ArrayList<>();
         String sql = """
@@ -99,8 +99,8 @@ public class KhuyenMaiDao {
 
     public boolean addKhuyenMai(KhuyenMaiDTO khuyenMaiDTO) {
         String sql = """
-                INSERT INTO `khuyenmai`( `tenkhuyenmai`, `soluong`, `ngaybatdau`, `ngayketthuc`, `apdungchohoadontu`, `giatri`, `hinhthuc`)
-                VALUES (?, ?, ?, ?, ?, ?, ?)
+                INSERT INTO `khuyenmai`( `tenkhuyenmai`, `soluong`, `ngaybatdau`, `ngayketthuc`, `apdungchohoadontu`, `giatri`, `hinhthuc`, `mota` )
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
                 """;
         // LocalDate dayNow = LocalDate.now();
         try (Connection conn = JdbcUtil.getConnection();
@@ -112,6 +112,7 @@ public class KhuyenMaiDao {
             statement.setInt(5, khuyenMaiDTO.getApDungChoHoaDonTu());
             statement.setInt(6, khuyenMaiDTO.getGiaTri());
             statement.setInt(7, khuyenMaiDTO.getHinhThuc());
+            statement.setString(8, khuyenMaiDTO.getMota());
 
             return statement.executeUpdate() > 0;
         } catch (Exception e) {
@@ -136,9 +137,18 @@ public class KhuyenMaiDao {
 
     public boolean updateKhuyenMai(KhuyenMaiDTO khuyenMaiDTO) {
         String sql = """
-                    UPDATE khuyenmai SET makhuyenmai = ?, tenkhuyenmai = ?, soluong = ?, ngaybatdau = ?, ngayketthuc = ?, apdungchohoadontu = ?, giatri = ?, hinhthuc = ?
-                    WHERE makhuyenmai = ? AND trangthai = 1
-                """;
+        UPDATE khuyenmai SET makhuyenmai = ?, tenkhuyenmai = ?, soluong = ?,
+        ngaybatdau = ?, ngayketthuc = ?, apdungchohoadontu = ?, giatri = ?, hinhthuc
+        = ?, mota = ?
+        WHERE makhuyenmai = ? AND trangthai = 1
+        """;
+
+        // String sql = """
+        //                         UPDATE khuyenmai
+        //         SET makhuyenmai = ?, tenkhuyenmai = ?, soluong = ?, ngaybatdau = ?, ngayketthuc = ?, apdungchohoadontu = ?, giatri = ?, hinhthuc = ?, mota = ?
+        //         WHERE makhuyenmai = ? AND trangthai = 1
+
+        //                         """;
 
         try (Connection conn = JdbcUtil.getConnection();
                 PreparedStatement statement = conn.prepareStatement(sql)) {
@@ -150,7 +160,8 @@ public class KhuyenMaiDao {
             statement.setInt(6, khuyenMaiDTO.getApDungChoHoaDonTu());
             statement.setInt(7, khuyenMaiDTO.getGiaTri());
             statement.setInt(8, khuyenMaiDTO.getHinhThuc());
-            statement.setInt(9, khuyenMaiDTO.getMaKM());
+            statement.setString(9, khuyenMaiDTO.getMota());
+            statement.setInt(10, khuyenMaiDTO.getMaKM());
             return statement.executeUpdate() > 0;
         } catch (Exception e) {
             e.printStackTrace();
@@ -178,10 +189,10 @@ public class KhuyenMaiDao {
                     int apDung = rs.getInt("apdungchohoadontu");
                     int giaTri = rs.getInt("giatri");
                     int hinhThuc = rs.getInt("hinhthuc");
-                    khuyenMaiDTO = new KhuyenMaiDTO(ma, ten, soLuong, start, end, apDung, giaTri, hinhThuc, 1);
+                    String mota = rs.getString("mota");
+                    khuyenMaiDTO = new KhuyenMaiDTO(ma, ten, soLuong, start, end, apDung, giaTri, hinhThuc, 1, mota);
                 }
             } catch (Exception e) {
-
                 e.printStackTrace();
             }
 
@@ -211,8 +222,9 @@ public class KhuyenMaiDao {
                 int apDungChoHoaDonTu = rs.getInt("apdungchohoadontu");
                 int giaTri = rs.getInt("giatri");
                 int hinhThuc = rs.getInt("hinhthuc");
+                String mota = rs.getString("mota");
                 KhuyenMaiDTO khuyenMaiDTO = new KhuyenMaiDTO(maKM, tenKM, soLuong, ngayBD, ngayKT, apDungChoHoaDonTu,
-                        giaTri, hinhThuc, 1);
+                        giaTri, hinhThuc, 1, mota);
                 list.add(khuyenMaiDTO);
             }
         } catch (Exception e) {
@@ -241,8 +253,9 @@ public class KhuyenMaiDao {
                 int apDungChoHoaDonTu = rs.getInt("apdungchohoadontu");
                 int giaTri = rs.getInt("giatri");
                 int hinhThuc = rs.getInt("hinhthuc");
+                String mota = rs.getString("mota");
                 KhuyenMaiDTO khuyenMaiDTO = new KhuyenMaiDTO(maKM, tenKM, soLuong, ngayBD, ngayKT, apDungChoHoaDonTu,
-                        giaTri, hinhThuc, 1);
+                        giaTri, hinhThuc, 1, mota);
                 list.add(khuyenMaiDTO);
             }
         } catch (Exception e) {
