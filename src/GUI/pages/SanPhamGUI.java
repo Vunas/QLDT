@@ -1,5 +1,6 @@
 package GUI.pages;
 
+import BLL.BUS.ChiTietSanPhamBLL;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
@@ -323,7 +324,7 @@ public class SanPhamGUI extends JPanel {
                     sp.getTenSP(),
                     resizedIcon, // Display Image
                     sp.getImg(), // Hidden Path
-                    sp.getSoLuong(),
+                    new ChiTietSanPhamBLL().getSoLuongImeisBySanPham(sp.getMaSP()),
                     formatter.format(sp.getGiaNhap()),
                     formatter.format(sp.getGiaBan()),
                     sp.getMauSac(),
