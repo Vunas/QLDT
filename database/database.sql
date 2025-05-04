@@ -615,8 +615,8 @@ CREATE TABLE `quyen` (
 
 INSERT INTO `quyen` (`maQuyen`, `tenQuyen`, `danhSachChucNang`, `trangthai`) VALUES
 (1, 'admin', 'Sản Phẩm:rcfd /Thuộc tính:rcfd /Phiếu Nhập:rcfd /Hóa đơn:rcfd /Khách Hàng:rcfd /Nhà Cung Cấp:rcfd /Nhân Viên:rcfd /Tài Khoản:rcfd /Bảo Hành:rcfd /Khuyến Mãi:rcfd /Phân Quyền:rcfd /Thống kê:rcfd /', 1),
-(2, 'quản lý', 'Sản Phẩm:rcfd /Thuộc tính: /Phiếu Nhập: /Hóa đơn:rcfd /Khách Hàng:rcfd /Nhà Cung Cấp:rcfd /Nhân Viên: /Tài Khoản: /Bảo Hành: /Khuyến Mãi: /Phân Quyền: /Thống kê: /', 1),
-(3, 'nhân viên', 'Sản Phẩm:rcfd /Thuộc tính: /Phiếu Nhập: /Hóa đơn:rcfd /Khách Hàng: /Nhà Cung Cấp: /Nhân Viên: /Tài Khoản: /Bảo Hành: /Khuyến Mãi: /Phân Quyền: /Thống kê: /', 1);
+(2, 'quản lý', 'Sản Phẩm:rcfd /Thuộc tính: /Phiếu Nhập: /Hóa đơn:rcfd /Khách Hàng:rcfd /Nhà Cung Cấp:rcfd /Nhân Viên: /Tài Khoản: /Bảo Hành: /Khuyến Mãi: rcfd/Phân Quyền: /Thống kê: rcfd/', 1),
+(3, 'nhân viên', 'Sản Phẩm:rcfd /Thuộc tính: /Phiếu Nhập: /Hóa đơn:rcfd /Khách Hàng: /Nhà Cung Cấp: /Nhân Viên: /Tài Khoản: /Bảo Hành: /Khuyến Mãi: rcfd/Phân Quyền: /Thống kê: /', 1);
 
 -- --------------------------------------------------------
 
