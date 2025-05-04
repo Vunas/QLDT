@@ -49,11 +49,11 @@ public class TaiKhoanDialog extends JDialog {
         pnlMain.setPreferredSize(new Dimension(400, 300));
 
         // Input fields
-        tfMaNV = new InputChoose("Mã Nhân Viên",createTableNVChuaCoTK());
+        tfMaNV = new InputChoose("Mã Nhân Viên", createTableNVChuaCoTK());
         tfMaNV.setGhiChuChoDiaLog("*Chỉ những nhân vien chưa có tài khoản mới xuất thiên trong bảng này!");
         tfTenDangNhap = new InputText("Tên Đăng Nhập");
         tfMatKhau = new InputPassword("Mật Khẩu");
-        tfMaQuyen = new InputChoose("Mã Quyền",CreateTableQuyen());
+        tfMaQuyen = new InputChoose("Mã Quyền", CreateTableQuyen());
 
         if (taiKhoan != null) {
             tfMaNV.setText(String.valueOf(taiKhoan.getMaNV()));
@@ -108,23 +108,25 @@ public class TaiKhoanDialog extends JDialog {
     }
 
     public void validateTaiKhoan() {
+        TaiKhoanDTO tk = new TaiKhoanBLL().getTaiKhoanByTenDangNhap(tfTenDangNhap.getText());
         if (tfMaNV.getText() == null || tfMaNV.getText().isEmpty()) {
             isSaved = false;
             tfMaNV.setLblError("Mã nhân viên không được để trống.");
-        }else
+        } else
             tfMaNV.setLblError("");
         if (tfTenDangNhap.getText() == null || tfTenDangNhap.getText().isEmpty()) {
             isSaved = false;
             tfTenDangNhap.setLblError("Tên đăng nhập không được để trống.");
         } else {
-            if (new TaiKhoanBLL().getTaiKhoanByTenDangNhap(tfTenDangNhap.getText()) != null){
+            if (tk != null && !tfMaNV.getText().equals(String.valueOf(tk.getMaNV()))) {
                 isSaved = false;
                 tfTenDangNhap.setLblError("Tên đăng nhập bị trùng");
-            }else
+            } else
                 tfTenDangNhap.setLblError("");
         }
 
-        if (tfMatKhau.getPassWord() == null || tfMatKhau.getPassWord().isEmpty() || tfMatKhau.getPassWord().equals(HashUtil.hashPassword(""))) {
+        if (tfMatKhau.getPassWord() == null || tfMatKhau.getPassWord().isEmpty()
+                || tfMatKhau.getPassWord().equals(HashUtil.hashPassword(""))) {
             isSaved = false; // Check if the password is empty
             tfMatKhau.setLblError("Mật khẩu không được để trống.");
         } else {
@@ -134,7 +136,7 @@ public class TaiKhoanDialog extends JDialog {
         if (tfMaQuyen.getText() == null || tfMaQuyen.getText().isEmpty()) {
             isSaved = false;
             tfMaQuyen.setLblError("Mã quyền không được để trống.");
-        }else
+        } else
             tfMaQuyen.setLblError("");
     }
 
@@ -143,12 +145,13 @@ public class TaiKhoanDialog extends JDialog {
     }
 
     public TaiKhoanDTO getTaiKhoanData() {
-        return new TaiKhoanDTO(Integer.parseInt(tfMaNV.getText()), tfTenDangNhap.getText(), matKhau == null? tfMatKhau.getPassWord() : matKhau, Integer.parseInt(tfMaQuyen.getText()),1);
+        return new TaiKhoanDTO(Integer.parseInt(tfMaNV.getText()), tfTenDangNhap.getText(),
+                matKhau == null ? tfMatKhau.getPassWord() : matKhau, Integer.parseInt(tfMaQuyen.getText()), 1);
     }
 
     private JTable createTableNVChuaCoTK() {
         // Lấy danh sách nhân viên chưa có tài khoản từ BLL
-        List <NhanVienDTO> nhanVienList = new NhanVienBLL().getNhanVienChuaCoTaiKhoan();
+        List<NhanVienDTO> nhanVienList = new NhanVienBLL().getNhanVienChuaCoTaiKhoan();
         String[] columnNames = { "Mã NV", "Họ Tên", "Ngày Sinh", "Giới Tính", "SĐT" };
         DefaultTableModel model = new DefaultTableModel(columnNames, 0);
 

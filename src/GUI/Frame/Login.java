@@ -146,7 +146,7 @@ public class Login extends JFrame {
                 }
                 if (new QuyenBLL().getQuyenById(taiKhoanDTO.getMaQuyen()) == null ) {
                     JOptionPane.showMessageDialog(null, "Mã quyền của tài khoản này đã bị xóa, vui lòng liên hệ quản trị viên để thay đổi quyền!", "Lỗi", JOptionPane.ERROR_MESSAGE);
-
+                    return;
                 }
                 
                 TaiKhoanDTO.setTaiKhoanHienTai(taiKhoanDTO);
