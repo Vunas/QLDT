@@ -632,7 +632,12 @@ public class TaoHoaDon extends JPanel {
         TaiKhoanDTO taiKhoan = TaiKhoanDTO.getTaiKhoanHienTai();
         hoadon.setMaKH(khachhang.getMaKH());
         hoadon.setMaNhanVien(taiKhoan.getMaNV());
-        hoadon.setMakhuyenmai(Integer.parseInt(makhuyenmai.getText()));
+        String text = makhuyenmai.getText();
+        if (!text.isEmpty()) {
+            hoadon.setMakhuyenmai(Integer.parseInt(text));
+        } else {
+            hoadon.setMakhuyenmai(0);
+        }
         LocalDate today = LocalDate.now();
         hoadon.setNgayXuat(today);
         new HoaDonBLL().addHoaDon(hoadon);
