@@ -90,8 +90,8 @@ public class SanPhamGUI extends JPanel {
                 if (dialog.isSaved()) {
                     try {
                         // Assign a new unique ID (you might generate this differently)
-                        int maKH = sanPhamBLL.generateNewId();
-                        SanPhamDTO newKhachHang = dialog.getSanPhamData(maKH);
+                        int maSP = sanPhamBLL.generateNewId();
+                        SanPhamDTO newKhachHang = dialog.getSanPhamData(maSP);
                         if (sanPhamBLL.addSanPham(newKhachHang)) {
                             JOptionPane.showMessageDialog(null, "Thêm sản phẩm thành công!");
                             loadData(sanPhamBLL.getAllSanPham());

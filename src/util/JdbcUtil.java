@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 public class JdbcUtil {
-    private static final String URL = "jdbc:mysql://localhost:3306/qldt";
+    private static final String URL = "jdbc:mysql://localhost:3307/qldt";
     private static final String USER = "root";
     private static final String PASSWORD = ""; // Mật khẩu trống
 
