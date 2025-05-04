@@ -1,5 +1,6 @@
 package GUI.pages;
 
+import BLL.BUS.ChiTietSanPhamBLL;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
@@ -90,8 +91,8 @@ public class SanPhamGUI extends JPanel {
                 if (dialog.isSaved()) {
                     try {
                         // Assign a new unique ID (you might generate this differently)
-                        int maKH = sanPhamBLL.generateNewId();
-                        SanPhamDTO newKhachHang = dialog.getSanPhamData(maKH);
+                        int maSP = sanPhamBLL.generateNewId();
+                        SanPhamDTO newKhachHang = dialog.getSanPhamData(maSP);
                         if (sanPhamBLL.addSanPham(newKhachHang)) {
                             JOptionPane.showMessageDialog(null, "Thêm sản phẩm thành công!");
                             loadData(sanPhamBLL.getAllSanPham());
@@ -323,7 +324,7 @@ public class SanPhamGUI extends JPanel {
                     sp.getTenSP(),
                     resizedIcon, // Display Image
                     sp.getImg(), // Hidden Path
-                    sp.getSoLuong(),
+                    new ChiTietSanPhamBLL().getSoLuongImeisBySanPham(sp.getMaSP()),
                     formatter.format(sp.getGiaNhap()),
                     formatter.format(sp.getGiaBan()),
                     sp.getMauSac(),

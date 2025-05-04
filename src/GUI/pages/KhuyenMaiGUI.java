@@ -147,22 +147,8 @@ public class KhuyenMaiGUI extends JPanel {
                     return;
                 }
                 int maKM = (int) tbl.getValueAt(selectedRow, 0);
-                String tenKM = (String) tbl.getValueAt(selectedRow, 1);
-                int soLuong = (int) tbl.getValueAt(selectedRow, 2);
-                Date ngayBD = (Date) tbl.getValueAt(selectedRow, 3);
-                Date ngayKT = (Date) tbl.getValueAt(selectedRow, 4);
-                int apDungChoHoaDonTu = (int) tbl.getValueAt(selectedRow, 5);
-                int giaTri = (int) tbl.getValueAt(selectedRow, 6);
-                int hinhThuc = 0;
-                if (tbl.getValueAt(selectedRow, 6).equals("%")) {
-                    hinhThuc = 1;
-                } else if (tbl.getValueAt(selectedRow, 6).equals("tiền")) {
-                    hinhThuc = 2;
-                }
-
-                KhuyenMaiDTO khuyenMaiDTO = new KhuyenMaiDTO(maKM, tenKM, soLuong, ngayBD, ngayKT, apDungChoHoaDonTu,
-                        giaTri,
-                        hinhThuc, 1);
+                KhuyenMaiDTO khuyenMaiDTO = khuyenMaiBLL.getKhuyenMaiByID(maKM);
+                
 
                 JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(KhuyenMaiGUI.this);
                 KhuyenMaiDialog dialog = new KhuyenMaiDialog(parentFrame, khuyenMaiDTO, "Chỉnh Sửa Khuyến Mãi");
@@ -217,22 +203,8 @@ public class KhuyenMaiGUI extends JPanel {
                     return;
                 }
                 int maKM = (int) tbl.getValueAt(selectedRow, 0);
-                String tenKM = (String) tbl.getValueAt(selectedRow, 1);
-                int soLuong = (int) tbl.getValueAt(selectedRow, 2);
-                Date ngayBD = (Date) tbl.getValueAt(selectedRow, 3);
-                Date ngayKT = (Date) tbl.getValueAt(selectedRow, 4);
-                int apDungChoHoaDonTu = (int) tbl.getValueAt(selectedRow, 5);
-                int giaTri = (int) tbl.getValueAt(selectedRow, 6);
-                int hinhThuc = 0;
-                if (tbl.getValueAt(selectedRow, 6).equals("%")) {
-                    hinhThuc = 1;
-                } else if (tbl.getValueAt(selectedRow, 6).equals("tiền")) {
-                    hinhThuc = 2;
-                }
-
-                KhuyenMaiDTO khuyenMaiDTO = new KhuyenMaiDTO(maKM, tenKM, soLuong, ngayBD, ngayKT, apDungChoHoaDonTu,
-                        giaTri,
-                        hinhThuc, 1);
+                KhuyenMaiDTO khuyenMaiDTO = khuyenMaiBLL.getKhuyenMaiByID(maKM);
+                
 
                 JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(KhuyenMaiGUI.this);
                 KhuyenMaiDialog dialog = new KhuyenMaiDialog(parentFrame, khuyenMaiDTO, "Xem Chi Tiết");

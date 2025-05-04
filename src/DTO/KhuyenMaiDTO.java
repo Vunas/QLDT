@@ -14,7 +14,7 @@ public class KhuyenMaiDTO {
     int trangThai;
     String mota;
 
-    public KhuyenMaiDTO() {
+    public KhuyenMaiDTO(int maKM2, String string, Integer integer, Date date, Date date2, Integer integer2, Integer integer3, byte hinhthuc2, String string2, int i) {
     }
 
     public KhuyenMaiDTO(int maKM, String tenKM, int soLuong, Date ngayBD, Date ngayKT, int apDungChoHoaDonTu,
@@ -28,6 +28,20 @@ public class KhuyenMaiDTO {
         this.giaTri = giaTri;
         this.hinhThuc = hinhThuc;
         this.trangThai = trangThai;
+    }
+
+    public KhuyenMaiDTO(int maKM, String tenKM, int soLuong, Date ngayBD, Date ngayKT, int apDungChoHoaDonTu,
+            int giaTri, int hinhThuc, int trangThai, String mota) {
+        this.maKM = maKM;
+        this.tenKM = tenKM;
+        this.soLuong = soLuong;
+        this.ngayBD = ngayBD;
+        this.ngayKT = ngayKT;
+        this.apDungChoHoaDonTu = apDungChoHoaDonTu;
+        this.giaTri = giaTri;
+        this.hinhThuc = hinhThuc;
+        this.trangThai = trangThai;
+        this.mota = mota;
     }
 
     public KhuyenMaiDTO(int maKM, String tenKM, int soLuong, Date ngayBD, Date ngayKT, int apDungChoHoaDonTu,

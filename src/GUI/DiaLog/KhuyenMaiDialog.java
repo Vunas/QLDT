@@ -8,19 +8,32 @@ import java.awt.Font;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+
 import DTO.KhuyenMaiDTO;
 import GUI.Panel.InputType.InputDate;
 import GUI.Panel.InputType.InputText;
 
 public class KhuyenMaiDialog extends JDialog {
-    private InputText maKM, tenKM, soLuong, apDungChoHoaDonTu, giaTri, hinhThuc;
+    private InputText maKM, tenKM, soLuong, apDungChoHoaDonTu, giaTri;
+    private JComboBox<String> hinhThuc;
+    private JTextArea mota;
     private InputDate ngayBD, ngayKT;
     private boolean isSaved = false;
 
@@ -31,7 +44,7 @@ public class KhuyenMaiDialog extends JDialog {
     }
 
     private void initComponents(KhuyenMaiDTO khuyenMaiDTO, String title) {
-        setSize(550, 750);
+        setSize(550, 800);
         setLayout(new BorderLayout(10, 10));
 
         JLabel lbContent = new JLabel(title);
@@ -41,24 +54,47 @@ public class KhuyenMaiDialog extends JDialog {
         lbContent.setForeground(Color.WHITE);
         lbContent.setBorder(new EmptyBorder(10, 10, 10, 10));
         JPanel pnlContent = new JPanel();
-        pnlContent.add(lbContent, CENTER_ALIGNMENT);
+        pnlContent.add(lbContent, BorderLayout.CENTER);
 
         JPanel pnlMain = new JPanel();
         pnlMain.setLayout(new BoxLayout(pnlMain, BoxLayout.Y_AXIS));
-        pnlMain.setBorder(new EmptyBorder(5, 10, 5, 10));
+        pnlMain.setBorder(new EmptyBorder(20, 30, 20, 30));
         pnlMain.setPreferredSize(new Dimension(400, 400));
         pnlMain.setBackground(Color.WHITE);
 
+        maKM = new InputText("Mã khuyến Mãi");
         tenKM = new InputText("Tên Khuyến Mãi");
         soLuong = new InputText("Số Lượng");
         ngayBD = new InputDate("Ngày Bắt đầu");
         ngayKT = new InputDate("Ngày Kết Thúc");
+
+        JPanel panelNgayBD = new JPanel();
+        panelNgayBD.setLayout(new FlowLayout(FlowLayout.LEFT));
+        panelNgayBD.setPreferredSize(new Dimension(400, 40));
+        panelNgayBD.add(ngayBD);
+
+        JPanel panelNgayKT = new JPanel();
+        panelNgayKT.setLayout(new FlowLayout(FlowLayout.LEFT));
+        panelNgayKT.setPreferredSize(new Dimension(400, 40));
+        panelNgayKT.add(ngayKT);
         apDungChoHoaDonTu = new InputText("Áp Dụng Cho Hóa Đơn Từ");
         giaTri = new InputText("Giá Trị");
-        hinhThuc = new InputText("Hình Thức");
+        mota = new JTextArea();
+        mota.setLineWrap(true);
+        mota.setWrapStyleWord(true);
+        mota.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+        mota.setPreferredSize(new Dimension(400, 80));
+        JScrollPane scroll = new JScrollPane(mota);
+        scroll.setPreferredSize(new Dimension(400, 80));
+
+        String[] option = { "Phần Trăm Giảm", "Giá Cố Định Giảm", "Quà Tặng" };
+        hinhThuc = new JComboBox<>(option);
+        hinhThuc.setPreferredSize(new Dimension(400, 35));
+        hinhThuc.setFont(new Font("segoe UI", Font.PLAIN, 14));
+        hinhThuc.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        hinhThuc.setBorder(new LineBorder(Color.GRAY, 1));
 
         if (khuyenMaiDTO != null) {
-            maKM = new InputText("Mã Khuyến Mãi");
             maKM.setText(String.valueOf(khuyenMaiDTO.getMaKM()));
             tenKM.setText(khuyenMaiDTO.getTenKM());
             soLuong.setText(String.valueOf(khuyenMaiDTO.getSoLuong()));
@@ -66,8 +102,12 @@ public class KhuyenMaiDialog extends JDialog {
             ngayKT.setDate(new java.sql.Date(khuyenMaiDTO.getNgayKT().getTime()));
             apDungChoHoaDonTu.setText(String.valueOf(khuyenMaiDTO.getApDungChoHoaDonTu()));
             giaTri.setText(String.valueOf(khuyenMaiDTO.getGiaTri()));
-            hinhThuc.setText(String.valueOf(khuyenMaiDTO.getHinhThuc()));
-
+            mota.setText(khuyenMaiDTO.getMota());
+            if(khuyenMaiDTO.getHinhThuc() == 1){
+                hinhThuc.setSelectedIndex(0);
+            } else if (khuyenMaiDTO.getHinhThuc() == 2) {
+                hinhThuc.setSelectedIndex(1);
+            }
             if (title.equals("Xem Chi Tiết")) {
                 pnlMain.add(maKM);
                 maKM.getTxtForm().setEditable(false);
@@ -77,28 +117,32 @@ public class KhuyenMaiDialog extends JDialog {
                 ngayKT.getDate();
                 apDungChoHoaDonTu.getTxtForm().setEditable(false);
                 giaTri.getTxtForm().setEditable(false);
-                hinhThuc.getTxtForm().setEditable(false);
-
+                mota.setEditable(false);
             }
         }
         pnlMain.add(tenKM);
         pnlMain.add(soLuong);
-        pnlMain.add(ngayBD);
-        pnlMain.add(ngayKT);
+        pnlMain.add(panelNgayBD);
+        pnlMain.add(panelNgayKT);
         pnlMain.add(apDungChoHoaDonTu);
         pnlMain.add(giaTri);
+        pnlMain.add(new JLabel("Hình Thức"));
         pnlMain.add(hinhThuc);
+        pnlMain.add(new JLabel("Mô Tả"));
+        pnlMain.add(scroll);
 
-        JPanel pnlButtons = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        pnlButtons.setBackground(this.getBackground());
         JButton btnSave = new JButton("Lưu");
-        btnSave.setPreferredSize(new Dimension(90, 60));
-        btnSave.setBackground(new Color(100, 149, 237)); // ForestGreen
-        btnSave.setFont(new Font(getName(), Font.PLAIN, 20));
-        btnSave.setFocusPainted(true);
+        btnSave.setFont(new Font("Segoe", Font.BOLD, 14));
+        btnSave.setBackground(new Color(33, 150, 243));
         btnSave.setForeground(Color.WHITE);
+        btnSave.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        buttonPanel.setBackground(Color.WHITE);
+
+        buttonPanel.add(btnSave);
         if (title.equals("Xem Chi Tiết")) {
-            btnSave.setVisible(false);
+            buttonPanel.setVisible(false);
         } else {
             btnSave.addActionListener(new ActionListener() {
                 @Override
@@ -107,34 +151,46 @@ public class KhuyenMaiDialog extends JDialog {
                     validateKhuyenMai();
                     if (isSaved) {
                         if (khuyenMaiDTO != null) {
+                            pnlMain.add(maKM);
+
                             khuyenMaiDTO.setTenKM(tenKM.getText());
                             khuyenMaiDTO.setSoLuong(Integer.valueOf(soLuong.getText()));
                             khuyenMaiDTO.setNgayBD(new java.sql.Date(khuyenMaiDTO.getNgayBD().getTime()));
                             khuyenMaiDTO.setNgayKT(new java.sql.Date(khuyenMaiDTO.getNgayKT().getTime()));
                             khuyenMaiDTO.setApDungChoHoaDonTu(Integer.valueOf(apDungChoHoaDonTu.getText()));
                             khuyenMaiDTO.setGiaTri(Integer.valueOf(giaTri.getText()));
-                            if (hinhThuc.getText().equals("%") || hinhThuc.getText().equals("1")) {
+                            if (hinhThuc.getSelectedIndex() == 0) {
                                 khuyenMaiDTO.setHinhThuc(1);
-                            } else if (hinhThuc.getText().equals("tien") || hinhThuc.getText().equals("2")) {
+                            } else if (hinhThuc.getSelectedIndex() == 1) {
                                 khuyenMaiDTO.setHinhThuc(2);
-                            }
+                            } 
+                            khuyenMaiDTO.setMota(mota.getText());
                         }
                         dispose();
                     }
                 }
 
             });
-            pnlButtons.add(btnSave);
+            buttonPanel.add(btnSave);
         }
 
-        JScrollPane scrollPane = new JScrollPane(pnlMain, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-
+        JScrollPane scrollPane = new JScrollPane(pnlMain);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setPreferredSize(new Dimension(400, 400));
         add(pnlContent, BorderLayout.NORTH);
         add(scrollPane, BorderLayout.CENTER);
-        add(pnlButtons, BorderLayout.SOUTH);
-
+        add(buttonPanel, BorderLayout.SOUTH);
         setResizable(false);
+    }
+
+    public JButton createButton(String text, Color bgColor, Color fgColor) {
+        JButton button = new JButton(text);
+        button.setFont(new Font("Segoe", Font.BOLD, 14));
+        button.setBackground(bgColor);
+        button.setForeground(fgColor);
+        button.setFocusPainted(false);
+        button.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+        return button;
     }
 
     public void validateKhuyenMai() {
@@ -152,9 +208,10 @@ public class KhuyenMaiDialog extends JDialog {
             soLuong.setLblError("");
         }
 
-        if (apDungChoHoaDonTu.getText() == null || apDungChoHoaDonTu.getText().isEmpty()) {
+        if (apDungChoHoaDonTu.getText() == null ||
+                apDungChoHoaDonTu.getText().isEmpty()) {
             isSaved = false;
-            apDungChoHoaDonTu.setLblError("Áp Dụng Cho Hóa Đơn Từ Không Được Để Trống !");
+            apDungChoHoaDonTu.setLblError("Áp Dụng Cho Hóa Đơn Từ Không Được Để Trống!");
         } else {
             apDungChoHoaDonTu.setLblError("");
         }
@@ -166,11 +223,9 @@ public class KhuyenMaiDialog extends JDialog {
             giaTri.setLblError("");
         }
 
-        if (hinhThuc.getText() == null || hinhThuc.getText().isEmpty()) {
+        if (hinhThuc.getSelectedItem() == null) {
             isSaved = false;
-            hinhThuc.setLblError("Hình Thức Không Được Để Trống !");
-        } else {
-            hinhThuc.setLblError("");
+
         }
 
         if (ngayBD.getDate() == null) {
@@ -186,6 +241,15 @@ public class KhuyenMaiDialog extends JDialog {
         } else {
             ngayKT.setLblError("");
         }
+        if (mota.getText().trim().isEmpty()) {
+            isSaved = false;
+            JOptionPane.showMessageDialog(this, "Mô tả không được để trống!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+        if (hinhThuc.getSelectedItem() == null) {
+            isSaved = false;
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn hình thức khuyến mãi!", "Lỗi",
+                    JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     public boolean isSaved() {
@@ -194,14 +258,14 @@ public class KhuyenMaiDialog extends JDialog {
 
     public KhuyenMaiDTO getKhuyenMaiData(int maKM) {
         byte hinhthuc = 0;
-        if (hinhThuc.getText().equals("%")) {
+        if (hinhThuc.getSelectedIndex() == 0) {
             hinhthuc = 1;
-        } else if (hinhThuc.getText().equals("tiền")) {
+        } else if (hinhThuc.getSelectedIndex() == 1) {
             hinhthuc = 2;
         }
         return new KhuyenMaiDTO(maKM, tenKM.getText(), Integer.valueOf(soLuong.getText()),
                 new java.sql.Date(ngayBD.getDate().getTime()),
                 new java.sql.Date(ngayKT.getDate().getTime()), Integer.valueOf(apDungChoHoaDonTu.getText()),
-                Integer.valueOf(giaTri.getText()), hinhthuc, 1);
+                Integer.valueOf(giaTri.getText()), hinhthuc, 1, mota.getText());
     }
 }

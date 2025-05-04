@@ -35,23 +35,24 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.data.category.DefaultCategoryDataset;
 
-import DAO.ThongKeDao;
+import BLL.BUS.ThongKeBLL;
 import DTO.ThongKeDTO;
 import GUI.Panel.TopNav;
 
 public class ThongKeGUI extends JPanel {
     TopNav topNav;
-    // ThongKeDTO thongKeDTO;
     List<JButton> itemButtons;
     public int tong_doanh_thu;
     public int tong_san_pham;
     public int tong_khach_hang;
     public int tong_nhan_vien;
     public ChartPanel chartPanelCurrent;
+    ThongKeBLL thongKeBLL;
 
     public ThongKeGUI(TopNav topNav) {
         this.setLayout(new BorderLayout());
         itemButtons = new ArrayList<>();
+        this.thongKeBLL = new ThongKeBLL();
         initThongKe();
     }
 
@@ -61,13 +62,12 @@ public class ThongKeGUI extends JPanel {
     
 
     public void DisplayDashboardCards() {
-        ThongKeDao thongKeDao = new ThongKeDao();
-        List<ThongKeDTO> thongKeDoanhThu = thongKeDao.ThongKeDoanhThu();
+        List<ThongKeDTO> thongKeDoanhThu = thongKeBLL.thongKeDoanhThu();
         tong_doanh_thu = 0;
-        List<ThongKeDTO> thongkeSanPham = thongKeDao.ThongKeSanPham();
+        List<ThongKeDTO> thongkeSanPham = thongKeBLL.thongKeSanPham();
         tong_san_pham = 0;
-        tong_khach_hang = thongKeDao.ThongKeTongKhachHang();
-        tong_nhan_vien = thongKeDao.ThongKeTongNhanVien();
+        tong_khach_hang = thongKeBLL.thongKeTongKhachHang();
+        tong_nhan_vien = thongKeBLL.thongKeTongNhanVien();
         for (ThongKeDTO dto : thongKeDoanhThu) {
             tong_doanh_thu += dto.gettongGiaTri();
         }
@@ -280,8 +280,7 @@ public class ThongKeGUI extends JPanel {
     }
 
     public ChartPanel createChartKhachHang() {
-        ThongKeDao thongKeDao = new ThongKeDao();
-        List<ThongKeDTO> list = thongKeDao.ThongKeKhachHang();
+        List<ThongKeDTO> list = thongKeBLL.thongKeKhachHang();
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         for (ThongKeDTO thongKeDTO : list) {
             dataset.addValue(thongKeDTO.getSoluong(), "Tống Giá Trị Mua Hàng", thongKeDTO.getTen());
@@ -311,8 +310,7 @@ public class ThongKeGUI extends JPanel {
     }
 
     public ChartPanel createChartKhachHangByFilter(ThongKeDTO thongke) {
-        ThongKeDao thongKeDao = new ThongKeDao();
-        List<ThongKeDTO> list = thongKeDao.ThongKeKhachHangByFilter(thongke);
+        List<ThongKeDTO> list = thongKeBLL.thongKeKhachHangByFilter(thongke);
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         for (ThongKeDTO thongKeDTO : list) {
             dataset.addValue(thongKeDTO.getSoluong(), "Tống Giá Trị Mua Hàng", thongKeDTO.getTen());
@@ -340,8 +338,8 @@ public class ThongKeGUI extends JPanel {
     }
 
     public ChartPanel createChartSanPham() {
-        ThongKeDao thongKeDao = new ThongKeDao();
-        List<ThongKeDTO> list = thongKeDao.ThongKeSanPham();
+        
+        List<ThongKeDTO> list = thongKeBLL.thongKeSanPham();
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
         for (ThongKeDTO dto : list) {
@@ -371,8 +369,8 @@ public class ThongKeGUI extends JPanel {
     }
 
     public ChartPanel createChartSanPhamByFilter(ThongKeDTO thongke) {
-        ThongKeDao thongKeDao = new ThongKeDao();
-        List<ThongKeDTO> list = thongKeDao.ThongKeSanPhamByFilter(thongke);
+        
+        List<ThongKeDTO> list = thongKeBLL.thongKeSanPhamByFilter(thongke);
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
         for (ThongKeDTO dto : list) {
@@ -402,8 +400,8 @@ public class ThongKeGUI extends JPanel {
     }
 
     public ChartPanel createChartNhanVien() {
-        ThongKeDao thongKeDao = new ThongKeDao();
-        List<ThongKeDTO> thongKeDTO = thongKeDao.ThongKeNhanVien();
+        
+        List<ThongKeDTO> thongKeDTO = thongKeBLL.thongKeNhanVien();
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         for (ThongKeDTO dto : thongKeDTO) {
             dataset.addValue(dto.getSoluong(), "Tống Đơn Hàng Của Nhân Viên Bán Được", dto.getTen());
@@ -428,8 +426,8 @@ public class ThongKeGUI extends JPanel {
     }
 
     public ChartPanel createChartNhanVienByFilter(ThongKeDTO thongke) {
-        ThongKeDao thongKeDao = new ThongKeDao();
-        List<ThongKeDTO> thongKeDTO = thongKeDao.ThongKeNhanVienByFilter(thongke);
+        
+        List<ThongKeDTO> thongKeDTO = thongKeBLL.thongKeNhanVienByFilter(thongke);
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         for (ThongKeDTO dto : thongKeDTO) {
             dataset.addValue(dto.getSoluong(), "Tống Đơn Hàng Của Nhân Viên Bán Được", dto.getTen());
@@ -454,8 +452,8 @@ public class ThongKeGUI extends JPanel {
     }
 
     public ChartPanel createChartDoanhThu() {
-        ThongKeDao thongKeDao = new ThongKeDao();
-        List<ThongKeDTO> thongKeDTO = thongKeDao.ThongKeDoanhThu();
+        
+        List<ThongKeDTO> thongKeDTO = thongKeBLL.thongKeDoanhThu();
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         for (ThongKeDTO dto : thongKeDTO) {
             dataset.addValue(dto.gettongGiaTri(), "Tổng Doanh Thu", dto.getNgayXuat());
@@ -478,8 +476,8 @@ public class ThongKeGUI extends JPanel {
     }
 
     public ChartPanel createChartDoanhThuByFilter(ThongKeDTO thongke) {
-        ThongKeDao thongKeDao = new ThongKeDao();
-        List<ThongKeDTO> thongKeDTO = thongKeDao.ThongKeDoanhThuByFilter(thongke);
+        
+        List<ThongKeDTO> thongKeDTO = thongKeBLL.thongKeDoanhThuByFilter(thongke);
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         for (ThongKeDTO dto : thongKeDTO) {
             dataset.addValue(dto.gettongGiaTri(), "Tổng Doanh Thu", dto.getNgayXuat());

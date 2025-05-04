@@ -89,7 +89,7 @@ public class SideBar extends JPanel {
         pnlMid.setBackground(Color.WHITE);
         pnlMid.setLayout(new FlowLayout(0, 0, 5));
         pnlMid.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-
+        
         itemBars = new ItemBar[menuBars.length];
         for (int i = 0; i < menuBars.length; i++) {
             itemBars[i] = new ItemBar(menuBars[i], icons[i]);
@@ -156,7 +156,7 @@ public class SideBar extends JPanel {
             @Override
             public void mousePressed(MouseEvent evt) {
                 changePage(3);
-                main.setPanel(new PhieuNhapGUI(main,topNav));
+                main.setPanel(new PhieuNhapGUI(main, topNav));
             }
         });
 
@@ -164,7 +164,7 @@ public class SideBar extends JPanel {
             @Override
             public void mousePressed(MouseEvent evt) {
                 changePage(4);
-                main.setPanel(new HoaDonGUI(main,topNav));
+                main.setPanel(new HoaDonGUI(main, topNav));
             }
         });
 
