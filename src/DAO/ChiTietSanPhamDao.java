@@ -113,6 +113,21 @@ public class ChiTietSanPhamDao {
         }
         return 0;
     }
+     
+     public List<String> getImei(){
+          List<String> imeiList = new ArrayList<>();
+        String sql = "SELECT maimei FROM ctsanpham "; // Lọc các bản ghi còn hiệu lực
+        try (Connection conn = JdbcUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                imeiList.add(rs.getString("maimei"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return imeiList;
+     }
 
 
     public boolean xoaMemChiTietSanPham(String maimei) {

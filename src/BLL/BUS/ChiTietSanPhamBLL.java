@@ -39,4 +39,7 @@ public class ChiTietSanPhamBLL {
     public int getSoLuongImeisBySanPham(int masp){
         return chiTietSanPhamDao.getSoLuongImeisBySanPham(masp);
     }
+    public List<String> getImei(){
+        return chiTietSanPhamDao.getImei();
+    }
 }

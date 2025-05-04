@@ -121,10 +121,12 @@ public class TaoPhieuNhap extends JPanel {
         nhaphang.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                themphieunhap();
-                themchitietphieunhap();
-                themchitietsanpham();
-                main.setPanel(new PhieuNhapGUI(main, topNav));
+                if(checkimei()){
+                    themphieunhap();
+                    themchitietphieunhap();
+                    themchitietsanpham();
+                    main.setPanel(new PhieuNhapGUI(main, topNav));
+                }
             }
 
         });
@@ -302,6 +304,8 @@ public class TaoPhieuNhap extends JPanel {
                         sanphamdathemTable.setValueAt(dongia, selectedRow, 5);
                         String soluong = soluongtxt.getText();
                         sanphamdathemTable.setValueAt(soluong, selectedRow, 6);
+                        String imei = maimeitxt.getText();
+                        tbmsanphamdathemTable.setValueAt(imei, selectedRow, 7);
                         setTongTien();
 
                     }
@@ -522,6 +526,28 @@ public class TaoPhieuNhap extends JPanel {
             }
         }
     }
+
+     public boolean checkimei() {
+    List<String> imeiList = new ChiTietSanPhamBLL().getImei(); // Lấy danh sách IMEI từ DB
+
+    for (int row = 0; row < sanphamdathemTable.getRowCount(); row++) {
+        String maimeiStr = tbmsanphamdathemTable.getValueAt(row, 7).toString().trim(); // Cột chứa IMEI bắt đầu
+        int soLuong = Integer.parseInt(sanphamdathemTable.getValueAt(row, 6).toString()); // Cột chứa số lượng
+
+        for (int i = 0; i < soLuong; i++) {
+            String imeiMoi = String.valueOf(Long.parseLong(maimeiStr) + i);
+
+            for (String imeiDaCo : imeiList) {
+                if (imeiMoi.equals(imeiDaCo)) { // ✅ Nếu trùng thì báo lỗi
+                    JOptionPane.showMessageDialog(null, "Mã IMEI trùng: " + imeiMoi);
+                    return false;
+                }
+            }
+        }
+    }
+
+    return true; // Không có trùng
+}
 
     public void setThongPhieuNhap() {
         TaiKhoanDTO taiKhoan = TaiKhoanDTO.getTaiKhoanHienTai();
