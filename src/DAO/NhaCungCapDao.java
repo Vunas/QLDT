@@ -110,6 +110,29 @@ public class NhaCungCapDao {
         }
         return nhaCungCapList;
     }
+    
+      public List<NhaCungCapDTO> getAllNhaCungCapToAdd() {
+        List<NhaCungCapDTO> nhaCungCapList = new ArrayList<>();
+        String sql = "SELECT * FROM nha_cung_cap"; // Chỉ lấy nhà cung cấp còn hiệu lực
+        try (Connection connection = JdbcUtil.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql);
+             ResultSet resultSet = statement.executeQuery()) {
+
+            while (resultSet.next()) {
+                NhaCungCapDTO nhaCungCap = new NhaCungCapDTO(
+                        resultSet.getInt("maNCC"),
+                        resultSet.getString("ten"),
+                        resultSet.getString("diaChi"),
+                        resultSet.getString("sdt"),
+                        resultSet.getInt("trangThai")
+                );
+                nhaCungCapList.add(nhaCungCap);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return nhaCungCapList;
+    }
 
     // Lấy danh sách tên các nhà cung cấp còn hiệu lực
     public String[] getNameNhaCungCap() {

@@ -83,7 +83,7 @@ public class NhanVienBLL {
     // Tạo mã ID mới tự động
     public int generateNewId() {
         // Đảm bảo danh sách không rỗng trước khi truy cập phần tử cuối
-        List<NhanVienDTO> nhanVienList = NhanVienDao.getAllNhanVien();
+        List<NhanVienDTO> nhanVienList = NhanVienDao.getAllNhanVienToAdd();
         if (!nhanVienList.isEmpty()) {
             return nhanVienList.get(nhanVienList.size() - 1).getMaNV() + 1;
         } else {

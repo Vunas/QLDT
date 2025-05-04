@@ -81,7 +81,7 @@ public class NhaCungCapBLL {
 
     public int generateNewId() {
         // Giả định danh sách được sắp xếp theo mã tăng dần
-        List<NhaCungCapDTO> allNhaCungCap = nhaCungCapDao.getAllNhaCungCap();
+        List<NhaCungCapDTO> allNhaCungCap = nhaCungCapDao.getAllNhaCungCapToAdd();
         return allNhaCungCap.get(allNhaCungCap.size() - 1).getMaNhaCungCap() + 1;
     }
     

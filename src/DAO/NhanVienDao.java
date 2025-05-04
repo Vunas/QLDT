@@ -111,6 +111,30 @@ public class NhanVienDao {
         return nhanVienList;
     }
     
+    public List<NhanVienDTO> getAllNhanVienToAdd() {
+        List<NhanVienDTO> nhanVienList = new ArrayList<>();
+        String query = "SELECT * FROM nhanvien"; // Chỉ lấy nhân viên còn hiệu lực
+        try (Connection conn = JdbcUtil.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(query);
+                ResultSet rs = stmt.executeQuery()) {
+    
+            while (rs.next()) {
+                int maNV = rs.getInt("maNV");
+                String hoTen = rs.getString("hoTen");
+                Date ngaySinh = rs.getDate("ngaySinh");
+                int gioiTinh = rs.getInt("gioiTinh");
+                String sDT = rs.getString("sDT");
+                int trangThai = rs.getInt("trangthai");
+    
+                nhanVienList.add(new NhanVienDTO(maNV, hoTen, ngaySinh, gioiTinh, sDT, trangThai));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return nhanVienList;
+    }
+    
+    
 
     public List<NhanVienDTO> getNhanVienChuaCoTaiKhoan() {
         List<NhanVienDTO> nhanVienList = new ArrayList<>();
