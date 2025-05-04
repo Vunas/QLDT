@@ -25,10 +25,8 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 public class SanPhamDiaLog extends JDialog{
-    private InputText tfMaSP;
     private InputText tfTenSP;
     private InputText tfImg;
-    private InputText tfSoLuong;
     private InputText tfGiaNhap;
     private InputText tfGiaBan;
     private InputText tfChip;
@@ -81,7 +79,7 @@ public class SanPhamDiaLog extends JDialog{
         panelRight.setPreferredSize(new Dimension(400, 500)); // Adjust width
         panelRight.setMaximumSize(new Dimension(300, Integer.MAX_VALUE)); // Expand height
         
-        tfMaSP = new InputText("Mã sản phẩm");
+        
         tfTenSP = new InputText("Tên sản phẩm");
         
         cbxBrand = new SelectForm("Thương hiệu",brandBLL.getArrTenThuongHieu());
@@ -176,7 +174,7 @@ public class SanPhamDiaLog extends JDialog{
         });
 
         
-        tfSoLuong = new InputText("Số lượng");
+        
         tfGiaNhap = new InputText("Giá nhập");
         tfGiaBan = new InputText("Giá bán");
       
@@ -185,14 +183,13 @@ public class SanPhamDiaLog extends JDialog{
         tfThoiGianBaoHanh = new InputText("Thời gian bảo hành");
         
         if (sanPham != null) {
-            tfMaSP = new InputText("Mã sản phẩm");
-            tfMaSP.setText(String.valueOf(sanPham.getMaSP()));
+            
             tfTenSP.setText(sanPham.getTenSP());
             ImageIcon newIcon = new ImageIcon(sanPham.getImg()); // Load image               
             Image newImg = newIcon.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH); // Resize
             lblIcon.setIcon(new ImageIcon(newImg));     
             tfImg.setText(sanPham.getImg());
-            tfSoLuong.setText(sanPham.getSoLuong()+"");
+            
             tfGiaNhap.setText(sanPham.getGiaNhap()+"");
             tfGiaBan.setText(sanPham.getGiaBan()+"");
             
@@ -206,12 +203,12 @@ public class SanPhamDiaLog extends JDialog{
 
             // Set fields to read-only if "Xem chi tiết"
             if (titleString.equals("Xem chi tiết")) {
-                pnlMain.add(tfMaSP);
-                tfMaSP.getTxtForm().setEditable(false);
+               
+                
                 tfTenSP.getTxtForm().setEditable(false);
                 tfImg.getTxtForm().setEditable(false);
                 btnChooseImage.setEnabled(false);
-                tfSoLuong.getTxtForm().setEditable(false);
+                
                 tfGiaNhap.getTxtForm().setEditable(false);
                 tfGiaBan.getTxtForm().setEditable(false);
                 
@@ -229,7 +226,7 @@ public class SanPhamDiaLog extends JDialog{
         pnlMain.add(tfImg);
 //        pnlMain.add(lblIcon);
 //        pnlMain.add(btnChooseImage);
-        pnlMain.add(tfSoLuong);
+        
         pnlMain.add(tfGiaNhap);
         pnlMain.add(tfGiaBan);
         pnlMain.add(tfChip);
@@ -288,7 +285,7 @@ public class SanPhamDiaLog extends JDialog{
 
                             
                             sanPham.setImg(tfImg.getText());
-                            sanPham.setSoLuong(Integer.parseInt(tfSoLuong.getText()));
+                            
                             sanPham.setGiaNhap(Integer.parseInt(tfGiaNhap.getText()));
                             sanPham.setGiaBan(Integer.parseInt(tfGiaBan.getText()));
                             
@@ -380,8 +377,8 @@ public class SanPhamDiaLog extends JDialog{
         return isSaved;
     }
     
-    public SanPhamDTO getSanPhamData(int maKH) {
-        return new SanPhamDTO(maKH, tfTenSP.getText(), tfImg.getText(), Integer.parseInt(tfSoLuong.getText()),
+    public SanPhamDTO getSanPhamData(int maSP) {
+        return new SanPhamDTO(maSP, tfTenSP.getText(), tfImg.getText(),0,
                 Integer.parseInt(tfGiaNhap.getText()),Integer.parseInt(tfGiaBan.getText()) , cbxColor.getValue() , cbxBrand.getValue(),
                 Integer.parseInt(cbxRam.getValue()) , Integer.parseInt(cbxRom.getValue()) , tfChip.getText(), Float.parseFloat(tfThoiGianBaoHanh.getText()),1);
     }
