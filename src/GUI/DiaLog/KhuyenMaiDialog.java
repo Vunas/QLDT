@@ -10,19 +10,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
-import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
@@ -83,13 +79,13 @@ public class KhuyenMaiDialog extends JDialog {
         mota.setLineWrap(true);
         mota.setWrapStyleWord(true);
         mota.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-        mota.setPreferredSize(new Dimension(400, 80));
+        mota.setPreferredSize(new Dimension(400, 25));
         JScrollPane scroll = new JScrollPane(mota);
-        scroll.setPreferredSize(new Dimension(400, 80));
+        scroll.setPreferredSize(new Dimension(400, 25));
 
-        String[] option = { "Phần Trăm Giảm", "Giá Cố Định Giảm", "Quà Tặng" };
+        String[] option = { "Phần Trăm Giảm", "Giá Cố Định Giảm"};
         hinhThuc = new JComboBox<>(option);
-        hinhThuc.setPreferredSize(new Dimension(400, 35));
+        hinhThuc.setPreferredSize(new Dimension(400, 15));
         hinhThuc.setFont(new Font("segoe UI", Font.PLAIN, 14));
         hinhThuc.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         hinhThuc.setBorder(new LineBorder(Color.GRAY, 1));
@@ -103,7 +99,7 @@ public class KhuyenMaiDialog extends JDialog {
             apDungChoHoaDonTu.setText(String.valueOf(khuyenMaiDTO.getApDungChoHoaDonTu()));
             giaTri.setText(String.valueOf(khuyenMaiDTO.getGiaTri()));
             mota.setText(khuyenMaiDTO.getMota());
-            if(khuyenMaiDTO.getHinhThuc() == 1){
+            if (khuyenMaiDTO.getHinhThuc() == 1) {
                 hinhThuc.setSelectedIndex(0);
             } else if (khuyenMaiDTO.getHinhThuc() == 2) {
                 hinhThuc.setSelectedIndex(1);
@@ -163,7 +159,7 @@ public class KhuyenMaiDialog extends JDialog {
                                 khuyenMaiDTO.setHinhThuc(1);
                             } else if (hinhThuc.getSelectedIndex() == 1) {
                                 khuyenMaiDTO.setHinhThuc(2);
-                            } 
+                            }
                             khuyenMaiDTO.setMota(mota.getText());
                         }
                         dispose();
@@ -194,62 +190,97 @@ public class KhuyenMaiDialog extends JDialog {
     }
 
     public void validateKhuyenMai() {
-        if (tenKM.getText() == null || tenKM.getText().isEmpty()) {
+        if (tenKM.getText() == null || tenKM.getText().trim().isEmpty()) {
             isSaved = false;
             tenKM.setLblError("Tên Khuyến Mãi Không Được Để Trống");
         } else {
             tenKM.setLblError("");
         }
 
-        if (soLuong.getText() == null || soLuong.getText().isEmpty()) {
+        if (soLuong.getText() == null || soLuong.getText().trim().isEmpty()) {
             isSaved = false;
             soLuong.setLblError("Số Lượng Không Được Để Trống !");
         } else {
-            soLuong.setLblError("");
+            try {
+                int soluong = Integer.parseInt(soLuong.getText());
+                if (soluong <= 0) {
+                    isSaved = false;
+                    soLuong.setLblError("Số Lượng Phải Lớn Hơn 0");
+                } else {
+                    soLuong.setLblError("");
+                }
+            } catch (NumberFormatException e) {
+                // TODO: handle exception
+                isSaved = false;
+                soLuong.setLblError("Số Lượng Phải Là Số Hợp Lệ!");
+            }
         }
-
         if (apDungChoHoaDonTu.getText() == null ||
-                apDungChoHoaDonTu.getText().isEmpty()) {
+                apDungChoHoaDonTu.getText().trim().isEmpty()) {
             isSaved = false;
             apDungChoHoaDonTu.setLblError("Áp Dụng Cho Hóa Đơn Từ Không Được Để Trống!");
         } else {
-            apDungChoHoaDonTu.setLblError("");
+            try {
+                int hoadontu = Integer.parseInt(apDungChoHoaDonTu.getText());
+                if (hoadontu < 0) {
+                    isSaved = false;
+                    apDungChoHoaDonTu.setLblError("Giá Trị Hóa Đơn Phải >= 0!");
+                } else {
+                    apDungChoHoaDonTu.setLblError("");
+                }
+            } catch (NumberFormatException e) {
+                // TODO: handle exception
+                isSaved = false;
+                apDungChoHoaDonTu.setLblError("Giá Trị Phải Là Số!");
+            }
         }
 
         if (giaTri.getText() == null || giaTri.getText().isEmpty()) {
             isSaved = false;
             giaTri.setLblError("Giá Trị Không Được Để Trống !");
         } else {
-            giaTri.setLblError("");
+            try {
+                int gt = Integer.parseInt(giaTri.getText());
+                if (gt <= 0) {
+                    isSaved = false;
+                    giaTri.setLblError("Giá Trị Phải Lớn Hơn 0!");
+                } else {
+                    giaTri.setLblError("");
+                }
+            } catch (NumberFormatException e) {
+                isSaved = false;
+                giaTri.setLblError("Giá Trị Khuyến Mãi Phải Là Số!");
+            }
         }
 
         if (hinhThuc.getSelectedItem() == null) {
             isSaved = false;
+            JOptionPane.showMessageDialog(this, "Vui Lòng Chọn Hình Thức Khuyến Mãi!", "Lỗi",
+                    JOptionPane.ERROR_MESSAGE);
 
         }
 
         if (ngayBD.getDate() == null) {
             isSaved = false;
-            ngayBD.setLblError("Ngày Bắt Đầu Không Được Để Trống !");
+            ngayBD.setLblError("Ngày Bắt Đầu Không Được Để Trống!");
         } else {
             ngayBD.setLblError("");
         }
 
         if (ngayKT.getDate() == null) {
             isSaved = false;
-            ngayKT.setLblError("Ngày Kết Thúc Không Được Để Trống !");
+            ngayBD.setLblError("Ngày Kết Thúc Không Được Để Trống!");
+        } else if (ngayBD.getDate() != null && ngayKT.getDate().before(ngayBD.getDate())) {
+            isSaved = false;
+            ngayBD.setLblError("Ngày Kết Thúc Phải Sau Ngày Bắt Đầu!");
         } else {
             ngayKT.setLblError("");
         }
-        if (mota.getText().trim().isEmpty()) {
+        if (mota.getText().trim().isEmpty() || mota.getText() == null) {
             isSaved = false;
-            JOptionPane.showMessageDialog(this, "Mô tả không được để trống!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Mô Tả Không Được Để Trống!", "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
-        if (hinhThuc.getSelectedItem() == null) {
-            isSaved = false;
-            JOptionPane.showMessageDialog(this, "Vui lòng chọn hình thức khuyến mãi!", "Lỗi",
-                    JOptionPane.ERROR_MESSAGE);
-        }
+        
     }
 
     public boolean isSaved() {

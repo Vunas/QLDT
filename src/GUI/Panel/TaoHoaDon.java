@@ -82,7 +82,7 @@ public class TaoHoaDon extends JPanel {
     KhuyenMaiBLL khuyenMaiBLL;
 
     // List<List<String>> imeitheohang;
-    public TaoHoaDon(Main main,TopNav topNav) {
+    public TaoHoaDon(Main main, TopNav topNav) {
         initComponent(main);
         loaddatasanpham();
         setThongTinHoaDon();
@@ -144,7 +144,7 @@ public class TaoHoaDon extends JPanel {
                 if (makhuyenmai.getText() != null && !makhuyenmai.getText().isEmpty()) {
                     updateSoLuongKM();
                 }
-                main.setPanel(new HoaDonGUI(main,topNav));
+                main.setPanel(new HoaDonGUI(main, topNav));
             }
 
         });
@@ -370,7 +370,6 @@ public class TaoHoaDon extends JPanel {
                 suasp();
             }
         });
-
 
         xoa = new ButtonCustom("Xóa", "danger", 14);
         xoa.setEnabled(false);
@@ -688,16 +687,48 @@ public class TaoHoaDon extends JPanel {
     public void updateTongTien() {
         tong = 0;
         for (int row = 0; row < tbmsanphamdathemTable.getRowCount(); row++) {
-            int tiensanpham = Integer.parseInt(tbmsanphamdathemTable.getValueAt(row, 5).toString())
-                    * Integer.parseInt(tbmsanphamdathemTable.getValueAt(row, 6).toString());
-            tong = tong + tiensanpham;
+
+            int tien = Integer.parseInt(tbmsanphamdathemTable.getValueAt(row, 5).toString());
+            int soLuong = Integer.parseInt(tbmsanphamdathemTable.getValueAt(row, 6).toString());
+            tong += tien * soLuong;
+
         }
 
         String maKMText = makhuyenmai.getText();
+        System.out.println("DEBUG maKMText: '" + maKMText + "'");
+        System.out.println("DEBUG trim: '" + maKMText.trim() + "'");
 
-        if (maKMText != null && !maKMText.isEmpty()) {
-            try {
-                int maKM = Integer.valueOf(maKMText);
+        // if (maKMText == null || maKMText.trim().isEmpty()) {
+        // System.out.println("Không có khuyến mãi nào được chọn");
+        // NumberFormat kieuhienthi = NumberFormat.getInstance(Locale.US);
+        // sotien.setText(kieuhienthi.format(tong) + "đ");
+        // return;
+        // } else {
+        // try {
+        // int maKM = Integer.parseInt(maKMText);
+        // KhuyenMaiDTO dto = khuyenMaiBLL.getKhuyenMaiByID(maKM);
+        // if (dto != null) {
+        // if (dto.getHinhThuc() == 1) {
+        // double phamTramGiam = dto.getGiaTri();
+        // tong = (int) (tong * (100.0 - phamTramGiam) / 100.0);
+        // } else if (dto.getHinhThuc() == 2) {
+        // tong -= dto.getGiaTri();
+        // }
+        // } else {
+        // System.out.println("Lỗi: Không tìm thấy khuyến mãi!");
+        // }
+        // } catch (NumberFormatException e) {
+        // e.printStackTrace();
+        // }
+        // }
+        try {
+            if (maKMText == null || maKMText.trim().isEmpty()) {
+                System.out.println("Không có khuyến mãi nào được chọn");
+                NumberFormat kieuhienthi = NumberFormat.getInstance(Locale.US);
+                sotien.setText(kieuhienthi.format(tong) + "đ");
+                return;
+            } else {
+                int maKM = Integer.parseInt(maKMText.trim());
                 KhuyenMaiDTO dto = khuyenMaiBLL.getKhuyenMaiByID(maKM);
                 if (dto != null) {
                     if (dto.getHinhThuc() == 1) {
@@ -706,27 +737,32 @@ public class TaoHoaDon extends JPanel {
                     } else if (dto.getHinhThuc() == 2) {
                         tong -= dto.getGiaTri();
                     }
+                } else {
+                    System.out.println("Lỗi: Không tìm thấy khuyến mãi!");
                 }
-            } catch (Exception e) {
-
-                e.printStackTrace();
-
             }
+        } catch (NumberFormatException e) {
+            System.out.println("Mã khuyến mãi không hợp lệ: " + maKMText);
         }
+
         NumberFormat kieuhienthi = NumberFormat.getInstance(Locale.US);
         sotien.setText(kieuhienthi.format(tong) + "đ");
     }
 
     public void updateSoLuongKM() {
         String maKMText = makhuyenmai.getText();
-        if (maKMText != null && !maKMText.isEmpty()) {
-            try {
-                int maKM = Integer.valueOf(maKMText);
-                khuyenMaiBLL.giamSoLuongKM(maKM);
-            } catch (Exception e) {
 
-                e.printStackTrace();
-            }
+        if (maKMText == null || maKMText.trim().isEmpty()) {
+            System.out.println("Không có khuyến mãi nào để cập nhật số lượng.");
+            return;
+        }
+
+        try {
+            int maKM = Integer.parseInt(maKMText.trim());
+            khuyenMaiBLL.giamSoLuongKM(maKM);
+        } catch (NumberFormatException e) {
+            System.out.println("Mã khuyến mãi không hợp lệ: " + maKMText);
+            e.printStackTrace();
         }
     }
 }
