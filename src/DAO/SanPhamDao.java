@@ -203,7 +203,7 @@ public class SanPhamDao {
     
     public List<SanPhamDTO> getAllSanPhamToAdd() {
         List<SanPhamDTO> SanPhamList = new ArrayList<>();
-        String query = "SELECT * FROM SanPham WHERE trangThai = 1";
+        String query = "SELECT * FROM SanPham";
         try (Connection conn = JdbcUtil.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query);
              ResultSet rs = stmt.executeQuery()) {
