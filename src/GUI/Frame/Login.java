@@ -17,6 +17,7 @@ import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.FlatLightLaf;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 
+import BLL.BUS.QuyenBLL;
 import BLL.BUS.TaiKhoanBLL;
 import DTO.TaiKhoanDTO;
 import GUI.Panel.InputType.InputPassword;
@@ -142,6 +143,10 @@ public class Login extends JFrame {
                 if (taiKhoanDTO == null){
                     JOptionPane.showMessageDialog(null, "Đăng nhập thất bại.", "Lỗi", JOptionPane.ERROR_MESSAGE);
                     return;
+                }
+                if (new QuyenBLL().getQuyenById(taiKhoanDTO.getMaQuyen()) == null ) {
+                    JOptionPane.showMessageDialog(null, "Mã quyền của tài khoản này đã bị xóa, vui lòng liên hệ quản trị viên để thay đổi quyền!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+
                 }
                 
                 TaiKhoanDTO.setTaiKhoanHienTai(taiKhoanDTO);

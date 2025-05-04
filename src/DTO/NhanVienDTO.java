@@ -3,12 +3,12 @@ package DTO;
 import java.util.Date;
 
 public class NhanVienDTO {
-    private int maNV;         // Mã nhân viên
-    private String hoTen;     // Họ và tên
-    private Date ngaySinh;    // Ngày sinh
-    private int gioiTinh;     // Giới tính (0: nữ, 1: nam)
-    private String sDT;       // Số điện thoại
-    private int trangThai;    // Trạng thái (0: đã xóa mềm, 1: còn hiệu lực)
+    private int maNV;      
+    private String hoTen;     
+    private Date ngaySinh;    
+    private int gioiTinh;     
+    private String sDT;       
+    private int trangThai;  
 
     // Constructor không tham số
     public NhanVienDTO() {}
