@@ -143,14 +143,6 @@ public class KhuyenMaiDao {
                 WHERE makhuyenmai = ? AND trangthai = 1
                 """;
 
-        // String sql = """
-        // UPDATE khuyenmai
-        // SET makhuyenmai = ?, tenkhuyenmai = ?, soluong = ?, ngaybatdau = ?,
-        // ngayketthuc = ?, apdungchohoadontu = ?, giatri = ?, hinhthuc = ?, mota = ?
-        // WHERE makhuyenmai = ? AND trangthai = 1
-
-        // """;
-
         try (Connection conn = JdbcUtil.getConnection();
                 PreparedStatement statement = conn.prepareStatement(sql)) {
             statement.setInt(1, khuyenMaiDTO.getMaKM());
@@ -285,7 +277,7 @@ public class KhuyenMaiDao {
     public List<KhuyenMaiDTO> getKhuyenMaiByName(String TenKM) {
         List<KhuyenMaiDTO> list = new ArrayList<>();
         String sql = """
-                SELECT * FROM `khuyenmai` WHERE khuyenmai.tenkhuyenmai LIKE ?
+                SELECT * FROM `khuyenmai` WHERE khuyenmai.tenkhuyenmai LIKE ? AND trangthai = 1
                 """;
         try (Connection conn = JdbcUtil.getConnection();
                 PreparedStatement statement = conn.prepareStatement(sql)) {
