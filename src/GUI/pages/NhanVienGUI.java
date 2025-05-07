@@ -9,6 +9,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 
 import BLL.BUS.NhanVienBLL;
@@ -185,9 +187,20 @@ public class NhanVienGUI extends JPanel {
         btn[4].addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+
                 ImportExcelUtility.openAndImportExcel((NhanVienDTO dto) -> nhanVienBLL.addNhanVien(dto),
-                        (Object[] rowData) -> new NhanVienDTO(nhanVienBLL.generateNewId(), rowData[0].toString(),
-                                (Date) rowData[1], (int) rowData[2], rowData[3].toString(), 1));
+                        (Object[] rowData) -> {
+                            try {
+                                return new NhanVienDTO(nhanVienBLL.generateNewId(), rowData[0].toString(),
+                                        (java.util.Date) formatter.parse(rowData[1].toString()),
+                                        (int) (rowData[2].toString().equalsIgnoreCase("nữ") ? 1 : 0),
+                                        rowData[3].toString(), 1);
+                            } catch (ParseException e1) {
+                                e1.printStackTrace();
+                            }
+                            return null;
+                        });
 
                 loadData(nhanVienBLL.getAllNhanVien());
             }
