@@ -83,7 +83,7 @@ public class KhuyenMaiDialog extends JDialog {
         JScrollPane scroll = new JScrollPane(mota);
         scroll.setPreferredSize(new Dimension(400, 25));
 
-        String[] option = { "Phần Trăm Giảm", "Giá Cố Định Giảm"};
+        String[] option = { "Phần Trăm Giảm", "Giá Cố Định Giảm" };
         hinhThuc = new JComboBox<>(option);
         hinhThuc.setPreferredSize(new Dimension(400, 15));
         hinhThuc.setFont(new Font("segoe UI", Font.PLAIN, 14));
@@ -280,7 +280,6 @@ public class KhuyenMaiDialog extends JDialog {
             isSaved = false;
             JOptionPane.showMessageDialog(this, "Mô Tả Không Được Để Trống!", "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
-        
     }
 
     public boolean isSaved() {
