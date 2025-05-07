@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.table.DefaultTableCellRenderer;
 
 public class SanPhamGUI extends JPanel {
     TopNav topNav;
@@ -339,7 +340,11 @@ public class SanPhamGUI extends JPanel {
 
         tbl.setModel(model);
         tbl.setRowHeight(80); // Adjust row height for images
-
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+        for (int i = 0; i < tbl.getColumnCount(); i++) {
+            if(i != 2)tbl.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        }
         // Hide the "Hidden Path" column (Index 3)
         tbl.getColumnModel().getColumn(3).setMinWidth(0);
         tbl.getColumnModel().getColumn(3).setMaxWidth(0);

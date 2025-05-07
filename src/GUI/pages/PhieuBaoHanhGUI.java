@@ -91,12 +91,20 @@ public class PhieuBaoHanhGUI extends JPanel {
                 new String[] { "Mã Phiếu BH", "Khách Hàng", "SĐT", "Nhân Viên", "Ngày Lập" }, 0);
         tblPhieuBH = new JTable(modelPhieuBH);
         tblPhieuBH.setRowHeight(35);
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+        for (int i = 0; i < tblPhieuBH.getColumnCount(); i++) {
+            tblPhieuBH.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        }
         scrPhieuBH = new JScrollPane(tblPhieuBH);
 
         // Table phiếu sửa chữa
         modelPhieuSC = new DefaultTableModel(new String[] { "Mã SC", "IMEI", "Ngày Nhận", "Trạng Thái" }, 0);
         tblPhieuSC = new JTable(modelPhieuSC);
         tblPhieuSC.setRowHeight(35);
+        for (int i = 0; i < tblPhieuSC.getColumnCount(); i++) {
+            tblPhieuSC.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        }
         scrPhieuSC = new JScrollPane(tblPhieuSC);
         // Row sorter và filter cho bảng sửa chữa
         TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(modelPhieuSC);
@@ -343,9 +351,8 @@ public class PhieuBaoHanhGUI extends JPanel {
                     kh.getHoTen().toLowerCase().contains(keyword) || kh.getSdt().contains(keyword);
                 case "IMEI" -> new ChiTietPhieuBaoHanhBLL().getCTBaoHanhByMaPhieuBH(p.getMaPhieuBH()).stream()
                         .anyMatch(ct -> ct.getMaIMEI().toLowerCase().contains(keyword));
-                default -> p.getMaPhieuBH() == Integer.parseInt(keyword)
-                        || kh.getHoTen().toLowerCase().contains(keyword)
-                        || kh.getSdt().contains(keyword);
+                default -> (kh.getHoTen().toLowerCase().contains(keyword)
+                        || kh.getSdt().contains(keyword) );
             };
             if (match)
                 result.add(p);
