@@ -64,15 +64,11 @@ public class KhuyenMaiDialog extends JDialog {
         ngayBD = new InputDate("Ngày Bắt đầu");
         ngayKT = new InputDate("Ngày Kết Thúc");
 
-        JPanel panelNgayBD = new JPanel();
-        panelNgayBD.setLayout(new FlowLayout(FlowLayout.LEFT));
-        panelNgayBD.setPreferredSize(new Dimension(400, 40));
-        panelNgayBD.add(ngayBD);
-
-        JPanel panelNgayKT = new JPanel();
-        panelNgayKT.setLayout(new FlowLayout(FlowLayout.LEFT));
-        panelNgayKT.setPreferredSize(new Dimension(400, 40));
-        panelNgayKT.add(ngayKT);
+        JPanel panelDate = new JPanel();
+        panelDate.setLayout(new FlowLayout(FlowLayout.LEFT));
+        panelDate.setPreferredSize(new Dimension(400, 40));
+        panelDate.add(ngayBD);
+        panelDate.add(ngayKT);
         apDungChoHoaDonTu = new InputText("Áp Dụng Cho Hóa Đơn Từ");
         giaTri = new InputText("Giá Trị");
         mota = new JTextArea();
@@ -95,7 +91,9 @@ public class KhuyenMaiDialog extends JDialog {
             tenKM.setText(khuyenMaiDTO.getTenKM());
             soLuong.setText(String.valueOf(khuyenMaiDTO.getSoLuong()));
             ngayBD.setDate(new java.sql.Date(khuyenMaiDTO.getNgayBD().getTime()));
+            System.out.println(ngayBD);
             ngayKT.setDate(new java.sql.Date(khuyenMaiDTO.getNgayKT().getTime()));
+            System.out.println(ngayKT);
             apDungChoHoaDonTu.setText(String.valueOf(khuyenMaiDTO.getApDungChoHoaDonTu()));
             giaTri.setText(String.valueOf(khuyenMaiDTO.getGiaTri()));
             mota.setText(khuyenMaiDTO.getMota());
@@ -118,8 +116,7 @@ public class KhuyenMaiDialog extends JDialog {
         }
         pnlMain.add(tenKM);
         pnlMain.add(soLuong);
-        pnlMain.add(panelNgayBD);
-        pnlMain.add(panelNgayKT);
+        pnlMain.add(panelDate);
         pnlMain.add(apDungChoHoaDonTu);
         pnlMain.add(giaTri);
         pnlMain.add(new JLabel("Hình Thức"));
@@ -161,6 +158,9 @@ public class KhuyenMaiDialog extends JDialog {
                                 khuyenMaiDTO.setHinhThuc(2);
                             }
                             khuyenMaiDTO.setMota(mota.getText());
+                            System.out.println("Ngày bắt đầu: " + khuyenMaiDTO.getNgayBD());
+                            System.out.println("Ngày kết thúc: " + khuyenMaiDTO.getNgayKT());
+
                         }
                         dispose();
                     }

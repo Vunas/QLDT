@@ -166,7 +166,7 @@ public class TaoPhieuBaoHanh extends JPanel {
                         new ChiTietPhieuBaoHanhBLL().generateNewId(),
                         maPBH, maSP, imei, d1, d2, 1, "");
                 new ChiTietPhieuBaoHanhBLL().add(ct);
-                new ChiTietSanPhamBLL().capNhatMaBaoHanh(imei, maPBH);
+                
             }
             new ChiTietHoaDonBLL().capNhatMaBaoHanh(maHD, maPBH);
             JOptionPane.showMessageDialog(this, "Tạo phiếu bảo hành thành công!");

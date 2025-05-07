@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -152,7 +153,6 @@ public class KhuyenMaiGUI extends JPanel {
                 }
                 int maKM = (int) tbl.getValueAt(selectedRow, 0);
                 KhuyenMaiDTO khuyenMaiDTO = khuyenMaiBLL.getKhuyenMaiByID(maKM);
-                
 
                 JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(KhuyenMaiGUI.this);
                 KhuyenMaiDialog dialog = new KhuyenMaiDialog(parentFrame, khuyenMaiDTO, "Chỉnh Sửa Khuyến Mãi");
@@ -208,7 +208,6 @@ public class KhuyenMaiGUI extends JPanel {
                 }
                 int maKM = (int) tbl.getValueAt(selectedRow, 0);
                 KhuyenMaiDTO khuyenMaiDTO = khuyenMaiBLL.getKhuyenMaiByID(maKM);
-                
 
                 JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(KhuyenMaiGUI.this);
                 KhuyenMaiDialog dialog = new KhuyenMaiDialog(parentFrame, khuyenMaiDTO, "Xem Chi Tiết");
@@ -224,23 +223,22 @@ public class KhuyenMaiGUI extends JPanel {
                         (KhuyenMaiDTO dto) -> khuyenMaiBLL.addKhuyenMai(dto),
                         (Object[] rowData) -> new KhuyenMaiDTO(
                                 khuyenMaiBLL.generateNewId(),
-                                (String) rowData[1],
-                                (int) rowData[0],
-                                (Date) rowData[2],
-                                (Date) rowData[3],
-                                (int) rowData[4],
-                                (int) rowData[5],
-                                (int) rowData[6], 1));
+                                (String) rowData[0],
+                                Integer.parseInt(rowData[1].toString()) ,
+                                Date.valueOf(rowData[2].toString()),
+                                Date.valueOf(rowData[3].toString()),
+                                Integer.parseInt(rowData[4].toString()) ,
+                                Integer.parseInt(rowData[5].toString()) ,
+                                (int) (rowData[6].toString().equals("%")? 1 : 2), 1,"")) ;
                 loadData(khuyenMaiBLL.getAllKhuyenMai());
             }
 
         });
+        // btn[4].setVisible(false);
 
         btn[5].addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
-
                 ExportExcelUtility.saveTableToExcel(tbl, "Khuyến Mãi");
             }
         });
@@ -251,22 +249,18 @@ public class KhuyenMaiGUI extends JPanel {
         comboBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
                 String type = comboBox.getSelectedItem().toString();
                 loadData(khuyenMaiBLL.getKhuyenMaiByFilter(type));
             }
         });
     }
 
-    public void search(){
+    public void search() {
         JTextField textSearch = topNav.getTextSearch();
         textSearch.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
-                // Lấy từ khóa từ trường nhập
                 String word = textSearch.getText().trim();
-
-                // Gọi phương thức tìm kiếm với từ khóa
                 loadData(khuyenMaiBLL.search(word));
             }
         });
@@ -275,10 +269,8 @@ public class KhuyenMaiGUI extends JPanel {
     private void refresh() {
         JButton btnRefresh = topNav.getBtnRefresh();
         btnRefresh.addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
-
                 topNav.getFindFor().setSelectedIndex(0);
                 topNav.getTextSearch().setText("");
                 loadData(khuyenMaiBLL.getAllKhuyenMai());
