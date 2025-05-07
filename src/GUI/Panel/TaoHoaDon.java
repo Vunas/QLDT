@@ -83,7 +83,7 @@ public class TaoHoaDon extends JPanel {
 
     // List<List<String>> imeitheohang;
     public TaoHoaDon(Main main, TopNav topNav) {
-        initComponent(main);
+        initComponent(main, topNav);
         loaddatasanpham();
         setThongTinHoaDon();
         chonsanphamdethem();
@@ -96,8 +96,9 @@ public class TaoHoaDon extends JPanel {
         return tong;
     }
 
-    public void initComponent(Main main) {
+    public void initComponent(Main main, TopNav topNav) {
         this.main = main;
+        this.topNav = topNav;
         this.setSize(600, 600);
         this.setLayout(new BorderLayout(2, 2));
 
