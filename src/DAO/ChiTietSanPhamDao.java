@@ -85,7 +85,7 @@ public class ChiTietSanPhamDao {
     
      public List<String> getImeisBySanPham(int masanpham) {
         List<String> imeiList = new ArrayList<>();
-        String sql = "SELECT maimei FROM ctsanpham WHERE masanpham = ? AND trangthai = 1"; // Lọc các bản ghi còn hiệu lực
+        String sql = "SELECT maimei FROM ctsanpham WHERE masanpham = ? AND trangthai = 1 AND tinhtrang = 0"; // Lọc các bản ghi còn hiệu lực
         try (Connection conn = JdbcUtil.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, masanpham);

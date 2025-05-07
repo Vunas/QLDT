@@ -137,18 +137,19 @@ public class KhuyenMaiDao {
 
     public boolean updateKhuyenMai(KhuyenMaiDTO khuyenMaiDTO) {
         String sql = """
-        UPDATE khuyenmai SET makhuyenmai = ?, tenkhuyenmai = ?, soluong = ?,
-        ngaybatdau = ?, ngayketthuc = ?, apdungchohoadontu = ?, giatri = ?, hinhthuc
-        = ?, mota = ?
-        WHERE makhuyenmai = ? AND trangthai = 1
-        """;
+                UPDATE khuyenmai SET makhuyenmai = ?, tenkhuyenmai = ?, soluong = ?,
+                ngaybatdau = ?, ngayketthuc = ?, apdungchohoadontu = ?, giatri = ?, hinhthuc
+                = ?, mota = ?
+                WHERE makhuyenmai = ? AND trangthai = 1
+                """;
 
         // String sql = """
-        //                         UPDATE khuyenmai
-        //         SET makhuyenmai = ?, tenkhuyenmai = ?, soluong = ?, ngaybatdau = ?, ngayketthuc = ?, apdungchohoadontu = ?, giatri = ?, hinhthuc = ?, mota = ?
-        //         WHERE makhuyenmai = ? AND trangthai = 1
+        // UPDATE khuyenmai
+        // SET makhuyenmai = ?, tenkhuyenmai = ?, soluong = ?, ngaybatdau = ?,
+        // ngayketthuc = ?, apdungchohoadontu = ?, giatri = ?, hinhthuc = ?, mota = ?
+        // WHERE makhuyenmai = ? AND trangthai = 1
 
-        //                         """;
+        // """;
 
         try (Connection conn = JdbcUtil.getConnection();
                 PreparedStatement statement = conn.prepareStatement(sql)) {
@@ -279,5 +280,40 @@ public class KhuyenMaiDao {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public List<KhuyenMaiDTO> getKhuyenMaiByName(String TenKM) {
+        List<KhuyenMaiDTO> list = new ArrayList<>();
+        String sql = """
+                SELECT * FROM `khuyenmai` WHERE khuyenmai.tenkhuyenmai LIKE ?
+                """;
+        try (Connection conn = JdbcUtil.getConnection();
+                PreparedStatement statement = conn.prepareStatement(sql)) {
+            statement.setString(1, "%" + TenKM + "%");
+            try (ResultSet rs = statement.executeQuery()) {
+                while (rs.next()) {
+                    int maKM = rs.getInt("makhuyenmai");
+                    String tenKM = rs.getString("tenkhuyenmai");
+                    int soLuong = rs.getInt("soluong");
+                    Date ngayBD = rs.getDate("ngaybatdau");
+                    Date ngayKT = rs.getDate("ngayketthuc");
+                    int apDungChoHoaDonTu = rs.getInt("apdungchohoadontu");
+                    int giaTri = rs.getInt("giatri");
+                    int hinhThuc = rs.getInt("hinhthuc");
+                    String mota = rs.getString("mota");
+                    KhuyenMaiDTO khuyenMaiDTO = new KhuyenMaiDTO(maKM, tenKM, soLuong, ngayBD, ngayKT,
+                            apDungChoHoaDonTu,
+                            giaTri, hinhThuc, 1, mota);
+                    list.add(khuyenMaiDTO);
+                }
+            } catch (Exception e) {
+                // TODO: handle exception
+                e.printStackTrace();
+            }
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+        }
+        return list;
     }
 }

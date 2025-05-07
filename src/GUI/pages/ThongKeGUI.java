@@ -147,7 +147,6 @@ public class ThongKeGUI extends JPanel {
                 ThongKeGUI.this.repaint();
             }
         });
-        jPanelDashboardCards.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
         JPanel jPanelFilter = new JPanel();
         jPanelFilter.setBorder(new EmptyBorder(10, 20, 10, 20));
@@ -283,10 +282,10 @@ public class ThongKeGUI extends JPanel {
         List<ThongKeDTO> list = thongKeBLL.thongKeKhachHang();
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         for (ThongKeDTO thongKeDTO : list) {
-            dataset.addValue(thongKeDTO.getSoluong(), "Tống Giá Trị Mua Hàng", thongKeDTO.getTen());
+            dataset.addValue(thongKeDTO.getSoluong(), "Tổng Giá Trị Mua Hàng", thongKeDTO.getTen());
         }
         JFreeChart chart = ChartFactory.createBarChart3D("Thống Kê Khách Hàng Mua Nhiều Nhất", "Tên Khách Hàng",
-                "Tống Giá Trị Mua Hàng", dataset, PlotOrientation.VERTICAL,
+                "Tổng Giá Trị Mua Hàng", dataset, PlotOrientation.VERTICAL,
                 true,
                 true,
                 false);
@@ -313,10 +312,10 @@ public class ThongKeGUI extends JPanel {
         List<ThongKeDTO> list = thongKeBLL.thongKeKhachHangByFilter(thongke);
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         for (ThongKeDTO thongKeDTO : list) {
-            dataset.addValue(thongKeDTO.getSoluong(), "Tống Giá Trị Mua Hàng", thongKeDTO.getTen());
+            dataset.addValue(thongKeDTO.getSoluong(), "Tổng Giá Trị Mua Hàng", thongKeDTO.getTen());
         }
         JFreeChart chart = ChartFactory.createBarChart3D("Thống Kê Khách Hàng Mua Nhiều Nhất", "Tên Khách Hàng",
-                "Tống Giá Trị Mua Hàng", dataset, PlotOrientation.VERTICAL,
+                "Tổng Giá Trị Mua Hàng", dataset, PlotOrientation.VERTICAL,
                 true,
                 true,
                 false);
@@ -346,7 +345,7 @@ public class ThongKeGUI extends JPanel {
             dataset.addValue(dto.getSoluong(), "Số Lượng Bán Ra", dto.getTen());
         }
 
-        JFreeChart chart = ChartFactory.createBarChart3D("Thóng Kê Sản Phẩm Bán Chạy", "Tên Sản Phẩm", "Số Lượng",
+        JFreeChart chart = ChartFactory.createBarChart3D("Thống Kê Sản Phẩm Bán Chạy", "Tên Sản Phẩm", "Số Lượng",
                 dataset, PlotOrientation.VERTICAL, // Chiều biểu đồ
                 true, // Hiển thị chú thích
                 true,
@@ -484,7 +483,14 @@ public class ThongKeGUI extends JPanel {
         }
 
         JFreeChart lineChart = ChartFactory.createLineChart("Thống Kê Doanh Thu", "Ngày", "Doanh Thu", dataset);
-
+        CategoryPlot plot = lineChart.getCategoryPlot();
+        plot.setOutlinePaint(Color.DARK_GRAY); // Viền của biểu đồ
+        plot.setRangeGridlinePaint(Color.LIGHT_GRAY); // Đường lưới ngang
+        // plot.setDomainGridlinePaint(Color.LIGHT_GRAY); // Đường lưới dọc
+        plot.setBackgroundPaint(Color.WHITE);
+        LineAndShapeRenderer renderer = new LineAndShapeRenderer();
+        renderer.setSeriesPaint(0, new Color(248, 113, 113));
+        plot.setRenderer(renderer);
         ChartPanel chartPanel = new ChartPanel(lineChart);
         chartPanel.setPreferredSize(new Dimension(600, 300));
         chartPanel.setBorder(new EmptyBorder(10, 15, 10, 15));
