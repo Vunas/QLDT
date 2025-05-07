@@ -63,4 +63,8 @@ public class KhuyenMaiBLL {
     public boolean giamSoLuongKM(int maKM){
         return khuyenmai.giamSoLuongKM(maKM);
     }
+
+    public List<KhuyenMaiDTO> search(String word){
+        return khuyenmai.getKhuyenMaiByName(word);
+    }
 }

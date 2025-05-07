@@ -358,7 +358,7 @@ public class TaoPhieuNhap extends JPanel {
         List<SanPhamDTO> list = sanphamBLL.getAllSanPham();
         tbmsanphamTable.setRowCount(0);
         for (SanPhamDTO sp : list) {
-            tbmsanphamTable.addRow(new Object[] { sp.getMaSP(), sp.getTenSP(), sp.getSoLuong() });
+            tbmsanphamTable.addRow(new Object[] { sp.getMaSP(), sp.getTenSP(), new ChiTietSanPhamBLL().getSoLuongImeisBySanPham(sp.getMaSP()) });
         }
         sanphamdathemTable.removeColumn(sanphamdathemTable.getColumnModel().getColumn(7));
     }

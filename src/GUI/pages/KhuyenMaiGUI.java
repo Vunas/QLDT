@@ -6,6 +6,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.sql.Date;
 import java.util.List;
 
@@ -16,6 +18,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
@@ -39,6 +42,7 @@ public class KhuyenMaiGUI extends JPanel {
         khuyenMaiBLL.autoUpdateTrangThai(khuyenMaiBLL.getAllKhuyenMai());
         initComponent(topNav);
         filter();
+        search();
         refresh();
         loadData(khuyenMaiBLL.getAllKhuyenMai());
         chucnang(); // Add functionality to the buttons
@@ -250,6 +254,20 @@ public class KhuyenMaiGUI extends JPanel {
 
                 String type = comboBox.getSelectedItem().toString();
                 loadData(khuyenMaiBLL.getKhuyenMaiByFilter(type));
+            }
+        });
+    }
+
+    public void search(){
+        JTextField textSearch = topNav.getTextSearch();
+        textSearch.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                // Lấy từ khóa từ trường nhập
+                String word = textSearch.getText().trim();
+
+                // Gọi phương thức tìm kiếm với từ khóa
+                loadData(khuyenMaiBLL.search(word));
             }
         });
     }
