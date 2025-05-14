@@ -142,22 +142,14 @@ public class KhuyenMaiDao {
                 = ?, mota = ?
                 WHERE makhuyenmai = ? AND trangthai = 1
                 """;
-
-        // String sql = """
-        // UPDATE khuyenmai
-        // SET makhuyenmai = ?, tenkhuyenmai = ?, soluong = ?, ngaybatdau = ?,
-        // ngayketthuc = ?, apdungchohoadontu = ?, giatri = ?, hinhthuc = ?, mota = ?
-        // WHERE makhuyenmai = ? AND trangthai = 1
-
-        // """;
-
         try (Connection conn = JdbcUtil.getConnection();
                 PreparedStatement statement = conn.prepareStatement(sql)) {
             statement.setInt(1, khuyenMaiDTO.getMaKM());
             statement.setString(2, khuyenMaiDTO.getTenKM());
             statement.setInt(3, khuyenMaiDTO.getSoLuong());
-            statement.setDate(4, khuyenMaiDTO.getNgayBD());
-            statement.setDate(5, khuyenMaiDTO.getNgayKT());
+            statement.setDate(4, new java.sql.Date(khuyenMaiDTO.getNgayBD().getTime()));
+            statement.setDate(5, new java.sql.Date(khuyenMaiDTO.getNgayKT().getTime()));
+
             statement.setInt(6, khuyenMaiDTO.getApDungChoHoaDonTu());
             statement.setInt(7, khuyenMaiDTO.getGiaTri());
             statement.setInt(8, khuyenMaiDTO.getHinhThuc());
@@ -176,6 +168,39 @@ public class KhuyenMaiDao {
                     SELECT *
                     FROM khuyenmai
                     WHERE makhuyenmai = ? AND trangthai = 1
+                """;
+        try (Connection conn = JdbcUtil.getConnection();
+                PreparedStatement statement = conn.prepareStatement(sql);) {
+            statement.setInt(1, maKM);
+            try (ResultSet rs = statement.executeQuery()) {
+                if (rs.next()) {
+                    int ma = rs.getInt("makhuyenmai");
+                    String ten = rs.getString("tenkhuyenmai");
+                    int soLuong = rs.getInt("soluong");
+                    Date start = rs.getDate("ngaybatdau");
+                    Date end = rs.getDate("ngayketthuc");
+                    int apDung = rs.getInt("apdungchohoadontu");
+                    int giaTri = rs.getInt("giatri");
+                    int hinhThuc = rs.getInt("hinhthuc");
+                    String mota = rs.getString("mota");
+                    khuyenMaiDTO = new KhuyenMaiDTO(ma, ten, soLuong, start, end, apDung, giaTri, hinhThuc, 1, mota);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return khuyenMaiDTO;
+    }
+
+    public KhuyenMaiDTO getKhuyenMaiByIDignoreTrangThai(int maKM) {
+        KhuyenMaiDTO khuyenMaiDTO = null;
+        String sql = """
+                    SELECT *
+                    FROM khuyenmai
+                    WHERE makhuyenmai = ?
                 """;
         try (Connection conn = JdbcUtil.getConnection();
                 PreparedStatement statement = conn.prepareStatement(sql);) {
@@ -285,7 +310,7 @@ public class KhuyenMaiDao {
     public List<KhuyenMaiDTO> getKhuyenMaiByName(String TenKM) {
         List<KhuyenMaiDTO> list = new ArrayList<>();
         String sql = """
-                SELECT * FROM `khuyenmai` WHERE khuyenmai.tenkhuyenmai LIKE ?
+                SELECT * FROM `khuyenmai` WHERE khuyenmai.tenkhuyenmai LIKE ? AND trangthai = 1
                 """;
         try (Connection conn = JdbcUtil.getConnection();
                 PreparedStatement statement = conn.prepareStatement(sql)) {

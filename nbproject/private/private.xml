@@ -15,6 +15,7 @@
             <file>file:/C:/Users/thaoh/OneDrive/Desktop/QLDT/src/DAO/ChiTietSanPhamDao.java</file>
         </group>
         <group>
+<<<<<<< HEAD
             <file>file:/C:/Users/nguyen/OneDrive/Máy%20tính/New%20Folder/QLDT/src/BLL/BUS/ChiTietHoaDonBLL.java</file>
             <file>file:/C:/Users/nguyen/OneDrive/Máy%20tính/New%20Folder/QLDT/src/GUI/pages/HoaDonGUI.java</file>
             <file>file:/C:/Users/nguyen/OneDrive/Máy%20tính/New%20Folder/QLDT/src/GUI/Panel/TaoHoaDon.java</file>
@@ -27,6 +28,9 @@
             <file>file:/C:/Users/nguyen/OneDrive/Máy%20tính/New%20Folder/QLDT/src/DAO/ChiTietHoaDonDao.java</file>
             <file>file:/C:/Users/nguyen/OneDrive/Máy%20tính/New%20Folder/QLDT/src/DAO/HoaDonDao.java</file>
             <file>file:/C:/Users/nguyen/OneDrive/Máy%20tính/New%20Folder/QLDT/src/BLL/BUS/HoaDonBLL.java</file>
+=======
+            <file>file:/C:/Users/LAPTOP/Downloads/NetBeansProjects/NetBeansProjects/DoanJava/src/util/HoaDonPDFExporter.java</file>
+>>>>>>> b0cf060b7115f6c7cb9061808c4a33bedef99942
         </group>
     </open-files>
 </project-private>

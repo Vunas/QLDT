@@ -64,15 +64,11 @@ public class KhuyenMaiDialog extends JDialog {
         ngayBD = new InputDate("Ngày Bắt đầu");
         ngayKT = new InputDate("Ngày Kết Thúc");
 
-        JPanel panelNgayBD = new JPanel();
-        panelNgayBD.setLayout(new FlowLayout(FlowLayout.LEFT));
-        panelNgayBD.setPreferredSize(new Dimension(400, 40));
-        panelNgayBD.add(ngayBD);
-
-        JPanel panelNgayKT = new JPanel();
-        panelNgayKT.setLayout(new FlowLayout(FlowLayout.LEFT));
-        panelNgayKT.setPreferredSize(new Dimension(400, 40));
-        panelNgayKT.add(ngayKT);
+        JPanel panelDate = new JPanel();
+        panelDate.setLayout(new FlowLayout(FlowLayout.LEFT));
+        panelDate.setPreferredSize(new Dimension(400, 40));
+        panelDate.add(ngayBD);
+        panelDate.add(ngayKT);
         apDungChoHoaDonTu = new InputText("Áp Dụng Cho Hóa Đơn Từ");
         giaTri = new InputText("Giá Trị");
         mota = new JTextArea();
@@ -96,6 +92,7 @@ public class KhuyenMaiDialog extends JDialog {
             soLuong.setText(String.valueOf(khuyenMaiDTO.getSoLuong()));
             ngayBD.setDate(new java.sql.Date(khuyenMaiDTO.getNgayBD().getTime()));
             ngayKT.setDate(new java.sql.Date(khuyenMaiDTO.getNgayKT().getTime()));
+
             apDungChoHoaDonTu.setText(String.valueOf(khuyenMaiDTO.getApDungChoHoaDonTu()));
             giaTri.setText(String.valueOf(khuyenMaiDTO.getGiaTri()));
             mota.setText(khuyenMaiDTO.getMota());
@@ -118,8 +115,7 @@ public class KhuyenMaiDialog extends JDialog {
         }
         pnlMain.add(tenKM);
         pnlMain.add(soLuong);
-        pnlMain.add(panelNgayBD);
-        pnlMain.add(panelNgayKT);
+        pnlMain.add(panelDate);
         pnlMain.add(apDungChoHoaDonTu);
         pnlMain.add(giaTri);
         pnlMain.add(new JLabel("Hình Thức"));
@@ -151,8 +147,8 @@ public class KhuyenMaiDialog extends JDialog {
 
                             khuyenMaiDTO.setTenKM(tenKM.getText());
                             khuyenMaiDTO.setSoLuong(Integer.valueOf(soLuong.getText()));
-                            khuyenMaiDTO.setNgayBD(new java.sql.Date(khuyenMaiDTO.getNgayBD().getTime()));
-                            khuyenMaiDTO.setNgayKT(new java.sql.Date(khuyenMaiDTO.getNgayKT().getTime()));
+                            khuyenMaiDTO.setNgayBD(new java.sql.Date(ngayBD.getDate().getTime()));
+                            khuyenMaiDTO.setNgayKT(new java.sql.Date(ngayKT.getDate().getTime()));
                             khuyenMaiDTO.setApDungChoHoaDonTu(Integer.valueOf(apDungChoHoaDonTu.getText()));
                             khuyenMaiDTO.setGiaTri(Integer.valueOf(giaTri.getText()));
                             if (hinhThuc.getSelectedIndex() == 0) {
@@ -169,6 +165,7 @@ public class KhuyenMaiDialog extends JDialog {
             });
             buttonPanel.add(btnSave);
         }
+        
 
         JScrollPane scrollPane = new JScrollPane(pnlMain);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
