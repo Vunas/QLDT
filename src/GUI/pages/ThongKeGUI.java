@@ -89,7 +89,7 @@ public class ThongKeGUI extends JPanel {
         jPanelDashboardCards.setBackground(new java.awt.Color(250, 250, 250));
 
         JPanel jPanelTongDoanhThu = createDashboardCards("Tổng Doanh Thu", tong_doanh_thu);
-        JPanel jPanelTongKhachHang = createDashboardCards("Tổng Khach Hang", tong_khach_hang);
+        JPanel jPanelTongKhachHang = createDashboardCards("Tổng Khách Hàng", tong_khach_hang);
         JPanel jPanelTongSanPham = createDashboardCards("Tổng Sản Phẩm", tong_san_pham);
         JPanel jPanelTongNhanVien = createDashboardCards("Tổng nhân viên", tong_nhan_vien);
 
@@ -194,7 +194,7 @@ public class ThongKeGUI extends JPanel {
                     ThongKeGUI.this.remove(chartPanelCurrent);
                     chartPanelCurrent = chartPanelNhanVienByFilter;
                 }
-                ThongKeGUI.this.revalidate(); // Cập nhật lại bố cục giao diện
+                ThongKeGUI.this.revalidate();
                 ThongKeGUI.this.repaint();
             }
 
@@ -291,9 +291,9 @@ public class ThongKeGUI extends JPanel {
                 false);
 
         CategoryPlot plot = chart.getCategoryPlot();
-        plot.setOutlinePaint(Color.DARK_GRAY); // Viền của biểu đồ
-        plot.setRangeGridlinePaint(Color.LIGHT_GRAY); // Đường lưới ngang
-        plot.setDomainGridlinePaint(Color.LIGHT_GRAY); // Đường lưới dọc
+        plot.setOutlinePaint(Color.DARK_GRAY); 
+        plot.setRangeGridlinePaint(Color.LIGHT_GRAY); 
+        plot.setDomainGridlinePaint(Color.LIGHT_GRAY); 
         plot.setBackgroundPaint(Color.WHITE);
 
         BarRenderer renderer = (BarRenderer) plot.getRenderer();
@@ -320,9 +320,9 @@ public class ThongKeGUI extends JPanel {
                 true,
                 false);
         CategoryPlot plot = chart.getCategoryPlot();
-        plot.setOutlinePaint(Color.DARK_GRAY); // Viền của biểu đồ
-        plot.setRangeGridlinePaint(Color.LIGHT_GRAY); // Đường lưới ngang
-        plot.setDomainGridlinePaint(Color.LIGHT_GRAY); // Đường lưới dọc
+        plot.setOutlinePaint(Color.DARK_GRAY); 
+        plot.setRangeGridlinePaint(Color.LIGHT_GRAY); 
+        plot.setDomainGridlinePaint(Color.LIGHT_GRAY); 
         plot.setBackgroundPaint(Color.WHITE);
 
         BarRenderer renderer = (BarRenderer) plot.getRenderer();
@@ -351,9 +351,9 @@ public class ThongKeGUI extends JPanel {
                 true,
                 false);
         CategoryPlot plot = chart.getCategoryPlot();
-        plot.setOutlinePaint(Color.DARK_GRAY); // Viền của biểu đồ
-        plot.setRangeGridlinePaint(Color.LIGHT_GRAY); // Đường lưới ngang
-        plot.setDomainGridlinePaint(Color.LIGHT_GRAY); // Đường lưới dọc
+        plot.setOutlinePaint(Color.DARK_GRAY); 
+        plot.setRangeGridlinePaint(Color.LIGHT_GRAY); 
+        plot.setDomainGridlinePaint(Color.LIGHT_GRAY); 
         plot.setBackgroundPaint(Color.WHITE);
 
         BarRenderer renderer = (BarRenderer) plot.getRenderer();
@@ -382,9 +382,9 @@ public class ThongKeGUI extends JPanel {
                 true,
                 false);
         CategoryPlot plot = chart.getCategoryPlot();
-        plot.setOutlinePaint(Color.DARK_GRAY); // Viền của biểu đồ
-        plot.setRangeGridlinePaint(Color.LIGHT_GRAY); // Đường lưới ngang
-        plot.setDomainGridlinePaint(Color.LIGHT_GRAY); // Đường lưới dọc
+        plot.setOutlinePaint(Color.DARK_GRAY); 
+        plot.setRangeGridlinePaint(Color.LIGHT_GRAY); 
+        plot.setDomainGridlinePaint(Color.LIGHT_GRAY); 
         plot.setBackgroundPaint(Color.WHITE);
 
         BarRenderer renderer = (BarRenderer) plot.getRenderer();
@@ -408,9 +408,9 @@ public class ThongKeGUI extends JPanel {
         JFreeChart chart = ChartFactory.createBarChart3D("Thống Kê Nhân Viên Bán Được Hàng Nhiều Nhất", "Tên Nhân Viên",
                 "Số Lượng Bán Ra", dataset);
         CategoryPlot plot = chart.getCategoryPlot();
-        plot.setOutlinePaint(Color.DARK_GRAY); // Viền của biểu đồ
-        plot.setRangeGridlinePaint(Color.LIGHT_GRAY); // Đường lưới ngang
-        plot.setDomainGridlinePaint(Color.LIGHT_GRAY); // Đường lưới dọc
+        plot.setOutlinePaint(Color.DARK_GRAY); 
+        plot.setRangeGridlinePaint(Color.LIGHT_GRAY); 
+        plot.setDomainGridlinePaint(Color.LIGHT_GRAY); 
         plot.setBackgroundPaint(Color.WHITE);
 
         BarRenderer renderer = (BarRenderer) plot.getRenderer();
@@ -434,9 +434,9 @@ public class ThongKeGUI extends JPanel {
         JFreeChart chart = ChartFactory.createBarChart3D("Thống Kê Nhân Viên Bán Được Hàng Nhiều Nhất", "Tên Nhân Viên",
                 "Số Lượng Sản Phẩm", dataset);
         CategoryPlot plot = chart.getCategoryPlot();
-        plot.setOutlinePaint(Color.DARK_GRAY); // Viền của biểu đồ
-        plot.setRangeGridlinePaint(Color.LIGHT_GRAY); // Đường lưới ngang
-        plot.setDomainGridlinePaint(Color.LIGHT_GRAY); // Đường lưới dọc
+        plot.setOutlinePaint(Color.DARK_GRAY); 
+        plot.setRangeGridlinePaint(Color.LIGHT_GRAY); 
+        plot.setDomainGridlinePaint(Color.LIGHT_GRAY); 
         plot.setBackgroundPaint(Color.WHITE);
 
         BarRenderer renderer = (BarRenderer) plot.getRenderer();
@@ -460,9 +460,9 @@ public class ThongKeGUI extends JPanel {
 
         JFreeChart lineChart = ChartFactory.createLineChart("Thống Kê Doanh Thu", "Ngày", "Doanh Thu", dataset);
         CategoryPlot plot = lineChart.getCategoryPlot();
-        plot.setOutlinePaint(Color.DARK_GRAY); // Viền của biểu đồ
-        plot.setRangeGridlinePaint(Color.LIGHT_GRAY); // Đường lưới ngang
-        // plot.setDomainGridlinePaint(Color.LIGHT_GRAY); // Đường lưới dọc
+        plot.setOutlinePaint(Color.DARK_GRAY); 
+        plot.setRangeGridlinePaint(Color.LIGHT_GRAY); 
+        
         plot.setBackgroundPaint(Color.WHITE);
         LineAndShapeRenderer renderer = new LineAndShapeRenderer();
         renderer.setSeriesPaint(0, new Color(248, 113, 113));
@@ -475,7 +475,6 @@ public class ThongKeGUI extends JPanel {
     }
 
     public ChartPanel createChartDoanhThuByFilter(ThongKeDTO thongke) {
-        
         List<ThongKeDTO> thongKeDTO = thongKeBLL.thongKeDoanhThuByFilter(thongke);
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         for (ThongKeDTO dto : thongKeDTO) {
@@ -483,19 +482,11 @@ public class ThongKeGUI extends JPanel {
         }
 
         JFreeChart lineChart = ChartFactory.createLineChart("Thống Kê Doanh Thu", "Ngày", "Doanh Thu", dataset);
-        CategoryPlot plot = lineChart.getCategoryPlot();
-        plot.setOutlinePaint(Color.DARK_GRAY); // Viền của biểu đồ
-        plot.setRangeGridlinePaint(Color.LIGHT_GRAY); // Đường lưới ngang
-        // plot.setDomainGridlinePaint(Color.LIGHT_GRAY); // Đường lưới dọc
-        plot.setBackgroundPaint(Color.WHITE);
-        LineAndShapeRenderer renderer = new LineAndShapeRenderer();
-        renderer.setSeriesPaint(0, new Color(248, 113, 113));
-        plot.setRenderer(renderer);
+
         ChartPanel chartPanel = new ChartPanel(lineChart);
         chartPanel.setPreferredSize(new Dimension(600, 300));
         chartPanel.setBorder(new EmptyBorder(10, 15, 10, 15));
 
         return chartPanel;
     }
-
 }

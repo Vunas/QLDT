@@ -538,7 +538,7 @@ public class TaoPhieuNhap extends JPanel {
             String imeiMoi = String.valueOf(Long.parseLong(maimeiStr) + i);
 
             for (String imeiDaCo : imeiList) {
-                if (imeiMoi.equals(imeiDaCo)) { // ✅ Nếu trùng thì báo lỗi
+                if (imeiMoi.equals(imeiDaCo)) { // Nếu trùng thì báo lỗi
                     JOptionPane.showMessageDialog(null, "Mã IMEI trùng: " + imeiMoi);
                     return false;
                 }
