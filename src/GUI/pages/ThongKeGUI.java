@@ -475,7 +475,6 @@ public class ThongKeGUI extends JPanel {
     }
 
     public ChartPanel createChartDoanhThuByFilter(ThongKeDTO thongke) {
-        
         List<ThongKeDTO> thongKeDTO = thongKeBLL.thongKeDoanhThuByFilter(thongke);
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         for (ThongKeDTO dto : thongKeDTO) {
@@ -490,5 +489,4 @@ public class ThongKeGUI extends JPanel {
 
         return chartPanel;
     }
-
 }

@@ -224,12 +224,12 @@ public class KhuyenMaiGUI extends JPanel {
                         (Object[] rowData) -> new KhuyenMaiDTO(
                                 khuyenMaiBLL.generateNewId(),
                                 (String) rowData[0],
-                                Integer.parseInt(rowData[1].toString()) ,
+                                Integer.parseInt(rowData[1].toString()),
                                 Date.valueOf(rowData[2].toString()),
                                 Date.valueOf(rowData[3].toString()),
-                                Integer.parseInt(rowData[4].toString()) ,
-                                Integer.parseInt(rowData[5].toString()) ,
-                                (int) (rowData[6].toString().equals("%")? 1 : 2), 1,"")) ;
+                                Integer.parseInt(rowData[4].toString()),
+                                Integer.parseInt(rowData[5].toString()),
+                                (int) (rowData[6].toString().equals("%") ? 1 : 2), 1, ""));
                 loadData(khuyenMaiBLL.getAllKhuyenMai());
             }
 

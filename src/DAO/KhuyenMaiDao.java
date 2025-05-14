@@ -142,14 +142,14 @@ public class KhuyenMaiDao {
                 = ?, mota = ?
                 WHERE makhuyenmai = ? AND trangthai = 1
                 """;
-
         try (Connection conn = JdbcUtil.getConnection();
                 PreparedStatement statement = conn.prepareStatement(sql)) {
             statement.setInt(1, khuyenMaiDTO.getMaKM());
             statement.setString(2, khuyenMaiDTO.getTenKM());
             statement.setInt(3, khuyenMaiDTO.getSoLuong());
-            statement.setDate(4, khuyenMaiDTO.getNgayBD());
-            statement.setDate(5, khuyenMaiDTO.getNgayKT());
+            statement.setDate(4, new java.sql.Date(khuyenMaiDTO.getNgayBD().getTime()));
+            statement.setDate(5, new java.sql.Date(khuyenMaiDTO.getNgayKT().getTime()));
+
             statement.setInt(6, khuyenMaiDTO.getApDungChoHoaDonTu());
             statement.setInt(7, khuyenMaiDTO.getGiaTri());
             statement.setInt(8, khuyenMaiDTO.getHinhThuc());

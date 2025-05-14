@@ -91,9 +91,8 @@ public class KhuyenMaiDialog extends JDialog {
             tenKM.setText(khuyenMaiDTO.getTenKM());
             soLuong.setText(String.valueOf(khuyenMaiDTO.getSoLuong()));
             ngayBD.setDate(new java.sql.Date(khuyenMaiDTO.getNgayBD().getTime()));
-            System.out.println(ngayBD);
             ngayKT.setDate(new java.sql.Date(khuyenMaiDTO.getNgayKT().getTime()));
-            System.out.println(ngayKT);
+
             apDungChoHoaDonTu.setText(String.valueOf(khuyenMaiDTO.getApDungChoHoaDonTu()));
             giaTri.setText(String.valueOf(khuyenMaiDTO.getGiaTri()));
             mota.setText(khuyenMaiDTO.getMota());
@@ -148,8 +147,8 @@ public class KhuyenMaiDialog extends JDialog {
 
                             khuyenMaiDTO.setTenKM(tenKM.getText());
                             khuyenMaiDTO.setSoLuong(Integer.valueOf(soLuong.getText()));
-                            khuyenMaiDTO.setNgayBD(new java.sql.Date(khuyenMaiDTO.getNgayBD().getTime()));
-                            khuyenMaiDTO.setNgayKT(new java.sql.Date(khuyenMaiDTO.getNgayKT().getTime()));
+                            khuyenMaiDTO.setNgayBD(new java.sql.Date(ngayBD.getDate().getTime()));
+                            khuyenMaiDTO.setNgayKT(new java.sql.Date(ngayKT.getDate().getTime()));
                             khuyenMaiDTO.setApDungChoHoaDonTu(Integer.valueOf(apDungChoHoaDonTu.getText()));
                             khuyenMaiDTO.setGiaTri(Integer.valueOf(giaTri.getText()));
                             if (hinhThuc.getSelectedIndex() == 0) {
@@ -158,9 +157,6 @@ public class KhuyenMaiDialog extends JDialog {
                                 khuyenMaiDTO.setHinhThuc(2);
                             }
                             khuyenMaiDTO.setMota(mota.getText());
-                            System.out.println("Ngày bắt đầu: " + khuyenMaiDTO.getNgayBD());
-                            System.out.println("Ngày kết thúc: " + khuyenMaiDTO.getNgayKT());
-
                         }
                         dispose();
                     }
@@ -169,6 +165,7 @@ public class KhuyenMaiDialog extends JDialog {
             });
             buttonPanel.add(btnSave);
         }
+        
 
         JScrollPane scrollPane = new JScrollPane(pnlMain);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
