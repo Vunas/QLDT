@@ -14,23 +14,23 @@ public class SanPhamDao {
 
     // Thêm sản phẩm mới
     public boolean addSanPham(SanPhamDTO SanPham) {
-        String query = "INSERT INTO SanPham (maSP, tenSP, img, soLuong, giaNhap, giaBan, mauSac, thuongHieu, Ram, Rom, Chip, thoiGianBaoHanh, trangThai) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO SanPham (tenSP, img, soLuong, giaNhap, giaBan, mauSac, thuongHieu, Ram, Rom, Chip, thoiGianBaoHanh, trangThai) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection conn = JdbcUtil.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
-            stmt.setInt(1, SanPham.getMaSP());
-            stmt.setString(2, SanPham.getTenSP());
-            stmt.setString(3, SanPham.getImg());
-            stmt.setInt(4, SanPham.getSoLuong());
-            stmt.setInt(5, SanPham.getGiaNhap());
-            stmt.setInt(6, SanPham.getGiaBan());
-            stmt.setString(7, SanPham.getMauSac());
-            stmt.setString(8, SanPham.getThuongHieu());
-            stmt.setInt(9, SanPham.getRam());
-            stmt.setInt(10, SanPham.getRom());
-            stmt.setString(11, SanPham.getChip());
-            stmt.setFloat(12, SanPham.getThoiGianBaoHanh());
-            stmt.setInt(13, 1); // Mặc định trạng thái là còn hiệu lực
+            
+            stmt.setString(1, SanPham.getTenSP());
+            stmt.setString(2, SanPham.getImg());
+            stmt.setInt(3,SanPham.getSoLuong());
+            stmt.setInt(4, SanPham.getGiaNhap());
+            stmt.setInt(5, SanPham.getGiaBan());
+            stmt.setString(6, SanPham.getMauSac());
+            stmt.setString(7, SanPham.getThuongHieu());
+            stmt.setInt(8, SanPham.getRam());
+            stmt.setInt(9, SanPham.getRom());
+            stmt.setString(10, SanPham.getChip());
+            stmt.setFloat(11, SanPham.getThoiGianBaoHanh());
+            stmt.setInt(12, 1); // Mặc định trạng thái là còn hiệu lực
 
             return stmt.executeUpdate() > 0; // Trả về true nếu thêm thành công
         } catch (SQLException e) {

@@ -32,6 +32,7 @@ public class SanPhamGUI extends JPanel {
     TopNav topNav;
     JPanel pnlBot;
     JTable tbl;
+    JTable hidden_tbl;
     SanPhamBLL sanPhamBLL;
 
     public SanPhamGUI(TopNav topNav) {
@@ -55,17 +56,24 @@ public class SanPhamGUI extends JPanel {
         // Tạo JTable
         tbl = new JTable();
         tbl.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-        // tbl.setRowHeight(35);
+//         tbl.setRowHeight(35);
         tbl.setRowHeight(50);
         tbl.setFocusable(false);
         tbl.setAutoCreateRowSorter(true);
+        
+        hidden_tbl = new JTable();
         // Tô màu header bảng
         JTableHeader header = tbl.getTableHeader();
         header.setPreferredSize(new Dimension(0, 40));
         header.setBackground(new Color(100, 149, 237)); // Màu nền header (Cornflower Blue)
         header.setForeground(Color.WHITE); // Màu chữ header
         header.setFont(new Font("Segoe UI", Font.BOLD, 14)); // Font chữ header
-
+        // Căn giữa dữ liệu
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+        for (int i = 0; i < tbl.getColumnCount(); i++) {
+            tbl.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        }
         // Thêm JScrollPane chứa bảng
         JScrollPane scrollPane = new JScrollPane(tbl);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -252,7 +260,7 @@ public class SanPhamGUI extends JPanel {
         btn[5].addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ExportExcelUtility.saveTableToExcel(tbl, "Khách Hàng");
+                ExportExcelUtility.saveTableToExcel(hidden_tbl, "San Pham");
             }
         });
 
@@ -312,6 +320,11 @@ public class SanPhamGUI extends JPanel {
                 return (column == 2) ? ImageIcon.class : Object.class; // Column 2 displays ImageIcon
             }
         };
+        
+        String[] columnNames2 = { "Mã SP", "Tên SP", "Image Path", "Số Lượng", "Giá Nhập", "Giá Bán",
+                "Màu Sắc", "Thương Hiệu", "Ram", "Rom", "Chip", "Thời Gian BH" };
+
+        DefaultTableModel model2 = new DefaultTableModel(columnNames2, 0);
 
         NumberFormat formatter = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
 
@@ -336,14 +349,34 @@ public class SanPhamGUI extends JPanel {
                     sp.getThoiGianBaoHanh()
             };
             model.addRow(rowData);
+            
+            Object[] rowData2 = {
+                    sp.getMaSP(),
+                    sp.getTenSP(),
+                    sp.getImg(), // Hidden Path
+                    new ChiTietSanPhamBLL().getSoLuongImeisBySanPham(sp.getMaSP()),
+                    sp.getGiaNhap(),
+                    sp.getGiaBan(),
+                    sp.getMauSac(),
+                    sp.getThuongHieu(),
+                    sp.getRam(),
+                    sp.getRom(),
+                    sp.getChip(),
+                    sp.getThoiGianBaoHanh()
+            };
+            model2.addRow(rowData2);
+            
         }
-
+        hidden_tbl.setModel(model2);
         tbl.setModel(model);
         tbl.setRowHeight(80); // Adjust row height for images
+        
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
         for (int i = 0; i < tbl.getColumnCount(); i++) {
-            if(i != 2)tbl.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+            if(i != 2){
+                tbl.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+            }
         }
         // Hide the "Hidden Path" column (Index 3)
         tbl.getColumnModel().getColumn(3).setMinWidth(0);
