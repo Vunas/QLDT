@@ -25,6 +25,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JButton;
@@ -34,10 +35,15 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+
+import com.formdev.flatlaf.FlatClientProperties;
+import com.formdev.flatlaf.extras.FlatSVGIcon;
+
 import util.ExportExcelUtility;
 
 /**
@@ -51,19 +57,50 @@ public class HoaDonGUI extends JPanel {
     private DefaultTableModel tbmtb1;
     private JScrollPane scrtb1;
     private Main main;
+    HoaDonBLL hoaDonBLL = new HoaDonBLL();
 
-    public HoaDonGUI(Main main,TopNav topNav) {
-        initComponent(main,topNav);
+    public HoaDonGUI(Main main, TopNav topNav) {
+        initComponent(main, topNav);
         loaddata();
         chucNang();
     }
 
-    private void initComponent(Main main,TopNav topNav) {
+    private void initComponent(Main main, TopNav topNav) {
         this.main = main;
         this.topNav = topNav;
         String[] itemFindFor = { "Tất Cả", "Mã Hóa Đơn", "Khách Hàng", "Nhân Viên Lập" };
 
         topNav.setItemComboBox(itemFindFor);
+
+        JButton XuatPdf = new JButton("xuat pdf");
+        XuatPdf = new JButton("Xuất PDF",
+                new FlatSVGIcon("./resources/icon/pdf.svg", 0.35f));
+        XuatPdf.setToolTipText("Xuất PDF");
+        XuatPdf.setVerticalTextPosition(SwingConstants.BOTTOM);
+        XuatPdf.setHorizontalTextPosition(SwingConstants.CENTER);
+        XuatPdf.putClientProperty(FlatClientProperties.STYLE, "arc: 12");
+        XuatPdf.setOpaque(false);
+        XuatPdf.setMaximumSize(new Dimension(9, 6));
+        XuatPdf.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int selectedRow = tbl.getSelectedRow();
+                if (selectedRow == -1) {
+                    JOptionPane.showMessageDialog(null, "Chọn 1 dòng để xuất hóa đơn pdf");
+                } else {
+                    int maHD = Integer.parseInt(tbl.getValueAt(selectedRow, 0).toString());
+
+                    HoaDonDTO hoaDonDTO = hoaDonBLL.getHoaDonById(maHD);
+                    try {
+                        hoaDonBLL.xuatHoaDonPDF(hoaDonDTO);
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
+                }
+
+            }
+        });
+        topNav.add(XuatPdf);
 
         pnlBot = new JPanel(new BorderLayout());
         pnlBot.setPreferredSize(new Dimension(0, 500));
@@ -115,7 +152,7 @@ public class HoaDonGUI extends JPanel {
         btn[0].addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                main.setPanel(new TaoHoaDon(main,topNav));
+                main.setPanel(new TaoHoaDon(main, topNav));
             }
         });
         btn[3].addActionListener(new ActionListener() {

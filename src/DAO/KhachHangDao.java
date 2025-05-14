@@ -22,7 +22,7 @@ public class KhachHangDao {
             statement.setString(2, khachHang.getHoTen());
             statement.setString(3, khachHang.getDiaChi());
             statement.setString(4, khachHang.getSdt());
-            statement.setInt(5, 1); // Mặc định trạng thái là 1 (còn hiệu lực)
+            statement.setInt(5, 1);
 
             return statement.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -56,16 +56,16 @@ public class KhachHangDao {
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, maKH);
-            return statement.executeUpdate() > 0; // Trả về true nếu có dòng bị ảnh hưởng
+            return statement.executeUpdate() > 0; 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return false; // Trả về false nếu xảy ra lỗi
+        return false; 
     }
 
     // Lấy thông tin khách hàng theo mã
     public KhachHangDTO getKhachHangById(int maKH) {
-        String sql = "SELECT * FROM khach_hang WHERE maKH = ? AND trangthai = 1"; // Lọc chỉ khách hàng còn hiệu lực
+        String sql = "SELECT * FROM khach_hang WHERE maKH = ? AND trangthai = 1"; 
         try (Connection connection = JdbcUtil.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
@@ -90,7 +90,7 @@ public class KhachHangDao {
     // Lấy danh sách tất cả khách hàng còn hiệu lực
     public List<KhachHangDTO> getAllKhachHang() {
         List<KhachHangDTO> khachHangList = new ArrayList<>();
-        String sql = "SELECT * FROM khach_hang WHERE trangthai = 1"; // Chỉ lấy khách hàng còn hiệu lực
+        String sql = "SELECT * FROM khach_hang WHERE trangthai = 1"; 
         try (Connection connection = JdbcUtil.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql);
              ResultSet resultSet = statement.executeQuery()) {
@@ -114,7 +114,7 @@ public class KhachHangDao {
     
       public List<KhachHangDTO> getAllKhachHangToAdd() {
         List<KhachHangDTO> khachHangList = new ArrayList<>();
-        String sql = "SELECT * FROM khach_hang"; // Chỉ lấy khách hàng còn hiệu lực
+        String sql = "SELECT * FROM khach_hang"; 
         try (Connection connection = JdbcUtil.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql);
              ResultSet resultSet = statement.executeQuery()) {
