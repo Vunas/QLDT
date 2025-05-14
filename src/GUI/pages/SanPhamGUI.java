@@ -247,11 +247,12 @@ public class SanPhamGUI extends JPanel {
         btn[4].addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ImportExcelUtility.openAndImportExcel((SanPhamDTO dto) -> sanPhamBLL.addSanPham(dto),
+                ImportExcelUtility.openAndImportExcel(
+                        (SanPhamDTO dto) -> sanPhamBLL.addSanPham(dto),
                         (Object[] rowData) -> new SanPhamDTO(sanPhamBLL.generateNewId(), rowData[0].toString(),
-                                rowData[1].toString(), (int) rowData[2], (int) rowData[3], (int) rowData[4],
-                                rowData[5].toString(), rowData[6].toString(), (int) rowData[7], (int) rowData[8],
-                                rowData[9].toString(), (float) rowData[10], 1));
+                                rowData[1].toString(), 0, Integer.parseInt(rowData[2].toString()), Integer.parseInt(rowData[3].toString()),
+                                rowData[4].toString(), rowData[5].toString(), Integer.parseInt(rowData[6].toString()), Integer.parseInt(rowData[7].toString()),
+                                rowData[8].toString(), Float.parseFloat(rowData[9].toString()), 1));
 
                 loadData(sanPhamBLL.getAllSanPham());
             }
