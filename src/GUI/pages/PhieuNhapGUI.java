@@ -31,8 +31,8 @@ import util.ExportExcelUtility;
 public class PhieuNhapGUI extends JPanel {
     private TopNav topNav;
     private JPanel pnlBot;
-    private JTable tbl;
-    private DefaultTableModel tbmtb1;
+    private JTable tbl,tb2;
+    private DefaultTableModel tbmtb1,tbmtb2;
     private JScrollPane scrtb1;
     private Main main;
 
@@ -40,6 +40,7 @@ public class PhieuNhapGUI extends JPanel {
     public PhieuNhapGUI(Main main,TopNav topNav) {
         initComponent(main,topNav);
         loaddata();
+        loaddatactpn();
         chucNang();
     }
 
@@ -49,6 +50,8 @@ public class PhieuNhapGUI extends JPanel {
         String[] itemFindFor = {"Tất Cả", "Mã Phiếu Nhập", "Nhà Cung Cấp", "Nhân Viên Nhập"};
         
         topNav.setItemComboBox(itemFindFor);
+        
+        
         
         pnlBot = new JPanel(new BorderLayout());
         pnlBot.setPreferredSize(new Dimension(0, 500));
@@ -90,6 +93,25 @@ public class PhieuNhapGUI extends JPanel {
         setLayout(new BorderLayout());
         add(topNav, BorderLayout.NORTH);
         add(pnlBot, BorderLayout.CENTER);
+        
+        tb2 = new JTable();
+         String[] headtable2 = {"maCTPhieuNhap", "soLuong", "donGia", "maPhieuNhap", "maSanPham"};
+         tbmtb2 = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+         tbmtb2.setColumnIdentifiers(headtable2);
+         tb2.setModel(tbmtb2);
+         
+    }
+    
+    public void loaddatactpn(){
+        List<ChiTietPhieuNhapDTO> list = new ChiTietPhieuNhapBLL().getAllChiTietPhieuNhap();
+        for(ChiTietPhieuNhapDTO ctpn : list){
+            tbmtb2.addRow(new Object[]{ctpn.getMaCTPhieuNhap(),ctpn.getSoLuong(),ctpn.getDonGia(),ctpn.getMaPhieuNhap(),ctpn.getMaSanPham()});
+        }
     }
 
    private void chucNang(){
@@ -98,6 +120,7 @@ public class PhieuNhapGUI extends JPanel {
     JTextField textSearch = topNav.getTextSearch();
     btn[1].setVisible(false);
     btn[4].setVisible(false);
+
     btn[0].addActionListener(new ActionListener(){
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -145,7 +168,8 @@ public class PhieuNhapGUI extends JPanel {
      btn[5].addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            ExportExcelUtility.saveTableToExcel(tbl, "Phiếu Nhập");
+            ExportExcelUtility.save2TableToExcel(tbl, "Phiếu Nhập", tb2, "Chi Tiết Phiếu Nhập");
+            
        }
      });
      

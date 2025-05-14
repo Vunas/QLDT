@@ -37,10 +37,10 @@ public class PhieuNhapDao {
   public List<PhieuNhapDTO> getAllPhieuNhap() {
         List<PhieuNhapDTO> list = new ArrayList<>();
         String sql = "SELECT * FROM phieunhap WHERE trangthai = 1";
-        try (Connection conn = JdbcUtil.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql);
-             ResultSet rs = stmt.executeQuery(sql)) {
-
+        try (Connection conn = JdbcUtil.getConnection())
+              {
+                  PreparedStatement stmt = conn.prepareStatement(sql);
+                  ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 list.add(new PhieuNhapDTO(
                         rs.getInt("maPhieuNhap"),
@@ -50,6 +50,7 @@ public class PhieuNhapDao {
                         rs.getInt("trangThai")
                 ));
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

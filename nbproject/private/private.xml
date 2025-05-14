@@ -14,6 +14,19 @@
             <file>file:/C:/Users/thaoh/OneDrive/Desktop/QLDT/src/GUI/Panel/TaoHoaDon.java</file>
             <file>file:/C:/Users/thaoh/OneDrive/Desktop/QLDT/src/DAO/ChiTietSanPhamDao.java</file>
         </group>
-        <group/>
+        <group>
+            <file>file:/C:/Users/nguyen/OneDrive/Máy%20tính/New%20Folder/QLDT/src/BLL/BUS/ChiTietHoaDonBLL.java</file>
+            <file>file:/C:/Users/nguyen/OneDrive/Máy%20tính/New%20Folder/QLDT/src/GUI/pages/HoaDonGUI.java</file>
+            <file>file:/C:/Users/nguyen/OneDrive/Máy%20tính/New%20Folder/QLDT/src/GUI/Panel/TaoHoaDon.java</file>
+            <file>file:/C:/Users/nguyen/OneDrive/Máy%20tính/New%20Folder/QLDT/src/GUI/pages/PhieuNhapGUI.java</file>
+            <file>file:/C:/Users/nguyen/OneDrive/Máy%20tính/New%20Folder/QLDT/src/BLL/BUS/PhieuNhapBLL.java</file>
+            <file>file:/C:/Users/nguyen/OneDrive/Máy%20tính/New%20Folder/QLDT/src/GUI/Panel/TaoPhieuNhap.java</file>
+            <file>file:/C:/Users/nguyen/OneDrive/Máy%20tính/New%20Folder/QLDT/src/BLL/BUS/ChiTietPhieuNhapBLL.java</file>
+            <file>file:/C:/Users/nguyen/OneDrive/Máy%20tính/New%20Folder/QLDT/src/DAO/PhieuNhapDao.java</file>
+            <file>file:/C:/Users/nguyen/OneDrive/Máy%20tính/New%20Folder/QLDT/src/DAO/ChiTietPhieuNhapDao.java</file>
+            <file>file:/C:/Users/nguyen/OneDrive/Máy%20tính/New%20Folder/QLDT/src/DAO/ChiTietHoaDonDao.java</file>
+            <file>file:/C:/Users/nguyen/OneDrive/Máy%20tính/New%20Folder/QLDT/src/DAO/HoaDonDao.java</file>
+            <file>file:/C:/Users/nguyen/OneDrive/Máy%20tính/New%20Folder/QLDT/src/BLL/BUS/HoaDonBLL.java</file>
+        </group>
     </open-files>
 </project-private>

@@ -18,6 +18,10 @@ public class ChiTietPhieuNhapBLL {
     public List<ChiTietPhieuNhapDTO> getChiTietPhieuNhapByPhieuNhap(int maPhieuNhap) {
         return chiTietPhieuNhapDAO.getChiTietPhieuNhapByMaPhieuNhap(maPhieuNhap);
     }
+    
+    public List<ChiTietPhieuNhapDTO> getAllChiTietPhieuNhap(){
+        return chiTietPhieuNhapDAO.getAllChiTietPhieuNhap();
+    }
 
     public boolean addChiTietPhieuNhap(ChiTietPhieuNhapDTO chiTietPhieuNhap) {
         return chiTietPhieuNhapDAO.addChiTietPhieuNhap(chiTietPhieuNhap);

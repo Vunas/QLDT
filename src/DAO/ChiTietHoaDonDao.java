@@ -50,6 +50,29 @@ public class ChiTietHoaDonDao {
         }
         return list;
     }
+    
+     public List<ChiTietHoaDonDTO> getAllChiTietHoaDon() {
+        List<ChiTietHoaDonDTO> list = new ArrayList<>();
+        String sql = "SELECT * FROM chitiethoadon WHERE trangThai = 1";
+        try (Connection conn = JdbcUtil.getConnection()) {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                int maCTHD = rs.getInt("maChiTietHoaDon");
+                int maHoaDon = rs.getInt("mahoadon");
+                int maBH = rs.getInt("maBaoHanh");
+                int maSP = rs.getInt("maSanPham");
+                int soLuong = rs.getInt("soLuong");
+                int donGia = rs.getInt("donGia");
+                int trangThai = rs.getInt("trangThai");
+
+                list.add(new ChiTietHoaDonDTO(maCTHD, maHoaDon, maBH, maSP, soLuong, donGia, trangThai));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
 
     public boolean xoaMemChiTietHoaDon(int maHoaDon) {
         String sql = "UPDATE chitiethoadon SET trangThai = 0 WHERE maHoaDon = ?";

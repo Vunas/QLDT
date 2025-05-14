@@ -15,28 +15,27 @@ public class ImportExcelUtility {
             DataHandler<T> dataHandler,
             DataRowMapper<T> rowMapper) throws Exception {
 
-        // Sử dụng try-with-resources để tự động đóng Workbook
         try (FileInputStream fileInputStream = new FileInputStream(file);
-                Workbook workbook = new XSSFWorkbook(fileInputStream)) {
+             Workbook workbook = new XSSFWorkbook(fileInputStream)) {
 
-            Sheet sheet = workbook.getSheetAt(0); // Lấy sheet đầu tiên
+            // Lặp qua tất cả các sheet
+            for (int sheetIndex = 0; sheetIndex < workbook.getNumberOfSheets(); sheetIndex++) {
+                Sheet sheet = workbook.getSheetAt(sheetIndex);
 
-            // Đọc dữ liệu từ Excel
-            for (int rowIndex = 1; rowIndex <= sheet.getLastRowNum(); rowIndex++) { // Bỏ qua dòng đầu tiên (tiêu đề)
-                Row row = sheet.getRow(rowIndex);
-                if (row != null) {
-                    Object[] rowData = new Object[row.getLastCellNum() - 1]; // Bỏ qua cột đầu tiên
-                    for (int colIndex = 1; colIndex < row.getLastCellNum(); colIndex++) { // Bắt đầu từ cột thứ 2
-                        Cell cell = row.getCell(colIndex);
-                        rowData[colIndex - 1] = (cell != null) ? cell.toString() : "";
-                    }
+                // Đọc dữ liệu từ sheet
+                for (int rowIndex = 1; rowIndex <= sheet.getLastRowNum(); rowIndex++) {
+                    Row row = sheet.getRow(rowIndex);
+                    if (row != null) {
+                        Object[] rowData = new Object[row.getLastCellNum() - 1];
+                        for (int colIndex = 1; colIndex < row.getLastCellNum(); colIndex++) {
+                            Cell cell = row.getCell(colIndex);
+                            rowData[colIndex - 1] = (cell != null) ? cell.toString() : "";
+                        }
 
-                    // Chuyển từ rowData sang DTO (nhờ rowMapper)
-                    T dto = rowMapper.mapRow(rowData);
-
-                    // Lưu dữ liệu qua DataHandler
-                    if (!dataHandler.handleData(dto)) {
-                        throw new Exception("Lỗi khi lưu: " + rowData[0]);
+                        T dto = rowMapper.mapRow(rowData);
+                        if (!dataHandler.handleData(dto)) {
+                            throw new Exception("Lỗi khi lưu tại sheet " + sheet.getSheetName() + ", dòng " + (rowIndex + 1));
+                        }
                     }
                 }
             }
@@ -51,13 +50,17 @@ public class ImportExcelUtility {
         fileChooser.setDialogTitle("Chọn file Excel");
         fileChooser.setFileFilter(new FileNameExtensionFilter("Excel Files", "xlsx"));
 
-        // Hiển thị hộp thoại chọn tệp
         int userSelection = fileChooser.showOpenDialog(null);
         if (userSelection == JFileChooser.APPROVE_OPTION) {
             File selectedFile = fileChooser.getSelectedFile();
             try {
+                if (!selectedFile.exists() || !selectedFile.getName().endsWith(".xlsx")) {
+                    JOptionPane.showMessageDialog(null, "Vui lòng chọn file Excel hợp lệ (.xlsx).");
+                    return;
+                }
+
                 importFromExcelAndSave(selectedFile, dataHandler, rowMapper);
-                JOptionPane.showMessageDialog(null, "Nhập dữ liệu từ Excel thành công!");
+                JOptionPane.showMessageDialog(null, "Nhập dữ liệu từ tất cả các sheet thành công!");
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, "Lỗi khi nhập dữ liệu: " + ex.getMessage());
             }

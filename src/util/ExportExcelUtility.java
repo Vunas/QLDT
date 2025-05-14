@@ -74,4 +74,59 @@ public class ExportExcelUtility {
 
         workbook.close();
     }
+    
+    
+    public static void save2TableToExcel(JTable table1, String sheetName1, JTable table2, String sheetName2) {
+    JFileChooser fileChooser = new JFileChooser();
+    fileChooser.setDialogTitle("Lưu file Excel");
+    fileChooser.setFileFilter(new FileNameExtensionFilter("Excel Files", "xlsx"));
+
+    int userSelection = fileChooser.showSaveDialog(null);
+    if (userSelection == JFileChooser.APPROVE_OPTION) {
+        String filePath = fileChooser.getSelectedFile().getAbsolutePath();
+        if (!filePath.endsWith(".xlsx")) {
+            filePath += ".xlsx";
+        }
+
+        try (Workbook workbook = new XSSFWorkbook()) {
+            // Ghi bảng 1
+            writeTableToSheet(workbook, table1, sheetName1);
+            // Ghi bảng 2
+            writeTableToSheet(workbook, table2, sheetName2);
+
+            try (FileOutputStream fileOut = new FileOutputStream(filePath)) {
+                workbook.write(fileOut);
+            }
+
+            JOptionPane.showMessageDialog(null, "Xuất dữ liệu ra Excel thành công!");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Lỗi khi xuất dữ liệu: " + ex.getMessage());
+        }
+    }
+}
+
+    private static void writeTableToSheet(Workbook workbook, JTable table, String sheetName) {
+    Sheet sheet = workbook.createSheet(sheetName);
+    TableModel model = table.getModel();
+
+    Row headerRow = sheet.createRow(0);
+    for (int col = 0; col < model.getColumnCount(); col++) {
+        Cell cell = headerRow.createCell(col);
+        cell.setCellValue(model.getColumnName(col));
+    }
+
+    for (int row = 0; row < model.getRowCount(); row++) {
+        Row excelRow = sheet.createRow(row + 1);
+        for (int col = 0; col < model.getColumnCount(); col++) {
+            Cell cell = excelRow.createCell(col);
+            Object value = model.getValueAt(row, col);
+            cell.setCellValue(value != null ? value.toString() : "");
+        }
+    }
+
+    for (int col = 0; col < model.getColumnCount(); col++) {
+        sheet.autoSizeColumn(col);
+    }
+}
+
 }

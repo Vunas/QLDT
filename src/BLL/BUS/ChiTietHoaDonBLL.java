@@ -14,7 +14,10 @@ public class ChiTietHoaDonBLL {
     public List<ChiTietHoaDonDTO> getChiTietTheoMaHoaDon(int maHoaDon) {
         return chiTietHoaDonDao.getChiTietHoaDonByMaHoaDon(maHoaDon);
     }
-
+    
+     public List<ChiTietHoaDonDTO> getAllChiTietHoaDon(){
+         return chiTietHoaDonDao.getAllChiTietHoaDon();
+     }
     public boolean deleteChiTietHoaDon(int maHoaDon) {
         return chiTietHoaDonDao.xoaMemChiTietHoaDon(maHoaDon);
     }

@@ -47,14 +47,15 @@ import util.ExportExcelUtility;
 public class HoaDonGUI extends JPanel {
     private TopNav topNav;
     private JPanel pnlBot;
-    private JTable tbl;
-    private DefaultTableModel tbmtb1;
+    private JTable tbl,tb2;
+    private DefaultTableModel tbmtb1,tbmtb2;
     private JScrollPane scrtb1;
     private Main main;
 
     public HoaDonGUI(Main main,TopNav topNav) {
         initComponent(main,topNav);
         loaddata();
+        loaddatacthd();
         chucNang();
     }
 
@@ -105,8 +106,25 @@ public class HoaDonGUI extends JPanel {
         setLayout(new BorderLayout());
         add(topNav, BorderLayout.NORTH);
         add(pnlBot, BorderLayout.CENTER);
+        
+          tb2 = new JTable();
+         String[] headtable2 = {"maCTHoaDon", "mahoadon", "mabaohanh", "masanpham", "soluong","dongia"};
+         tbmtb2 = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+         tbmtb2.setColumnIdentifiers(headtable2);
+         tb2.setModel(tbmtb2);
     }
-
+    
+      public void loaddatacthd(){
+        List<ChiTietHoaDonDTO> list = new ChiTietHoaDonBLL().getAllChiTietHoaDon();
+        for(ChiTietHoaDonDTO cthd : list){
+            tbmtb2.addRow(new Object[]{cthd.getMaChiTietHoaDon(),cthd.getMaHoaDon(),cthd.getMaBaoHanh(),cthd.getMaSanPham(),cthd.getSoLuong(),cthd.getDonGia()});
+        }
+    }
     private void chucNang() {
         JButton[] btn = topNav.getBtn();
         JButton reFresh = topNav.getBtnRefresh();
@@ -125,11 +143,11 @@ public class HoaDonGUI extends JPanel {
                 if (selectedRow == -1) {
                     JOptionPane.showMessageDialog(null, "Chọn 1 dòng để xem chi tiết");
                 } else {
-                    int maPN = Integer.parseInt(tbl.getValueAt(selectedRow, 0).toString());
+                    int maHD = Integer.parseInt(tbl.getValueAt(selectedRow, 0).toString());
 
                     // Nếu dialog chưa tạo hoặc đã đóng thì tạo mới
 
-                    HoaDonDiaLog hddialog = new HoaDonDiaLog(main, maPN);
+                    HoaDonDiaLog hddialog = new HoaDonDiaLog(main, maHD);
                     hddialog.setVisible(true);
                 }
 
@@ -160,7 +178,7 @@ public class HoaDonGUI extends JPanel {
         btn[5].addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ExportExcelUtility.saveTableToExcel(tbl, "Hóa Đơn");
+                ExportExcelUtility.save2TableToExcel(tbl, "Hóa Đơn", tb2, "Chi Tiết Hóa Đơn");
             }
         });
 

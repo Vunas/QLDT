@@ -53,6 +53,31 @@ public class ChiTietPhieuNhapDao {
         return list;
     }
     
+     public List<ChiTietPhieuNhapDTO> getAllChiTietPhieuNhap(){
+        List<ChiTietPhieuNhapDTO> list = new ArrayList<>();
+        String sql = "SELECT * FROM chitietphieunhap WHERE trangthai = 1"; // Lọc chỉ các bản ghi "còn"
+        try (Connection conn = JdbcUtil.getConnection()){
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()){
+                int maCTPhieuNhap = rs.getInt("maCTPhieuNhap");
+                int soLuong = rs.getInt("soLuong");
+                int donGia = rs.getInt("donGia");
+                int maPhieuNhap = rs.getInt("maPhieuNhap");
+                int maSanPham = rs.getInt("maSanPham");
+                int trangThai = rs.getInt("trangThai");
+                
+                list.add(new ChiTietPhieuNhapDTO(maCTPhieuNhap, soLuong, donGia, maPhieuNhap, maSanPham, trangThai));
+            }
+        } 
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+    
+    
+    
     public boolean xoaMemCTPhieuNhap(int maPhieuNhap){
         // Xóa mềm bằng cách cập nhật "trangthai" thành 0
         String sql = "UPDATE chitietphieunhap SET trangthai = 0 WHERE maPhieuNhap = ?";
