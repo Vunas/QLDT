@@ -37,6 +37,10 @@ public class KhuyenMaiBLL {
         return khuyenmai.getKhuyenMaiByID(ma);
     }
 
+    public KhuyenMaiDTO getKhuyenMaiByIDignoreTrangThai(int ma) {
+        return khuyenmai.getKhuyenMaiByIDignoreTrangThai(ma);
+    }
+
     public int generateNewId() {
         return khuyenmai.getALLKhuyenMaiToAdd().getLast().getMaKM() + 1;
     }
@@ -60,11 +64,11 @@ public class KhuyenMaiBLL {
         return filterKhuyenMaiDTOs;
     }
 
-    public boolean giamSoLuongKM(int maKM){
+    public boolean giamSoLuongKM(int maKM) {
         return khuyenmai.giamSoLuongKM(maKM);
     }
 
-    public List<KhuyenMaiDTO> search(String word){
+    public List<KhuyenMaiDTO> search(String word) {
         return khuyenmai.getKhuyenMaiByName(word);
     }
 }

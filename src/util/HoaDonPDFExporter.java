@@ -7,6 +7,9 @@ import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.*;
 import com.itextpdf.layout.property.UnitValue;
 
+import BLL.BUS.KhachHangBLL;
+import BLL.BUS.KhuyenMaiBLL;
+import BLL.BUS.NhanVienBLL;
 import BLL.BUS.SanPhamBLL;
 import DTO.HoaDonDTO;
 import DTO.ChiTietHoaDonDTO;
@@ -42,9 +45,13 @@ public class HoaDonPDFExporter {
             document.add(new Paragraph("HÓA ĐƠN MUA HÀNG").setBold().setFontSize(16));
             document.add(new Paragraph("Mã hóa đơn: " + hoaDon.getMaHoaDon()));
             document.add(new Paragraph("Ngày xuất: " + hoaDon.getNgayXuat()));
-            document.add(new Paragraph("Mã khách hàng: " + hoaDon.getMaKH()));
-            document.add(new Paragraph("Mã nhân viên: " + hoaDon.getMaNhanVien()));
-            document.add(new Paragraph("Mã khuyến mãi: " + hoaDon.getMakhuyenmai()));
+            document.add(new Paragraph(
+                    "Mã khách hàng: " + new KhachHangBLL().getKhachHangById(hoaDon.getMaKH()).getHoTen()));
+            document.add(new Paragraph(
+                    "Mã nhân viên: " + new NhanVienBLL().getNhanVienById(hoaDon.getMaNhanVien()).getHoTen()));
+            document.add(new Paragraph(
+                    "Mã khuyến mãi: "
+                            + hoaDon.getMaKH()));
 
             // Thêm khoảng cách trước bảng
             document.add(new Paragraph("\n"));

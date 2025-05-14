@@ -195,6 +195,39 @@ public class KhuyenMaiDao {
         return khuyenMaiDTO;
     }
 
+    public KhuyenMaiDTO getKhuyenMaiByIDignoreTrangThai(int maKM) {
+        KhuyenMaiDTO khuyenMaiDTO = null;
+        String sql = """
+                    SELECT *
+                    FROM khuyenmai
+                    WHERE makhuyenmai = ?
+                """;
+        try (Connection conn = JdbcUtil.getConnection();
+                PreparedStatement statement = conn.prepareStatement(sql);) {
+            statement.setInt(1, maKM);
+            try (ResultSet rs = statement.executeQuery()) {
+                if (rs.next()) {
+                    int ma = rs.getInt("makhuyenmai");
+                    String ten = rs.getString("tenkhuyenmai");
+                    int soLuong = rs.getInt("soluong");
+                    Date start = rs.getDate("ngaybatdau");
+                    Date end = rs.getDate("ngayketthuc");
+                    int apDung = rs.getInt("apdungchohoadontu");
+                    int giaTri = rs.getInt("giatri");
+                    int hinhThuc = rs.getInt("hinhthuc");
+                    String mota = rs.getString("mota");
+                    khuyenMaiDTO = new KhuyenMaiDTO(ma, ten, soLuong, start, end, apDung, giaTri, hinhThuc, 1, mota);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return khuyenMaiDTO;
+    }
+
     public List<KhuyenMaiDTO> getKhuyenMaiBySoTien() {
         List<KhuyenMaiDTO> list = new ArrayList<>();
         String sql = """
